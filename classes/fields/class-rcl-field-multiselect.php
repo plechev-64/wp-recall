@@ -45,14 +45,14 @@ class Rcl_Field_MultiSelect extends Rcl_Field_Abstract {
 
 	function get_input() {
 
-		if ( !$this->values )
+		if ( ! $this->values )
 			return false;
 
 		rcl_multiselect_scripts();
 
 		$this->value = ($this->value) ? $this->value : array();
 
-		if ( !is_array( $this->value ) )
+		if ( ! is_array( $this->value ) )
 			$this->value = array( $this->value );
 
 		$content = '<select ' . $this->get_required() . ' name="' . $this->input_name . '[]" id="' . $this->input_id . '" ' . $this->get_class() . ' multiple>';
@@ -69,7 +69,7 @@ class Rcl_Field_MultiSelect extends Rcl_Field_Abstract {
 
 		$init = 'jQuery("#' . $this->input_id . '").fSelect();';
 
-		if ( !rcl_is_ajax() ) {
+		if ( ! rcl_is_ajax() ) {
 			$content .= '<script>jQuery(window).on("load", function() {' . $init . '});</script>';
 		} else {
 			$content .= '<script>' . $init . '</script>';
@@ -80,7 +80,7 @@ class Rcl_Field_MultiSelect extends Rcl_Field_Abstract {
 
 	function get_value() {
 
-		if ( !$this->value )
+		if ( ! $this->value )
 			return false;
 
 		return implode( ', ', $this->value );

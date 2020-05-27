@@ -259,18 +259,18 @@ function rcl_commerce_fields_update( $post_id, $post, $update ) {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 		return false;
 
-	if ( !isset( $_POST['rcl_commerce_fields_nonce'] ) )
+	if ( ! isset( $_POST['rcl_commerce_fields_nonce'] ) )
 		return false;
 
-	if ( !wp_verify_nonce( $_POST['rcl_commerce_fields_nonce'], __FILE__ ) )
+	if ( ! wp_verify_nonce( $_POST['rcl_commerce_fields_nonce'], __FILE__ ) )
 		return false;
 
-	if ( !current_user_can( 'edit_post', $post_id ) )
+	if ( ! current_user_can( 'edit_post', $post_id ) )
 		return false;
 
 	$POST = $_POST;
 
-	if ( !isset( $POST['product-variations'] ) ) {
+	if ( ! isset( $POST['product-variations'] ) ) {
 
 		delete_post_meta( $post_id, 'product-variations' );
 	} else {
@@ -278,7 +278,7 @@ function rcl_commerce_fields_update( $post_id, $post, $update ) {
 		$variations = array();
 		foreach ( $POST['product-variations'] as $varSlug => $var ) {
 
-			if ( !isset( $var['status'] ) || !$var['status'] )
+			if ( ! isset( $var['status'] ) || ! $var['status'] )
 				continue;
 
 			$variations[] = array(
@@ -293,15 +293,15 @@ function rcl_commerce_fields_update( $post_id, $post, $update ) {
 			delete_post_meta( $post_id, 'product-variations' );
 	}
 
-	if ( !isset( $POST['wprecall']['outsale'] ) ) {
+	if ( ! isset( $POST['wprecall']['outsale'] ) ) {
 		delete_post_meta( $post_id, 'outsale' );
 	}
 
-	if ( !isset( $POST['wprecall']['availability_product'] ) ) {
+	if ( ! isset( $POST['wprecall']['availability_product'] ) ) {
 		delete_post_meta( $post_id, 'availability_product' );
 	}
 
-	if ( !isset( $POST['children_prodimage'] ) || !$POST['children_prodimage'] ) {
+	if ( ! isset( $POST['children_prodimage'] ) || ! $POST['children_prodimage'] ) {
 
 		delete_post_meta( $post_id, 'children_prodimage' );
 	} else {

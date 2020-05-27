@@ -16,14 +16,14 @@
 <?php endif; ?>
 <div class="group-wrapper">
 	<div class="group-content">
-		<?php if ( !rcl_is_group_area( 'sidebar' ) ): ?>
+		<?php if ( ! rcl_is_group_area( 'sidebar' ) ): ?>
 			<div class="group-avatar">
 				<?php rcl_group_thumbnail( 'medium' ); ?>
 			</div>
 		<?php endif; ?>
 		<div class="group-metadata">
 
-			<?php if ( !rcl_get_option( 'group-output' ) ): ?>
+			<?php if ( ! rcl_get_option( 'group-output' ) ): ?>
 				<h1 class="group-name"><?php rcl_group_name(); ?></h1>
 			<?php endif; ?>
 

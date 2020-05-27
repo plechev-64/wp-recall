@@ -53,6 +53,7 @@ Help: https://www.jssor.com/development/slider-with-thumbnail-navigator.html
 	left: 0px;
 	filter: alpha(opacity=80);
 	opacity: .8;
+	object-fit: cover;
 }
 
 .rcl-gallery-navigator .p:hover .i, .rcl-gallery-navigator .pav .i {

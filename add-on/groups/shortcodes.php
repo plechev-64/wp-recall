@@ -36,7 +36,7 @@ function rcl_get_grouplist( $atts = false ) {
 
 	$count = $list->count();
 
-	if ( !isset( $atts['number'] ) ) {
+	if ( ! isset( $atts['number'] ) ) {
 
 		$rclnavi				 = new Rcl_PageNavi( 'rcl-groups', $count, array( 'in_page' => $list->query['number'] ) );
 		$list->query['offset']	 = $rclnavi->offset;
@@ -46,7 +46,7 @@ function rcl_get_grouplist( $atts = false ) {
 
 	$content = $list->get_filters( $count );
 
-	if ( !$groupsdata ) {
+	if ( ! $groupsdata ) {
 		$content .= '<p align="center">' . __( 'Groups not found', 'wp-recall' ) . '</p>';
 		return $content;
 	}
@@ -60,7 +60,7 @@ function rcl_get_grouplist( $atts = false ) {
 
 	$content .= '</div>';
 
-	if ( !isset( $atts['number'] ) && $rclnavi->in_page )
+	if ( ! isset( $atts['number'] ) && $rclnavi->in_page )
 		$content .= $rclnavi->pagenavi();
 
 	$list->remove_data();

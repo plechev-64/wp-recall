@@ -11,7 +11,7 @@ class Rcl_Notify {
 		return rcl_get_notice( array(
 			'type'	 => $this->type,
 			'text'	 => $this->text
-		) );
+			) );
 		;
 	}
 

@@ -5,7 +5,7 @@ $f_reg = ($typeform == 'register') ? 'style="display:block;"' : '';
 
 <div class="form-tab-rcl" id="register-form-rcl" <?php echo $f_reg; ?>>
 	<div class="form_head">
-		<div class="form_auth"><?php if ( !$typeform ) { ?><a href="#" class="link-login-rcl link-tab-rcl"><?php _e( 'Authorization ', 'wp-recall' ); ?></a><?php } ?></div>
+		<div class="form_auth"><?php if ( ! $typeform ) { ?><a href="#" class="link-login-rcl link-tab-rcl"><?php _e( 'Authorization ', 'wp-recall' ); ?></a><?php } ?></div>
 		<div class="form_reg form_active"><?php _e( 'Registration', 'wp-recall' ); ?></div>
 	</div>
 

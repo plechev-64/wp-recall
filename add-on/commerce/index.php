@@ -150,7 +150,7 @@ function rcl_register_taxonomy_product_tag() {
 add_action( 'init', 'rcl_register_rating_product_type' );
 function rcl_register_rating_product_type() {
 
-	if ( !function_exists( 'rcl_register_rating_type' ) )
+	if ( ! function_exists( 'rcl_register_rating_type' ) )
 		return false;
 
 	rcl_register_rating_type( array(
@@ -234,20 +234,22 @@ function rcl_orders_tab( $status_id ) {
 
 	$count = rcl_count_orders( $args );
 
-	if ( !$count )
+	if ( ! $count )
 		return '<p>' . sprintf( __( 'No orders with status "%s" yet', 'wp-recall' ), rcl_get_status_name_order( $status_id ) ) . '.</p>';
 
-	$pagenavi = new Rcl_PageNavi( 'rcl-orders', $count, array( 'in_page' => 30 ) );
+	$pager = new Rcl_Pager( array(
+		'total' => $count
+		) );
 
-	$args['offset'] = $pagenavi->offset;
+	$args['offset'] = $pager->offset;
 
 	$rcl_orders = rcl_get_orders( $args );
 
-	$content = $pagenavi->pagenavi();
+	$content = $pager->get_navi();
 
 	$content .= rcl_get_include_template( 'orders-history.php', __FILE__ );
 
-	$content .= $pagenavi->pagenavi();
+	$content .= $pager->get_navi();
 
 	return $content;
 }
@@ -304,7 +306,7 @@ function rcl_get_order_manager() {
 
 	$args = apply_filters( 'rcl_order_manager_args', $args );
 
-	if ( !$args )
+	if ( ! $args )
 		return false;
 
 	$content = '<div class="order-manage-box">';
@@ -327,10 +329,10 @@ add_action( 'wp', 'rcl_commerce_setup_order_actions' );
 function rcl_commerce_setup_order_actions() {
 	global $user_ID;
 
-	if ( !isset( $_GET['order-action'] ) || !isset( $_GET['order-id'] ) )
+	if ( ! isset( $_GET['order-action'] ) || ! isset( $_GET['order-id'] ) )
 		return false;
 
-	if ( !wp_verify_nonce( $_GET['_wpnonce'], 'order-action' ) )
+	if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'order-action' ) )
 		return false;
 
 	$order_id		 = intval( $_GET['order-id'] );

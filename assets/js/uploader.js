@@ -118,7 +118,7 @@ function RclUploader( props ) {
 		options = {
 			dataType: 'json',
 			type: 'POST',
-			url: Rcl.ajax_url,
+			url: Rcl.ajaxurl,
 			dropZone: this.options.dropzone ? jQuery( "#rcl-dropzone-" + this.uploader_id ) : false,
 			formData: this.getFormData( uploader ),
 			loadImageMaxFileSize: this.options.max_size * 1024,
@@ -267,7 +267,7 @@ function RclUploader( props ) {
 
 	this.submit = function( e, data ) {
 
-		this.buttonLoading( true );
+		this.animateLoading( true );
 
 		if ( this.options.crop ) {
 			return this.submitCrop( e, data );
@@ -279,7 +279,7 @@ function RclUploader( props ) {
 
 		rcl_preloader_hide();
 
-		this.buttonLoading( false );
+		this.animateLoading( false );
 
 		if ( data.result['error'] ) {
 			rcl_notice( data.result['error'], 'error', 10000 );
@@ -341,7 +341,7 @@ function RclUploader( props ) {
 				var imgUrl = event.target.result;
 
 				var maxWidth = window.innerWidth * 0.9;
-				var maxHeight = window.innerHeight * 0.9;
+				var maxHeight = window.innerHeight * 0.8;
 
 				jQuery( 'body > div' ).last().after( '<div id=rcl-preview><img style="max-width:' + maxWidth + 'px;max-height:' + maxHeight + 'px;" src="' + imgUrl + '"></div>' );
 
@@ -361,6 +361,12 @@ function RclUploader( props ) {
 
 					var height = img.height();
 					var width = img.width();
+
+					if ( height < minHeightCrop || width < minWidthCrop ) {
+						rcl_notice( 'Недостаточный размер изображения. Min:' + ' ' + minWidthCrop + '*' + minHeightCrop + ' px', 'error', 10000 );
+						return false;
+					}
+
 					var jcrop_api;
 
 					img.Jcrop( {
@@ -379,15 +385,15 @@ function RclUploader( props ) {
 						title: Rcl.local.title_image_upload,
 						className: 'rcl-hand-uploader',
 						buttons: [ {
-								className: 'btn btn-primary',
-								label: 'Ok',
+								className: 'btn-success',
+								label: 'Загрузить',
 								closeAfter: true,
 								method: function() {
 									data.submit();
 								}
 							}, {
-								className: 'btn btn-danger',
-								label: Rcl.local.close,
+								className: 'btn-cancel',
+								label: 'Отмена',
 								closeAfter: true,
 								method: function() {
 									jcrop_api.destroy();
@@ -429,7 +435,7 @@ function RclUploader( props ) {
 
 	}
 
-	this.buttonLoading = function( status ) {
+	this.animateLoading = function( status ) {
 		if ( status )
 			this.button.addClass( 'rcl-bttn__loading' );
 		else

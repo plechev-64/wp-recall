@@ -24,6 +24,8 @@ function rcl_get_postslist( $post_type, $type_name = false ) {
 		'fields'			 => 'ids'
 	);
 
+	$args = apply_filters( 'rcl_postlist_args', $args, $post_type );
+
 	$ids = get_posts( $args );
 
 	if ( ! $ids )
@@ -125,7 +127,8 @@ function rcl_get_custom_fields_edit_box( $post_id, $post_type = false, $form_id 
 		if ( ! isset( $field->slug ) )
 			continue;
 
-		$field->value = ($post_id) ? get_post_meta( $post_id, $field->slug, 1 ) : '';
+		if ( ! isset( $field->value ) )
+			$field->value = ($post_id) ? get_post_meta( $post_id, $field->slug, 1 ) : '';
 
 		$content .= '<div class="rcl-custom-field">';
 
@@ -197,7 +200,7 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 					$value = isset( $_POST[$field_id] ) ? $_POST[$field_id] : false;
 				}
 
-				if ( $value ) {
+				if ( $value || $value == 0 ) {
 					update_post_meta( $post_id, $field_id, $value );
 				} else {
 					if ( get_post_meta( $post_id, $field_id, 1 ) )

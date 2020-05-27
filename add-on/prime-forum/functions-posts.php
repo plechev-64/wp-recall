@@ -63,7 +63,7 @@ function pfm_the_post_classes() {
 function pfm_get_post_edition( $post_id = false ) {
 	global $PrimePost;
 
-	if ( !$post_id || $post_id == $PrimePost->post_id ) {
+	if ( ! $post_id || $post_id == $PrimePost->post_id ) {
 		$postEdition = maybe_unserialize( $PrimePost->post_edit );
 	} else {
 		$postEdition = maybe_unserialize( pfm_get_post_field( $post_id, 'post_edit' ) );
@@ -93,10 +93,10 @@ add_filter( 'pfm_posts', 'pfm_add_data_rating_posts' );
 function pfm_add_data_rating_posts( $pfmPosts ) {
 	global $user_ID;
 
-	if ( !rcl_exist_addon( 'rating-system' ) )
+	if ( ! rcl_exist_addon( 'rating-system' ) )
 		return $pfmPosts;
 
-	if ( !$pfmPosts || !rcl_get_option( 'rating_forum-post' ) )
+	if ( ! $pfmPosts || ! rcl_get_option( 'rating_forum-post' ) )
 		return $pfmPosts;
 
 	$userIds = array();
@@ -155,7 +155,7 @@ function pfm_add_data_rating_posts( $pfmPosts ) {
 				$user_votes[$rating->object_id] = $rating->rating_value;
 			}
 
-			if ( !isset( $ratingData['values'][$rating->object_id] ) )
+			if ( ! isset( $ratingData['values'][$rating->object_id] ) )
 				$ratingData['values'][$rating->object_id] = 0;
 
 			if ( $rating->rating_value > 0 ) {
@@ -193,12 +193,12 @@ function pfm_update_post_author_count( $post_id ) {
 
 	$post = pfm_get_post( $post_id );
 
-	if ( !$post )
+	if ( ! $post )
 		return false;
 
-	$Posts = new PrimePosts();
-
-	$postCount = $Posts->count( array( 'user_id' => $post->user_id ) );
+	$postCount = RQ::tbl( new PrimePosts() )
+		->where( array( 'user_id' => $post->user_id ) )
+		->get_count();
 
 	pfm_update_author_meta( $post->user_id, 'post_count', $postCount );
 }
@@ -206,7 +206,7 @@ function pfm_update_post_author_count( $post_id ) {
 add_action( 'pfm_add_post', 'pfm_send_mail_topic_author', 10 );
 function pfm_send_mail_topic_author( $post_id ) {
 
-	if ( !pfm_get_option( 'author-notes' ) )
+	if ( ! pfm_get_option( 'author-notes' ) )
 		return false;
 
 	$post	 = pfm_get_post( $post_id );
@@ -250,7 +250,7 @@ function pfm_get_post_box( $post_id ) {
 	$PrimeUser	 = new PrimeUser();
 	$PrimeShorts = pfm_get_shortcodes();
 
-	$theme = rcl_get_addon( get_option( 'rcl_pforum_template' ) );
+	$theme = rcl_get_addon( get_site_option( 'rcl_pforum_template' ) );
 
 	$PrimePost = array(
 		'post_id'			 => $post_id,
@@ -289,7 +289,7 @@ function pfm_author_avatar( $size = 50 ) {
 add_action( 'pfm_post_author_metabox', 'pfm_add_author_action_status', 10 );
 function pfm_add_author_action_status() {
 	global $PrimePost, $PrimeUser;
-	if ( !$PrimePost->user_id )
+	if ( ! $PrimePost->user_id )
 		return false;
 	?>
 	<div class="prime-author-meta prime-author-status"><?php echo rcl_get_useraction_html( $PrimePost->user_id, 2 ); ?></div>
@@ -299,7 +299,7 @@ function pfm_add_author_action_status() {
 add_action( 'pfm_post_author_metabox', 'pfm_add_author_registered_data', 12 );
 function pfm_add_author_registered_data() {
 	global $PrimePost;
-	if ( !$PrimePost->user_id )
+	if ( ! $PrimePost->user_id )
 		return false;
 	$user_registered = ($date			 = pfm_get_user_data( $PrimePost->user_id, 'user_registered' )) ? $date : get_the_author_meta( 'user_registered', $PrimePost->user_id );
 	?>
@@ -318,7 +318,7 @@ function pfm_add_author_role_meta() {
 add_action( 'pfm_post_author_metabox', 'pfm_add_author_counters', 20 );
 function pfm_add_author_counters() {
 	global $PrimePost;
-	if ( !$PrimePost->user_id )
+	if ( ! $PrimePost->user_id )
 		return false;
 
 	if ( $tcount = pfm_get_author_meta( $PrimePost->user_id, 'topic_count' ) ) {

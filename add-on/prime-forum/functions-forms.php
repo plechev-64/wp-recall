@@ -10,7 +10,7 @@ function pfm_get_form( $args = false ) {
 function pfm_the_topic_form() {
 	global $PrimeForum, $PrimeQuery, $user_ID;
 
-	if ( !$PrimeForum || !$PrimeForum->forum_id || $PrimeQuery->errors )
+	if ( ! $PrimeForum || ! $PrimeForum->forum_id || $PrimeQuery->errors )
 		return;
 
 	if ( $PrimeForum->forum_closed ) {
@@ -20,7 +20,7 @@ function pfm_the_topic_form() {
 		return;
 	}
 
-	if ( !pfm_is_can( 'topic_create' ) ) {
+	if ( ! pfm_is_can( 'topic_create' ) ) {
 
 		echo apply_filters( 'pfm_notice_noaccess_topic_form', pfm_get_notice( __( 'You are not authorised to publish new topics in this forum', 'wp-recall' ), 'warning' ) );
 
@@ -37,7 +37,7 @@ function pfm_the_topic_form() {
 function pfm_the_post_form() {
 	global $PrimeTopic, $PrimeQuery, $user_ID;
 
-	if ( !$PrimeTopic || !$PrimeTopic->topic_id || $PrimeQuery->errors )
+	if ( ! $PrimeTopic || ! $PrimeTopic->topic_id || $PrimeQuery->errors )
 		return;
 
 	if ( $PrimeTopic->forum_closed ) {
@@ -54,7 +54,7 @@ function pfm_the_post_form() {
 		return;
 	}
 
-	if ( !pfm_is_can( 'post_create' ) ) {
+	if ( ! pfm_is_can( 'post_create' ) ) {
 
 		echo apply_filters( 'pfm_notice_noaccess_post_form', pfm_get_notice( __( 'You are not authorised to publish messages in this topic', 'wp-recall' ), 'warning' ) );
 
@@ -93,7 +93,7 @@ function pfm_add_manager_fields_post_form( $content, $action ) {
 	if ( $action != 'post_create' )
 		return $content;
 
-	if ( !pfm_is_can( 'topic_close' ) )
+	if ( ! pfm_is_can( 'topic_close' ) )
 		return $content;
 
 	$fields = array(
@@ -123,7 +123,7 @@ function pfm_add_manager_fields_post_form( $content, $action ) {
 add_filter( 'pfm_form_bottom', 'pfm_add_smilies_post_form', 10, 2 );
 function pfm_add_smilies_post_form( $content, $action ) {
 
-	if ( !in_array( $action, array(
+	if ( ! in_array( $action, array(
 			'topic_create',
 			'post_create',
 			'post_edit',
@@ -142,7 +142,7 @@ function pfm_add_post_reason_edit_field( $fields, $action ) {
 	if ( $action != 'post_edit' )
 		return $fields;
 
-	if ( !pfm_get_option( 'reason-edit', 1 ) )
+	if ( ! pfm_get_option( 'reason-edit', 1 ) )
 		return $fields;
 
 	$fields[] = array(

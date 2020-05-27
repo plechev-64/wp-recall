@@ -77,7 +77,7 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 		if ( ! $this->description )
 			$this->description = __( 'Платеж от', 'wp-recall' ) . ' ' . get_the_author_meta( 'user_email', $this->user_id );
 
-		$this->pay_summ = round( str_replace( ',', '.', $this->pay_summ ), 2 );
+		$this->pay_summ = rcl_commercial_round( str_replace( ',', '.', $this->pay_summ ) );
 
 		$this->baggage_data['pay_type']	 = $this->pay_type;
 		$this->baggage_data['user_id']	 = $this->user_id;
@@ -143,7 +143,7 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 			array(
 				'type'			 => $this->amount_type,
 				'slug'			 => 'pay_summ',
-				'title'			 => __( 'Сумма платежа', 'wp-recall' ),
+				'title'			 => __( 'Сумма платежа', 'wp-recall' ) . ', ' . rcl_get_primary_currency( 1 ),
 				'required'		 => true,
 				'value_min'		 => $this->amount_min,
 				'value_max'		 => $this->amount_type == 'runner' && ! $this->amount_max ? 100 : false,
@@ -195,8 +195,7 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 		$content .= rcl_get_form( array(
 			'method'	 => 'post',
 			'fields'	 => $fields,
-			'submit'	 => __( 'Получить ссылку на оплату', 'wp-recall' ),
-			//'onclick' => 'rcl_load_payment_form(this);return false;',
+			'submit'	 => isset( $rmag_options['submit_choose'] ) && $rmag_options['submit_choose'] ? $rmag_options['submit_choose'] : __( 'Продолжить' ),
 			'onclick'	 => 'rcl_send_form_data("rcl_load_payment_form",this);return false;'
 			) );
 

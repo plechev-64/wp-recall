@@ -110,8 +110,9 @@ function pfm_ajax_action( object, e ) {
 			if ( data['url-redirect'] ) {
 
 				var url = data['url-redirect'].split( '#' );
+				var href = window.location.href.split( '#' );
 
-				if ( window.location.origin + window.location.pathname === url[0] ) {
+				if ( href[0] === url[0] ) {
 					location.reload();
 				} else {
 					location.replace( data['url-redirect'] );

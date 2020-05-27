@@ -53,7 +53,7 @@ class PrimeForm extends Rcl_Fields {
 
 	function add_forum_custom_fields( $fields ) {
 
-		$customFields = get_option( 'rcl_fields_pfm_forum_' . $this->forum_id );
+		$customFields = get_site_option( 'rcl_fields_pfm_forum_' . $this->forum_id );
 
 		if ( $customFields ) {
 
@@ -71,7 +71,7 @@ class PrimeForm extends Rcl_Fields {
 
 		$group_id = pfm_get_forum_field( $this->forum_id, 'group_id' );
 
-		$customFields = get_option( 'rcl_fields_pfm_group_' . $group_id );
+		$customFields = get_site_option( 'rcl_fields_pfm_group_' . $group_id );
 
 		if ( $customFields ) {
 
@@ -135,7 +135,7 @@ class PrimeForm extends Rcl_Fields {
 
 		$fields[] = apply_filters( 'pfm_form_content_field', array(
 			'type'		 => 'editor',
-			'editor_id'	 => 'editor-action_' . $this->action . current_time( 'timestamp' ),
+			'editor_id'	 => 'editor-action_' . $this->action,
 			//'tinymce' => true,
 			'slug'		 => 'post_content',
 			'title'		 => __( 'Message text', 'wp-recall' ),

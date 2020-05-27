@@ -496,6 +496,7 @@ div.rcl_preloader i.rcli::before {
 	vertical-align: top;
 	width: calc(100% - 20px);
 }
+.postbox-container .rcl-custom-fields-box,
 .structure-edit .rcl-custom-fields-box {
 	max-width: unset;
 }
@@ -919,6 +920,21 @@ div.rcl_preloader i.rcli::before {
 }
 #custom_fields_editor_post .dynamic-values .dynamic-value input {
 	width: calc(100% - 35px);
+}
+
+.wrap-recall-options .rcl-radio-box {
+	display: inline-flex;
+	align-items: center;
+	margin: 3px 6px 0 0;
+}
+.wrap-recall-options div.rcl-option .rcl-radio-box .block-label {
+	margin: 0;
+	padding: 0 0 0 5px;
+	line-height: 10px;
+}
+.wrap-recall-options .rcl-custom-field i.fa-info:not(.mce-ico) {
+	vertical-align: bottom;
+	font-size: 18px;
 }
 /* END backend publications */
 
@@ -1706,6 +1722,38 @@ span.ruble-symbol {
 }
 .rcl-options .rcl-option .rcl-field-title{
 	font-weight: bold;
+}
+/*****/
+
+/* rcl-wizard */
+#rcl-wizard{
+	padding: 20px 100px;
+}
+#rcl-wizard .wizard-image{
+	text-align: center;
+	margin: 10px;
+}
+#rcl-wizard .wizard-title{
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	margin: 20px;
+}
+#rcl-wizard .step-content{
+	background: #fff;
+	padding: 30px;
+}
+#rcl-wizard .step-title{
+    font-size: 20px;
+    border-bottom: 1px solid #ccc;
+    line-height: 2;
+}
+#rcl-wizard .step-description{
+	font-size: 16px;
+	margin: 15px 0;
+}
+#rcl-wizard .step-options{
+	max-width: 500px;
 }
 /*****/
 

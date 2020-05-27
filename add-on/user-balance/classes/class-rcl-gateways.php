@@ -15,7 +15,7 @@ class Rcl_Gateways {
 	function gateway( $gateway_id ) {
 
 
-		if ( !isset( $this->gateways[$gateway_id] ) )
+		if ( ! isset( $this->gateways[$gateway_id] ) )
 			return false;
 
 		$className = $this->gateways[$gateway_id];
@@ -23,7 +23,7 @@ class Rcl_Gateways {
 		$gateway = new $className();
 
 		global $rclOldGatewaysData;
-		if ( !$gateway->label && isset( $rclOldGatewaysData[$gateway_id] ) ) {
+		if ( ! $gateway->label && isset( $rclOldGatewaysData[$gateway_id] ) ) {
 			$gateway->init_properties( $rclOldGatewaysData[$gateway_id] );
 		}
 

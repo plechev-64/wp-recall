@@ -134,32 +134,24 @@ function rcl_update_status_order( $order_id, $new_status ) {
 
 function rcl_get_orders( $args = array() ) {
 
-	if ( isset( $args['fields'] ) ) {
-		if ( ! in_array( 'order_id', $args['fields'] ) )
-			$args['fields'][] = 'order_id';
+	if ( isset( $args['select'] ) ) {
+		if ( ! in_array( 'order_id', $args['select'] ) )
+			$args['select'][] = 'order_id';
 	}
 
-	$ordersQuery = new Rcl_Orders_Query();
-
-	$args['unserialise'] = 'order_details';
-
-	$orders = $ordersQuery->get_results( $args );
+	$orders = RQ::tbl( new Rcl_Orders_Query() )->parse( $args )->get_results();
 
 	if ( ! $orders )
 		return array();
 
 	//указываем для получения товары только из полученных заказов
 	foreach ( $orders as $k => $order ) {
-
 		$args['order_id__in'][] = $order->order_id;
 	}
 
-	$args['order_id__in']	 = array_unique( $args['order_id__in'] );
-	$args['number']			 = -1; //снимаем ограничение выборки товаров
+	$args['order_id__in'] = array_unique( $args['order_id__in'] );
 
-	$productsQuery = new Rcl_Order_Items_Query();
-
-	$products = $productsQuery->get_results( $args );
+	$products = RQ::tbl( new Rcl_Order_Items_Query() )->parse( $args )->get_results();
 
 	$Orders = array();
 	foreach ( $orders as $order ) {
@@ -175,8 +167,6 @@ function rcl_get_orders( $args = array() ) {
 
 			unset( $product->order_id );
 
-			$product->variations = maybe_unserialize( $product->variations );
-
 			$Products[] = $product;
 		}
 
@@ -189,8 +179,7 @@ function rcl_get_orders( $args = array() ) {
 }
 
 function rcl_count_orders( $args = false ) {
-	$ordersQuery = new Rcl_Orders_Query();
-	return $ordersQuery->count( $args );
+	return RQ::tbl( new Rcl_Orders_Query() )->parse( $args )->get_count();
 }
 
 function rcl_get_order( $order_id ) {
@@ -271,7 +260,7 @@ function rcl_create_order_send_mail( $order_id, $register_data ) {
 	<p>' . __( 'Link to managing your order', 'wp-recall' ) . ':</p>
 	<p>' . admin_url( 'admin.php?page=manage-rmag&order-id=' . $rclOrder->order_id ) . '</p>';
 
-	$admin_email = (isset( $rmag_options['admin_email_magazin_recall'] ) && $rmag_options['admin_email_magazin_recall']) ? $rmag_options['admin_email_magazin_recall'] : get_option( 'admin_email' );
+	$admin_email = (isset( $rmag_options['admin_email_magazin_recall'] ) && $rmag_options['admin_email_magazin_recall']) ? $rmag_options['admin_email_magazin_recall'] : get_site_option( 'admin_email' );
 
 	rcl_mail( $admin_email, $subject, $textmail );
 
@@ -350,7 +339,7 @@ function rcl_payment_order_send_mail( $order_id ) {
 	<p>' . __( 'Link for managing the order', 'wp-recall' ) . ':</p>
 	<p>' . admin_url( 'admin.php?page=manage-rmag&order-id=' . $order_id ) . '</p>';
 
-	$admin_email = (isset( $rmag_options['admin_email_magazin_recall'] ) && $rmag_options['admin_email_magazin_recall']) ? $rmag_options['admin_email_magazin_recall'] : get_option( 'admin_email' );
+	$admin_email = (isset( $rmag_options['admin_email_magazin_recall'] ) && $rmag_options['admin_email_magazin_recall']) ? $rmag_options['admin_email_magazin_recall'] : get_site_option( 'admin_email' );
 
 	rcl_mail( $admin_email, $subject, $textmail );
 

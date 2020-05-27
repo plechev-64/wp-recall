@@ -178,7 +178,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 
 	function get_value() {
 
-		if ( !$this->value )
+		if ( ! $this->value )
 			return false;
 
 		$content = '<div id="rcl-gallery-' . $this->id . '" class="rcl-upload-gallery mode-' . $this->mode_output . '">';
@@ -243,7 +243,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 					$image = wp_get_attachment_image( $attach_id, array( 100, 100 ), true );
 				}
 
-				if ( !$image )
+				if ( ! $image )
 					return false;
 
 				$url = wp_get_attachment_url( $attach_id );

@@ -58,11 +58,11 @@ function rmag_update_options() {
 			$options[$key] = $value;
 		}
 
-		update_option( 'primary-rmag-options', $options );
+		update_site_option( 'primary-rmag-options', $options );
 
 		if ( isset( $_POST['local'] ) ) {
 			foreach ( ( array ) $_POST['local'] as $key => $value ) {
-				update_option( $key, $value );
+				update_site_option( $key, $value );
 			}
 		}
 
@@ -146,20 +146,30 @@ function rcl_update_options() {
 	}
 
 	$POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
-
+	/* print_r( $POST );
+	  wp_send_json( array(
+	  'success' => __( 'Settings saved!', 'wp-recall' )
+	  ) ); */
 	array_walk_recursive(
 		$POST, function(&$v, $k) {
 		$v = trim( $v );
 	} );
 
-	foreach ( $POST as $option_name => $value ) {
+	foreach ( $POST as $option_name => $values ) {
 
-		if ( ! is_array( $value ) )
+		if ( ! is_array( $values ) )
 			continue;
 
-		$value = apply_filters( $option_name . '_pre_update', $value );
+		$values = apply_filters( $option_name . '_pre_update', $values );
 
-		update_option( $option_name, $value );
+		if ( $option_name == 'local' ) {
+
+			foreach ( $values as $local_name => $value ) {
+				update_site_option( $local_name, $value );
+			}
+		} else {
+			update_site_option( $option_name, $values );
+		}
 	}
 
 	wp_send_json( array(
@@ -270,7 +280,7 @@ function rcl_update_custom_fields() {
 
 	$fields = wp_unslash( $fields );
 
-	update_option( $_POST['rcl-fields-options']['name-option'], $fields );
+	update_site_option( $_POST['rcl-fields-options']['name-option'], $fields );
 
 	do_action( 'rcl_update_custom_fields', $fields, $POSTDATA );
 
@@ -396,7 +406,7 @@ function rcl_admin_footer_text( $footer_text ) {
 
 function rcl_send_addon_activation_notice( $addon_id, $addon_headers ) {
 	wp_remote_post( RCL_SERVICE_HOST . '/products-files/api/add-ons.php?rcl-addon-info=add-notice', array( 'body' => array(
-			'rcl-key'	 => get_option( 'rcl-key' ),
+			'rcl-key'	 => get_site_option( 'rcl-key' ),
 			'addon-id'	 => $addon_id,
 			'headers'	 => array(
 				'version'	 => $addon_headers['version'],
@@ -648,5 +658,67 @@ function rcl_manager_get_new_group() {
 
 	wp_send_json( array(
 		'content' => $Manager->get_group_areas()
+	) );
+}
+
+rcl_ajax_action( 'rcl_save_wizard_page_data', false );
+function rcl_save_wizard_page_data() {
+
+	require_once RCL_PATH . 'classes/class-rcl-wizard.php';
+
+	$stepArgs = json_decode( wp_unslash( $_REQUEST['step'] ), true );
+
+	$Wizard = new Rcl_Wizard();
+
+	$Wizard->add_step( $stepArgs );
+
+	$post = $_REQUEST;
+
+	unset( $post['action'] );
+	unset( $post['step'] );
+	unset( $post['page_id'] );
+	unset( $post['ajax_nonce'] );
+
+	if ( $post ) {
+
+		foreach ( $post as $key => $data ) {
+
+			//we working with addons
+			if ( $key == 'addons' ) {
+
+				foreach ( $data as $addon => $status ) {
+					if ( $status ) {
+						rcl_activate_addon( $addon );
+					} else {
+						rcl_deactivate_addon( $addon );
+					}
+				}
+
+				continue;
+			}
+
+			//we working with options
+			if ( is_array( $data ) ) {
+
+				if ( $option = get_site_option( $key ) ) {
+
+					foreach ( $data as $k => $v ) {
+						$option[$k] = $v;
+					}
+
+					update_site_option( $key, $option );
+
+					continue;
+				}
+			}
+
+			update_site_option( $key, $data );
+		}
+	}
+
+	wp_send_json( array(
+		//'content' => $Wizard->get_step_content( 'one' ),
+		'preloader_live' => true,
+		'redirect'		 => admin_url( 'admin.php?page=rcl-wizard&step=' . $_REQUEST['page_id'] )
 	) );
 }

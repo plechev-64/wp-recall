@@ -3,7 +3,7 @@
 //Получаем ИД группы которой принадлежит публикация
 function rcl_get_group_id_by_post( $post_id ) {
 	$groups = get_the_terms( $post_id, 'groups' );
-	if ( !$groups )
+	if ( ! $groups )
 		return false;
 	foreach ( $groups as $group ) {
 		if ( $group->parent != 0 )
@@ -17,7 +17,7 @@ function rcl_get_group_id_by_post( $post_id ) {
 //Получаем данные группы которой принадлежит публикация
 function rcl_get_group_by_post( $post_id ) {
 	$groups = get_the_terms( $post_id, 'groups' );
-	if ( !$groups )
+	if ( ! $groups )
 		return false;
 	foreach ( $groups as $group ) {
 		if ( $group->parent != 0 )
@@ -33,7 +33,7 @@ function rcl_can_user_edit_post_group( $post_id ) {
 	global $user_ID;
 	$group_id = rcl_get_group_id_by_post( $post_id );
 
-	if ( !$group_id )
+	if ( ! $group_id )
 		return false;
 
 	if ( current_user_can( 'edit_post', $post_id ) )
@@ -53,7 +53,7 @@ add_filter( 'the_content', 'rcl_post_group_edit_button', 999 );
 add_filter( 'the_excerpt', 'rcl_post_group_edit_button', 999 );
 function rcl_post_group_edit_button( $content ) {
 	global $post, $user_ID, $rcl_group;
-	if ( !is_tax( 'groups' ) )
+	if ( ! is_tax( 'groups' ) )
 		return $content;
 
 	if ( rcl_is_group_can( 'moderator' ) ) {
@@ -80,7 +80,7 @@ function rcl_add_group_id_in_form( $content, $formData ) {
 		$group_id = $rcl_group->term_id;
 	}
 
-	if ( !$group_id )
+	if ( ! $group_id )
 		return $content;
 
 	$content .= '<input type="hidden" name="term_id" value="' . base64_encode( $group_id ) . '">';
@@ -117,7 +117,7 @@ function rcl_update_grouppost_meta( $post_id, $postdata, $action ) {
 	$gr_tag = (isset( $_POST['group-tag'] )) ? sanitize_text_field( $_POST['group-tag'] ) : false;
 	if ( $gr_tag ) {
 
-		if ( !$term_id ) {
+		if ( ! $term_id ) {
 			$groups = get_the_terms( $post_id, 'groups' );
 			foreach ( $groups as $group ) {
 				if ( $group->parent != 0 )
@@ -129,7 +129,7 @@ function rcl_update_grouppost_meta( $post_id, $postdata, $action ) {
 		}
 
 		$term = term_exists( $gr_tag, 'groups', $group_id );
-		if ( !$term ) {
+		if ( ! $term ) {
 			$term = wp_insert_term(
 				$gr_tag, 'groups', array(
 				'description'	 => '',

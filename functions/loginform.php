@@ -96,10 +96,10 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 			if ( $typeform != 'sign' && $can_register ) {
 				rcl_include_template( 'form-register.php' );
 			}
-			if ( !$typeform || $typeform == 'sign' ) {
+			if ( ! $typeform || $typeform == 'sign' ) {
 				rcl_include_template( 'form-remember.php' );
 			}
-		} else if ( !$login_form ) {
+		} else if ( ! $login_form ) {
 
 			$buttons = array(
 				rcl_get_button( array(
@@ -122,7 +122,7 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 
 	echo '</div>';
 
-	if ( !$user_ID && $type )
+	if ( ! $user_ID && $type )
 		echo '<script>rcl_do_action("rcl_login_form","' . $type . '")</script>';
 
 	$html = ob_get_contents();

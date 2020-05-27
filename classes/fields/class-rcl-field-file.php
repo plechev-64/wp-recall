@@ -115,7 +115,7 @@ class Rcl_Field_File extends Rcl_Field_Abstract {
 		$input .= '<br>';
 
 		if ( $extTypes )
-			$input .= '<span class="allowed-types">' . __( 'Allowed extensions', 'wp-recall' ) . ': ' . ($this->file_types ? $this->file_types : 'zip') . '</span>. ';
+			$input .= '<span class="allowed-types">' . __( 'Типы файлов', 'wp-recall' ) . ': ' . ($this->file_types ? $this->file_types : 'zip') . '</span>. ';
 
 		$input .= __( 'Max size', 'wp-recall' ) . ': ' . $this->max_size . 'Kb';
 

@@ -31,7 +31,7 @@ class Rcl_Options_Manager {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( isset( $args[$name] ) & !empty( $args[$name] ) )
+			if ( isset( $args[$name] ) & ! empty( $args[$name] ) )
 				$this->$name = $args[$name];
 		}
 	}
@@ -52,7 +52,7 @@ class Rcl_Options_Manager {
 
 	function get_menu() {
 
-		if ( !$this->boxes )
+		if ( ! $this->boxes )
 			return false;
 
 		$items = array();

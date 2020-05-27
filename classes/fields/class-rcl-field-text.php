@@ -63,7 +63,7 @@ class Rcl_Field_Text extends Rcl_Field_Abstract {
 
 	function get_value() {
 
-		if ( !$this->value )
+		if ( ! $this->value )
 			return false;
 
 		if ( $this->type == 'email' )

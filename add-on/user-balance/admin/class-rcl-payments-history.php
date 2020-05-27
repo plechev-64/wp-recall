@@ -179,42 +179,32 @@ class Rcl_Payments_History extends WP_List_Table {
 
 		$payments = new Rcl_Payments();
 
-		$payments->set_query( array(
-			'offset' => $this->offset,
-			'number' => $this->per_page
-		) );
+		$tableAs = $payments->table['as'];
 
-		$tableAs = $payments->query['table']['as'];
+		$payments->limit( $this->per_page, $this->offset );
 
 		if ( isset( $_POST['s'] ) ) {
 
-			$payments->query['where'][] = "($tableAs.user_id = '" . $_POST['s'] . "' OR $tableAs.payment_id = '" . $_POST['s'] . "')";
+			$payments->where_string( "($tableAs.user_id = '" . $_POST['s'] . "' OR $tableAs.payment_id = '" . $_POST['s'] . "')" );
 
 			if ( isset( $_GET['m'] ) && $_GET['m'] ) {
-
-				$payments->query['where'][] = "$tableAs.time_action LIKE '" . $_GET['m'] . "-%'";
+				$payments->where( ['time_action__like' => $_GET['m'] . '-' ] );
 			}
 		} else if ( isset( $_GET['m'] ) && $_GET['m'] ) {
-
-			$payments->query['where'][] = "$tableAs.time_action LIKE '" . $_GET['m'] . "-%'";
+			$payments->where( ['time_action__like' => $_GET['m'] . '-' ] );
 		} else if ( isset( $_GET['user_id'] ) ) {
-
-			$payments->query['where'][] = "$tableAs.user_id = '" . $_GET['user_id'] . "'";
+			$payments->where( ['user_id' => $_GET['user_id'] ] );
 		}
 
-		$items = $payments->get_data();
+		$items = $payments->get_results();
 
-		$payments->query['select'] = array(
-			"SUM($tableAs.pay_amount)"
-		);
+		$payments->select( ['sum' => ['pay_amount' ] ] );
 
-		$this->sum = round( $payments->get_data( 'get_var' ), 2 );
+		$this->total_items = $payments->get_count();
 
-		//$payments->reset_query();
+		$this->sum = rcl_commercial_round( $payments->get_var() );
 
-		$this->total_items = $payments->count();
-
-		$this->sum_balance = round( $this->get_sum_balance(), 2 );
+		$this->sum_balance = rcl_commercial_round( $this->get_sum_balance() );
 
 		return $items;
 	}

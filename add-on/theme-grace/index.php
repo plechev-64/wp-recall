@@ -78,9 +78,15 @@ function rcl_add_cover_inline_styles( $styles ) {
 		return $styles;
 
 	global $user_LK;
+
 	$cover_url	 = get_user_meta( $user_LK, 'rcl_cover', 1 );
 	if ( ! $cover_url )
 		$cover_url	 = rcl_addon_url( 'img/default-cover.jpg', __FILE__ );
-	$styles .= '#lk-conteyner{background-image: url(' . $cover_url . ');}';
+
+	$dataUrl	 = wp_parse_url( $cover_url );
+	$cover_path	 = untrailingslashit( ABSPATH ) . $dataUrl['path'];
+
+	$styles .= '#lk-conteyner{background-image: url(' . $cover_url . '?vers=' . filemtime( $cover_path ) . ');}';
+
 	return $styles;
 }

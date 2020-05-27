@@ -42,6 +42,9 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields {
 
 		$postForms = $wpdb->get_col( "SELECT option_name FROM " . $wpdb->options . " WHERE option_name LIKE 'rcl_fields_" . $this->post_type . "_%' AND option_name NOT LIKE '%_structure' ORDER BY option_id ASC" );
 
+		if ( $postForms )
+			natcasesort( $postForms );
+
 		$content .= '<div class="rcl-custom-fields-navi">';
 
 		$content .= '<ul class="rcl-types-list">';
@@ -70,20 +73,44 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields {
 
 		$content .= '</div>';
 
-		$content .= '<div class="rcl-custom-fields-menu">';
-
-		$content .= '<ul class="rcl-types-list">';
+		$actionButtons = array(
+			array(
+				'label'		 => __( 'Дублировать', 'wp-recall' ),
+				'icon'		 => 'fa-copy',
+				'onclick'	 => 'rcl_manager_copy_fields("' . $this->post_type . '_' . ($form_id + 1) . '");'
+			)
+		);
 
 		if ( $this->form_id != 1 ) {
 
-			$content .= '<li><a class="action-form" href="' . wp_nonce_url( admin_url( 'admin.php?page=manage-public-form&form-action=delete-form&post-type=' . $this->post_type . '&form-id=' . $this->form_id ), 'rcl-form-action' ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'wp-recall' ) . '\');"><i class="rcli fa-trash"></i> ' . __( 'Delete form', 'wp-recall' ) . '</a></li>';
+			$actionButtons = array_merge( array(
+				array(
+					'label'	 => __( 'Delete form', 'wp-recall' ),
+					'icon'	 => 'fa-trash',
+					'href'	 => wp_nonce_url( admin_url( 'admin.php?page=manage-public-form&form-action=delete-form&post-type=' . $this->post_type . '&form-id=' . $this->form_id ), 'rcl-form-action' )
+				)
+				), $actionButtons );
 		}
 
-		$content .= '<li><a class="action-form" href="#" onclick="rcl_manager_copy_fields(\'' . $this->post_type . '_' . ($form_id + 1) . '\');"><i class="rcli fa-copy"></i> ' . __( 'Дублировать', 'wp-recall' ) . '</a></li>';
+		$actionButtons = apply_filters( 'rcl_public_form_admin_actions_args', $actionButtons, $this );
 
-		$content .= '</ul>';
+		if ( $actionButtons ) {
 
-		$content .= '</div>';
+			$content .= '<div class="rcl-custom-fields-menu">';
+
+			$content .= '<ul class="rcl-types-list">';
+
+			foreach ( $actionButtons as $actionButton ) {
+
+				$actionButton['class'] = 'action-button';
+
+				$content .= '<li>' . rcl_get_button( $actionButton ) . '</li>';
+			}
+
+			$content .= '</ul>';
+
+			$content .= '</div>';
+		}
 
 		return $content;
 	}

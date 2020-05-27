@@ -8,7 +8,7 @@ function rcl_ajax_delete_post() {
 
 	$post = get_post( intval( $_POST['post_id'] ) );
 
-	if ( !$post ) {
+	if ( ! $post ) {
 		//$log['success']=__('Material successfully removed!','wp-recall');
 		$log['post_type'] = 'attachment';
 	} else {
@@ -16,7 +16,7 @@ function rcl_ajax_delete_post() {
 		$res = wp_delete_attachment( $post->ID );
 
 		if ( $res ) {
-			$log['success']		 = __( 'Material successfully removed!', 'wp-recall' );
+			$log['success']		 = __( 'Файл успешно удален!', 'wp-recall' );
 			$log['post_type']	 = $post->post_type;
 		} else {
 			$log['error'] = __( 'Deletion failed!', 'wp-recall' );
@@ -70,7 +70,7 @@ function rcl_edit_postdata() {
 		$wpdb->posts, $post_array, array( 'ID' => intval( $_POST['post_id'] ) )
 	);
 
-	if ( !$result ) {
+	if ( ! $result ) {
 		wp_send_json( array( 'error' => __( 'Changes to be saved not found', 'wp-recall' ) ) );
 	}
 
@@ -91,7 +91,7 @@ function rcl_get_like_tags() {
 
 	rcl_verify_ajax_nonce();
 
-	if ( !$_POST['query'] ) {
+	if ( ! $_POST['query'] ) {
 		wp_send_json( array( array( 'id' => '' ) ) );
 	};
 
@@ -120,15 +120,15 @@ function rcl_preview_post() {
 	$log		 = array();
 	$postdata	 = $_POST;
 
-	if ( !rcl_get_option( 'public_access' ) && !$user_ID ) {
+	if ( ! rcl_get_option( 'public_access' ) && ! $user_ID ) {
 
 		$email_new_user	 = sanitize_email( $postdata['email-user'] );
 		$name_new_user	 = $postdata['name-user'];
 
-		if ( !$email_new_user ) {
+		if ( ! $email_new_user ) {
 			$log['error'] = __( 'Enter your e-mail!', 'wp-recall' );
 		}
-		if ( !$name_new_user ) {
+		if ( ! $name_new_user ) {
 			$log['error'] = __( 'Enter your name!', 'wp-recall' );
 		}
 
@@ -137,9 +137,9 @@ function rcl_preview_post() {
 		$correctemail	 = is_email( $email_new_user );
 		$valid			 = validate_username( $email_new_user );
 
-		if ( $res_login || $res_email || !$correctemail || !$valid ) {
+		if ( $res_login || $res_email || ! $correctemail || ! $valid ) {
 
-			if ( !$valid || !$correctemail ) {
+			if ( ! $valid || ! $correctemail ) {
 				$log['error'] .= __( 'You have entered an invalid email!', 'wp-recall' );
 			}
 			if ( $res_login || $res_email ) {
@@ -177,7 +177,7 @@ function rcl_preview_post() {
 
 		$field = $formFields->get_field( 'post_thumbnail' );
 
-		if ( $field->get_prop( 'required' ) && !$thumbnail_id ) {
+		if ( $field->get_prop( 'required' ) && ! $thumbnail_id ) {
 			wp_send_json( array( 'error' => __( 'Upload or specify an image as a thumbnail', 'wp-recall' ) ) );
 		}
 	}
@@ -190,7 +190,7 @@ function rcl_preview_post() {
 
 		$field = $formFields->get_field( 'post_content' );
 
-		if ( $field->get_prop( 'required' ) && !$postContent ) {
+		if ( $field->get_prop( 'required' ) && ! $postContent ) {
 			wp_send_json( array( 'error' => __( 'Add contents of the publication!', 'wp-recall' ) ) );
 		}
 
@@ -201,7 +201,7 @@ function rcl_preview_post() {
 
 		$types = rcl_get_option( 'pm_post_types' );
 
-		if ( !$types || in_array( $postdata['post_type'], $types ) ) {
+		if ( ! $types || in_array( $postdata['post_type'], $types ) ) {
 
 			$fieldsBox = '<div class="rcl-custom-fields">';
 

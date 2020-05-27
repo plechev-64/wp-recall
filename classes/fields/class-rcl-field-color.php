@@ -28,7 +28,7 @@ class Rcl_Field_Color extends Rcl_Field_Abstract {
 				'defaultColor' => $this->value
 			) ) . ')';
 
-		if ( !rcl_is_ajax() ) {
+		if ( ! rcl_is_ajax() ) {
 			$content .= '<script>jQuery(window).on("load", function() {' . $init . '});</script>';
 		} else {
 			$content .= '<script>' . $init . '</script>';

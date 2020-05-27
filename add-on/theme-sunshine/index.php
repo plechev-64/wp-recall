@@ -1,6 +1,6 @@
 <?php
 
-if ( !is_admin() ):
+if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'rcl_cab_15_scripts', 10 );
 endif;
 function rcl_cab_15_scripts() {
@@ -82,21 +82,27 @@ function rcl_add_sidebar_area_after() {
 add_filter( 'rcl_inline_styles', 'rcl_add_cover_inline_styles', 10 );
 function rcl_add_cover_inline_styles( $styles ) {
 
-	if ( !rcl_is_office() )
+	if ( ! rcl_is_office() )
 		return $styles;
 
 	global $user_LK;
+
 	$cover_url	 = get_user_meta( $user_LK, 'rcl_cover', 1 );
-	if ( !$cover_url )
+	if ( ! $cover_url )
 		$cover_url	 = rcl_addon_url( 'img/default-cover.jpg', __FILE__ );
-	$styles .= '#lk-conteyner{background-image: url(' . $cover_url . ');}';
+
+	$dataUrl	 = wp_parse_url( $cover_url );
+	$cover_path	 = untrailingslashit( ABSPATH ) . $dataUrl['path'];
+
+	$styles .= '#lk-conteyner{background-image: url(' . $cover_url . '?vers=' . filemtime( $cover_path ) . ');}';
+
 	return $styles;
 }
 
 add_filter( 'rcl_inline_styles', 'rcl_add_colors_inline_styles', 10 );
 function rcl_add_colors_inline_styles( $styles ) {
 
-	if ( !rcl_is_office() )
+	if ( ! rcl_is_office() )
 		return $styles;
 
 	$lca_hex = rcl_get_option( 'primary-color' ); // достаем оттуда наш цвет

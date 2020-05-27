@@ -1,21 +1,21 @@
 <?php
 
 class PrimeTopics extends Rcl_Query {
-	function __construct() {
+	function __construct( $as = false ) {
 
 		$table = array(
 			'name'	 => RCL_PREF . "pforum_topics",
-			'as'	 => 'pfm_topics',
+			'as'	 => $as ? $as : 'pfm_topics',
 			'cols'	 => array(
 				'topic_id',
 				'topic_name',
 				'topic_slug',
 				'topic_status',
 				'topic_closed',
+				'topic_fix',
 				'forum_id',
 				'user_id',
 				'post_count',
-				'closed'
 			)
 		);
 

@@ -7,7 +7,7 @@ function rcl_add_related_products( $content ) {
 	if ( $rmag_options['sistem_related_products'] != 1 )
 		return $content;
 
-	if ( !is_object( $post ) || $post->post_type != 'products' )
+	if ( ! is_object( $post ) || $post->post_type != 'products' )
 		return $content;
 
 	$content .= rcl_get_related_products( $post->ID );
@@ -41,7 +41,7 @@ function rcl_get_related_products( $product_id ) {
 
 	$related_products = get_posts( $args );
 
-	if ( !$related_products )
+	if ( ! $related_products )
 		return false;
 
 	$title_related = (isset( $rmag_options['title_related_products_recall'] ) && $rmag_options['title_related_products_recall']) ? $rmag_options['title_related_products_recall'] : '';

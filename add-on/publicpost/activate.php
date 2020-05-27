@@ -2,16 +2,16 @@
 
 global $rcl_options;
 
-if ( !isset( $rcl_options['info_author_recall'] ) )
+if ( ! isset( $rcl_options['info_author_recall'] ) )
 	$rcl_options['info_author_recall']			 = 1;
-if ( !isset( $rcl_options['moderation_public_post'] ) )
+if ( ! isset( $rcl_options['moderation_public_post'] ) )
 	$rcl_options['moderation_public_post']		 = 1;
-if ( !isset( $rcl_options['id_parent_category'] ) )
+if ( ! isset( $rcl_options['id_parent_category'] ) )
 	$rcl_options['id_parent_category']			 = '';
-if ( !isset( $rcl_options['user_public_access_recall'] ) )
+if ( ! isset( $rcl_options['user_public_access_recall'] ) )
 	$rcl_options['user_public_access_recall']	 = 2;
 
-if ( !isset( $rcl_options['public_form_page_rcl'] ) )
+if ( ! isset( $rcl_options['public_form_page_rcl'] ) )
 	$rcl_options['public_form_page_rcl'] = wp_insert_post(
 		array(
 			'post_title'	 => 'Форма публикации',
@@ -22,31 +22,31 @@ if ( !isset( $rcl_options['public_form_page_rcl'] ) )
 			'post_name'		 => 'rcl-postedit'
 		) );
 
-if ( !isset( $rcl_options['publics_block_rcl'] ) )
+if ( ! isset( $rcl_options['publics_block_rcl'] ) )
 	$rcl_options['publics_block_rcl']		 = 1;
-if ( !isset( $rcl_options['view_publics_block_rcl'] ) )
+if ( ! isset( $rcl_options['view_publics_block_rcl'] ) )
 	$rcl_options['view_publics_block_rcl']	 = 1;
 
-if ( !isset( $rcl_options['type_text_editor'] ) ) {
+if ( ! isset( $rcl_options['type_text_editor'] ) ) {
 	$rcl_options['type_text_editor'] = 1;
 	$rcl_options['wp_editor']		 = array( 1, 2 );
 }
 
-if ( !isset( $rcl_options['output_public_form_rcl'] ) )
+if ( ! isset( $rcl_options['output_public_form_rcl'] ) )
 	$rcl_options['output_public_form_rcl']		 = 1;
-if ( !isset( $rcl_options['user_public_access_recall'] ) )
+if ( ! isset( $rcl_options['user_public_access_recall'] ) )
 	$rcl_options['user_public_access_recall']	 = 2;
-if ( !isset( $rcl_options['front_editing'] ) )
+if ( ! isset( $rcl_options['front_editing'] ) )
 	$rcl_options['front_editing']				 = array( 2 );
-if ( !isset( $rcl_options['media_uploader'] ) )
+if ( ! isset( $rcl_options['media_uploader'] ) )
 	$rcl_options['media_uploader']				 = 1;
 
-if ( !isset( $rcl_options['pm_rcl'] ) )
+if ( ! isset( $rcl_options['pm_rcl'] ) )
 	$rcl_options['pm_rcl']	 = 1;
-if ( !isset( $rcl_options['pm_place'] ) )
+if ( ! isset( $rcl_options['pm_place'] ) )
 	$rcl_options['pm_place'] = 0;
 
-update_option( 'rcl_global_options', $rcl_options );
+update_site_option( 'rcl_global_options', $rcl_options );
 
 global $wpdb;
 $post_types = get_post_types( array(
@@ -56,7 +56,7 @@ $post_types = get_post_types( array(
 
 foreach ( $post_types as $post_type ) {
 
-	if ( get_option( 'rcl_fields_' . $post_type->name ) ) {
+	if ( get_site_option( 'rcl_fields_' . $post_type->name ) ) {
 		$wpdb->query( "UPDATE $wpdb->options SET option_name = 'rcl_fields_" . $post_type->name . "_1' WHERE option_name = 'rcl_fields_" . $post_type->name . "'" );
 		$wpdb->query( "UPDATE $wpdb->options SET option_name = 'rcl_fields_" . $post_type->name . "_1_structure' WHERE option_name = 'rcl_fields_" . $post_type->name . "_structure'" );
 	}

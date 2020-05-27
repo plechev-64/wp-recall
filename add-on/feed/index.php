@@ -5,7 +5,7 @@ require_once 'classes/class-rcl-feed-query.php';
 require_once 'addon-core.php';
 require_once 'shortcodes.php';
 
-if ( !is_admin() ):
+if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'rcl_feed_scripts', 10 );
 endif;
 function rcl_feed_scripts() {
@@ -22,7 +22,7 @@ function rcl_add_block_feed_button() {
 
 function rcl_add_feed_button( $user_id ) {
 	global $user_ID;
-	if ( !$user_ID || $user_ID == $user_id )
+	if ( ! $user_ID || $user_ID == $user_id )
 		return false;
 	if ( rcl_get_feed_author_current_user( $user_id ) ) {
 		return rcl_get_feed_callback_link( $user_id, __( 'Unsubscribe', 'wp-recall' ), 'rcl_update_feed_current_user' );
@@ -41,7 +41,7 @@ function rcl_add_followers_tab() {
 	global $user_LK;
 	$count = 0;
 
-	if ( !is_admin() && $user_LK ) {
+	if ( ! is_admin() && $user_LK ) {
 		$count = rcl_feed_count_subscribers( $user_LK );
 	}
 
@@ -69,7 +69,7 @@ add_action( 'init', 'rcl_add_subscriptions_tab', 10 );
 function rcl_add_subscriptions_tab() {
 	global $user_LK;
 	$count = 0;
-	if ( !is_admin() && $user_LK ) {
+	if ( ! is_admin() && $user_LK ) {
 		$count = rcl_feed_count_authors( $user_LK );
 	}
 
@@ -242,7 +242,7 @@ function rcl_feed_progress() {
 
 	$content = '';
 
-	if ( !$feedsdata ) {
+	if ( ! $feedsdata ) {
 		$content .= '<p align="center">' . __( 'News no more', 'wp-recall' ) . '</p>';
 
 		$result['content']	 = $content;

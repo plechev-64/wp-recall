@@ -251,9 +251,18 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 	function get_form( $args = array() ) {
 		global $user_ID;
 
+		$content = '';
+
 		if ( $this->get_errors() ) {
 
 			return $this->get_errors_content();
+		}
+
+		if ( isset( $_GET['draft'] ) && $_GET['draft'] == 'saved' ) {
+			$content .= rcl_get_notice( array(
+				'type'	 => 'success',
+				'text'	 => __( 'Черновик успешно сохранен!', 'wp-recall' )
+				) );
 		}
 
 		$dataPost = $this->get_object_form();
@@ -284,14 +293,30 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 			$attrsForm[] = $k . '="' . $v . '"';
 		}
 
-		$content = '<div class="rcl-public-box rcl-form">';
+		$content .= '<div class="rcl-public-box rcl-form">';
+
+		$buttons = [ ];
 
 		if ( rcl_check_access_console() ) {
-			$content .= '<div class="edit-form-link">'
-				. '<a target="_blank" href="' . admin_url( 'admin.php?page=manage-public-form&post-type=' . $this->post_type . '&form_id=' . $this->form_id ) . '">'
-				. '<i class="rcli fa-list" aria-hidden="true"></i> ' . __( 'Edit this form', 'wp-recall' )
-				. '</a>'
-				. '</div>';
+
+			$buttons[] = [
+				'href'	 => admin_url( 'admin.php?page=manage-public-form&post-type=' . $this->post_type . '&form-id=' . $this->form_id ),
+				'label'	 => __( 'Edit this form', 'wp-recall' ),
+				'icon'	 => 'fa-list'
+			];
+		}
+
+		$buttons = apply_filters( 'rcl_public_form_top_manager_args', $buttons, $this );
+
+		if ( $buttons ) {
+
+			$content .= '<div id="rcl-public-form-top-manager">';
+
+			foreach ( $buttons as $button ) {
+				$content .= rcl_get_button( $button );
+			}
+
+			$content .= '</div>';
 		}
 
 		$content .= '<form action="" method="post" ' . implode( ' ', $attrsForm ) . '>';
@@ -335,7 +360,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		$buttons = array();
 
 		if ( $this->post_id ) {
-			$buttons[] = array(
+			$buttons['gotopost'] = array(
 				'href'	 => $this->post->post_status != 'publish' ? get_bloginfo( 'wpurl' ) . '/?p=' . $this->post_id . '&preview=true' : get_permalink( $this->post_id ),
 				'label'	 => __( 'Перейти к записи', 'wp-recall' ),
 				'attrs'	 => array(
@@ -348,7 +373,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		}
 
 		if ( $this->options['draft'] && $this->user_can['draft'] )
-			$buttons[] = array(
+			$buttons['draft'] = array(
 				'onclick'	 => 'rcl_save_draft(this); return false;',
 				'label'		 => __( 'Save as Draft', 'wp-recall' ),
 				//'class'		 => array( 'public-form-button' ),
@@ -357,7 +382,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 			);
 
 		if ( $this->options['preview'] )
-			$buttons[] = array(
+			$buttons['preview'] = array(
 				'onclick'	 => 'rcl_preview(this); return false;',
 				'label'		 => __( 'Preview', 'wp-recall' ),
 				//'class'		 => array( 'public-form-button' ),
@@ -365,7 +390,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 				'icon'		 => 'fa-eye'
 			);
 
-		$buttons[] = array(
+		$buttons['publish'] = array(
 			'onclick'	 => 'rcl_publish(this); return false;',
 			'label'		 => __( 'Publish', 'wp-recall' ),
 			//'class'		 => array( 'public-form-button' ),
@@ -373,7 +398,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 			'icon'		 => 'fa-print'
 		);
 
-		$buttons = apply_filters( 'rcl_public_form_primary_buttons', $buttons, $this->get_object_form() );
+		$buttons = apply_filters( 'rcl_public_form_primary_buttons', $buttons, $this->get_object_form(), $this );
 
 		if ( ! $buttons )
 			return false;
@@ -733,7 +758,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		$fields .= "<script>
 		jQuery(window).on('load', function(){
 			jQuery('#rcl-tags-" . $taxonomy . "').magicSuggest({
-				data: Rcl.ajax_url,
+				data: Rcl.ajaxurl,
 				dataUrlParams: { action: 'rcl_get_like_tags',taxonomy: '" . $taxonomy . "',ajax_nonce:Rcl.nonce },
 				noSuggestionText: '" . __( "Not found", "rcl-public" ) . "',
 				ajaxConfig: {
@@ -778,7 +803,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		if ( ! isset( $this->taxonomies[$taxonomy] ) )
 			return false;
 
-		if ( $this->post_type == 'post' ) {
+		if ( $this->post_type == 'post' && $taxonomy == 'category' ) {
 
 			$post_terms = get_the_terms( $this->post_id, $taxonomy );
 		} else {
@@ -806,20 +831,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 	function get_delete_box() {
 		global $user_ID;
 
-		if ( $this->post->post_author == $user_ID ) {
-
-			$content = '<form method="post" action="" onsubmit="return confirm(\'' . __( 'Are you sure?', 'wp-recall' ) . '\');">
-						' . wp_nonce_field( 'rcl-delete-post', '_wpnonce', true, false ) . '
-						' . rcl_get_button( array(
-					'submit' => true,
-					'label'	 => __( 'Delete post', 'wp-recall' ),
-					//'class'	 => array( 'delete-post-submit public-form-button' ),
-					'icon'	 => 'fa-trash'
-				) ) . '
-						<input type="hidden" name="rcl-delete-post" value="1">
-						<input type="hidden" name="post_id" value="' . $this->post_id . '">'
-				. '</form>';
-		} else {
+		if ( rcl_is_user_role( $user_ID, array( 'administrator', 'editor' ) ) ) {
 
 			$content = '<div id="rcl-delete-post">
 						' . rcl_get_button( array(
@@ -844,6 +856,19 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 							</form>
 						</div>
 					</div>';
+		} else {
+
+			$content = '<form method="post" action="" onsubmit="return confirm(\'' . __( 'Are you sure?', 'wp-recall' ) . '\');">
+						' . wp_nonce_field( 'rcl-delete-post', '_wpnonce', true, false ) . '
+						' . rcl_get_button( array(
+					'submit' => true,
+					'label'	 => __( 'Delete post', 'wp-recall' ),
+					//'class'	 => array( 'delete-post-submit public-form-button' ),
+					'icon'	 => 'fa-trash'
+				) ) . '
+						<input type="hidden" name="rcl-delete-post" value="1">
+						<input type="hidden" name="post_id" value="' . $this->post_id . '">'
+				. '</form>';
 		}
 
 		return $content;

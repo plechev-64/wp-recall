@@ -13,39 +13,30 @@ class PrimeForumsList {
 
 	function get_forums() {
 
-		$PrimeForums = new PrimeForums();
-
-		return $PrimeForums->get_results( array(
-				'fields'	 => array(
+		return RQ::tbl( new PrimeForums() )->select( [
 					'forum_id',
 					'group_id',
 					'forum_name',
 					'parent_id'
-				),
-				'number'	 => -1,
-				'order'		 => 'ASC',
-				'orderby'	 => 'forum_name'
-			) );
+				] )->orderby( 'forum_name', 'ASC' )
+				->number( -1 )
+				->get_results();
 	}
 
 	function get_groups() {
 
-		$PrimeGroups = new PrimeGroups();
-
-		return $PrimeGroups->get_results( array(
-				'fields'	 => array(
+		return RQ::tbl( new PrimeGroups() )
+				->select( [
 					'group_id',
 					'group_name'
-				),
-				'order'		 => 'ASC',
-				'number'	 => -1,
-				'orderby'	 => 'group_seq'
-			) );
+				] )->orderby( 'group_seq', 'ASC' )
+				->limit( -1 )
+				->get_results();
 	}
 
 	function get_parent_forums( $group_id ) {
 
-		if ( !$this->forums )
+		if ( ! $this->forums )
 			return false;
 
 		$forums = array();
@@ -91,7 +82,7 @@ class PrimeForumsList {
 
 			$forums = $this->get_parent_forums( $group->group_id );
 
-			if ( !$forums )
+			if ( ! $forums )
 				continue;
 
 			$content .= '<optgroup label="' . $group->group_name . '">';
@@ -114,7 +105,7 @@ class PrimeForumsList {
 
 			$content .= '<option value="' . $forum->forum_id . '">' . str_pad( '', $level * 3, "-- ", STR_PAD_LEFT ) . $forum->forum_name . '</option>';
 
-			if ( !in_array( $forum->forum_id, $this->parents ) )
+			if ( ! in_array( $forum->forum_id, $this->parents ) )
 				continue;
 
 			$childrens = $this->get_children_forums( $forum->forum_id );

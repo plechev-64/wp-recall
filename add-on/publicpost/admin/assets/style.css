@@ -35,3 +35,13 @@
 .rcl-custom-fields-menu .fa-copy:before {
 	/*content: "\f105";*/
 }
+
+#rcl-public-form-manager{
+
+}
+#rcl-public-form-manager .action-button{
+	margin-right: 10px;
+}
+#rcl-public-form-manager .action-button i{
+	font-size: 22px;
+}

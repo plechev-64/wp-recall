@@ -44,7 +44,7 @@ class Rcl_List_Terms {
 
 		$content = '<div class="rcl-terms-select">';
 
-		for ( $a = 0; $a < $this->select_amount; $a++ ) {
+		for ( $a = 0; $a < $this->select_amount; $a ++ ) {
 
 			$this->selected_term = false;
 
@@ -73,7 +73,7 @@ class Rcl_List_Terms {
 
 		$content = '<div class="rcl-terms-select">';
 
-		for ( $a = 0; $a < $this->select_amount; $a++ ) {
+		for ( $a = 0; $a < $this->select_amount; $a ++ ) {
 
 			$this->selected_term = false;
 
@@ -202,7 +202,7 @@ class Rcl_List_Terms {
 
 		$terms_data = ($term_ids) ? $this->get_terms_data( $term_ids ) : $this->datalist;
 
-		if ( !$terms_data )
+		if ( ! $terms_data )
 			return false;
 
 		$options = array();
@@ -219,7 +219,7 @@ class Rcl_List_Terms {
 
 			if ( $this->post_terms ) {
 
-				if ( !$this->selected_term && selected( isset( $this->post_terms[$term_id] ), true, false ) ) {
+				if ( ! $this->selected_term && selected( isset( $this->post_terms[$term_id] ), true, false ) ) {
 
 					unset( $this->post_terms[$term_id] );
 
@@ -234,7 +234,7 @@ class Rcl_List_Terms {
 			}
 		}
 
-		if ( !$options )
+		if ( ! $options )
 			return false;
 
 		return implode( '', $options );
@@ -283,7 +283,7 @@ class Rcl_List_Terms {
 			$options[] = rcl_form_field( $args );
 		}
 
-		if ( !$options )
+		if ( ! $options )
 			return false;
 
 		return implode( '', $options );

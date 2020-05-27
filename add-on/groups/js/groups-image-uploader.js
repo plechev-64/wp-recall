@@ -2,7 +2,7 @@ jQuery( function( $ ) {
 	$( '#groupavatarupload' ).fileupload( {
 		dataType: 'json',
 		type: 'POST',
-		url: Rcl.ajax_url,
+		url: Rcl.ajaxurl,
 		formData: {
 			action: 'rcl_group_avatar_upload',
 			ajax_nonce: Rcl.nonce

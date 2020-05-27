@@ -111,7 +111,7 @@ class PrimeRoles {
 
 		$role = $this->get_role( $role_name );
 
-		if ( !$role )
+		if ( ! $role )
 			return false;
 
 		return $role['capabilities'];

@@ -7,10 +7,10 @@ require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 $collate = '';
 
 if ( $wpdb->has_cap( 'collation' ) ) {
-	if ( !empty( $wpdb->charset ) ) {
+	if ( ! empty( $wpdb->charset ) ) {
 		$collate .= "DEFAULT CHARACTER SET $wpdb->charset";
 	}
-	if ( !empty( $wpdb->collate ) ) {
+	if ( ! empty( $wpdb->collate ) ) {
 		$collate .= " COLLATE $wpdb->collate";
 	}
 }
@@ -126,23 +126,23 @@ function pfm_activate_theme( $addonData ) {
 
 	$defaultTheme = 'prime-first';
 
-	$forumTheme	 = ($theme		 = get_option( 'rcl_pforum_template' )) ? $theme : $defaultTheme;
+	$forumTheme	 = ($theme		 = get_site_option( 'rcl_pforum_template' )) ? $theme : $defaultTheme;
 
 	rcl_activate_addon( $forumTheme, true, dirname( __FILE__ ) . '/themes' );
 
-	if ( !rcl_exist_addon( $forumTheme ) ) {
+	if ( ! rcl_exist_addon( $forumTheme ) ) {
 		$forumTheme = $defaultTheme;
 		rcl_activate_addon( $forumTheme, true, dirname( __FILE__ ) . '/themes' );
 	}
 
-	update_option( 'rcl_pforum_template', $forumTheme );
+	update_site_option( 'rcl_pforum_template', $forumTheme );
 
 	flush_rewrite_rules();
 }
 
-$PfmOptions = get_option( 'rcl_pforum_options' );
+$PfmOptions = get_site_option( 'rcl_pforum_options' );
 
-if ( !isset( $PfmOptions['home-page'] ) ) {
+if ( ! isset( $PfmOptions['home-page'] ) ) {
 
 	$PfmOptions['home-page'] = wp_insert_post( array(
 		'post_title'	 => __( 'Forum', 'wp-recall' ),
@@ -153,7 +153,7 @@ if ( !isset( $PfmOptions['home-page'] ) ) {
 		'post_name'		 => 'forum'
 		) );
 
-	update_option( 'rcl_pforum_options', $PfmOptions );
+	update_site_option( 'rcl_pforum_options', $PfmOptions );
 
 	$admins = get_users( array( 'role' => 'administrator' ) );
 
@@ -162,8 +162,8 @@ if ( !isset( $PfmOptions['home-page'] ) ) {
 	}
 }
 
-$aioseop_options = get_option( 'aioseop_options' );
+$aioseop_options = get_site_option( 'aioseop_options' );
 if ( $aioseop_options ) {
 	unset( $aioseop_options['aiosp_run_shortcodes'] );
-	update_option( 'aioseop_options', $aioseop_options );
+	update_site_option( 'aioseop_options', $aioseop_options );
 }

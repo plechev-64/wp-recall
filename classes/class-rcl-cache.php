@@ -16,10 +16,10 @@ class Rcl_Cache {
 		$this->inc_cache	 = rcl_get_option( 'use_cache' );
 		$this->only_guest	 = $only_guest;
 
-		if ( !$this->only_guest )
+		if ( ! $this->only_guest )
 			$this->only_guest = rcl_get_option( 'cache_output' );
 
-		$this->is_cache		 = ($this->inc_cache && (!$this->only_guest || $this->only_guest && !$user_ID)) ? 1 : 0;
+		$this->is_cache		 = ($this->inc_cache && ( ! $this->only_guest || $this->only_guest && ! $user_ID)) ? 1 : 0;
 		$this->time_cache	 = rcl_get_option( 'cache_time', 3600 );
 
 		if ( $timecache )
@@ -33,7 +33,7 @@ class Rcl_Cache {
 		$this->filepath		 = $cachepath . $filename;
 		$this->file_exists	 = 0;
 
-		if ( !file_exists( $cachepath ) ) {
+		if ( ! file_exists( $cachepath ) ) {
 			mkdir( $cachepath );
 			chmod( $cachepath, 0755 );
 		}
@@ -43,7 +43,7 @@ class Rcl_Cache {
 			'filepath'	 => $this->filepath
 		);
 
-		if ( !file_exists( $this->filepath ) ) {
+		if ( ! file_exists( $this->filepath ) ) {
 			$file['need_update'] = 1;
 			$file['file_exists'] = 0;
 			return ( object ) $file;
@@ -62,13 +62,13 @@ class Rcl_Cache {
 	}
 
 	function get_cache() {
-		if ( !$this->file_exists )
+		if ( ! $this->file_exists )
 			return false;
 		return file_get_contents( $this->filepath ) . '<!-- Rcl-cache start:' . date( 'd.m.Y H:i', $this->last_update ) . ' time:' . $this->time_cache . ' -->';
 	}
 
 	function update_cache( $content ) {
-		if ( !$this->filepath )
+		if ( ! $this->filepath )
 			return false;
 		$f = fopen( $this->filepath, 'w+' );
 		fwrite( $f, $content );
@@ -77,7 +77,7 @@ class Rcl_Cache {
 	}
 
 	function delete_file() {
-		if ( !$this->file_exists )
+		if ( ! $this->file_exists )
 			return false;
 		unlink( $this->filepath );
 	}

@@ -7,10 +7,10 @@ require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 $collate = '';
 
 if ( $wpdb->has_cap( 'collation' ) ) {
-	if ( !empty( $wpdb->charset ) ) {
+	if ( ! empty( $wpdb->charset ) ) {
 		$collate .= "DEFAULT CHARACTER SET $wpdb->charset";
 	}
-	if ( !empty( $wpdb->collate ) ) {
+	if ( ! empty( $wpdb->collate ) ) {
 		$collate .= " COLLATE $wpdb->collate";
 	}
 }
@@ -56,7 +56,7 @@ $sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
 
 dbDelta( $sql );
 
-if ( !isset( $rcl_options['moderation_public_group'] ) ) {
+if ( ! isset( $rcl_options['moderation_public_group'] ) ) {
 
 	$rcl_options['public_group_access_recall']	 = 2;
 	$rcl_options['moderation_public_group']		 = 0;
@@ -71,7 +71,7 @@ if ( !isset( $rcl_options['moderation_public_group'] ) ) {
 		'post_name'		 => 'rcl-groups'
 		) );
 
-	update_option( 'rcl_global_options', $rcl_options );
+	update_site_option( 'rcl_global_options', $rcl_options );
 
 	flush_rewrite_rules();
 }

@@ -92,7 +92,7 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 	function is_default_tab( $slug ) {
 		global $rcl_tabs;
 
-		if ( isset( $rcl_tabs[$slug] ) && !isset( $rcl_tabs[$slug]['custom-tab'] ) )
+		if ( isset( $rcl_tabs[$slug] ) && ! isset( $rcl_tabs[$slug]['custom-tab'] ) )
 			return true;
 
 		return false;
@@ -131,14 +131,14 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 	function get_default_tabs() {
 		global $rcl_tabs;
 
-		if ( !$rcl_tabs )
+		if ( ! $rcl_tabs )
 			return false;
 
 		$fields = array();
 
 		foreach ( $rcl_tabs as $tab_id => $tab ) {
 
-			if ( isset( $tab['custom-tab'] ) )
+			if ( isset( $tab['custom-tab'] ) || ! $tab_id )
 				continue;
 
 			$tabArea = (isset( $tab['output'] )) ? $tab['output'] : 'menu';
@@ -164,7 +164,7 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 	function edit_tab_options( $options, $field, $type ) {
 		global $rcl_tabs;
 
-		if ( !$field->slug )
+		if ( ! $field->slug )
 			return $options;
 
 		if ( $this->is_default_tab( $field->slug ) ) {

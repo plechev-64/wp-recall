@@ -5,7 +5,7 @@ require_once 'addon-settings.php';
 add_action( 'admin_init', 'rcl_payments_options_init', 10 );
 function rcl_payments_options_init() {
 
-	if ( !Rcl_Gateways()->gateways )
+	if ( ! Rcl_Gateways()->gateways )
 		return false;
 
 	foreach ( Rcl_Gateways()->gateways as $gateWayID => $className ) {
@@ -43,7 +43,7 @@ function rcl_balance_user_admin_content( $custom_column, $column_name, $user_id 
 function rcl_get_chart_payments( $pays ) {
 	global $chartData, $chartArgs;
 
-	if ( !$pays )
+	if ( ! $pays )
 		return false;
 
 	$chartArgs	 = array();
@@ -72,7 +72,7 @@ function rcl_edit_balance_user() {
 	$user_id = intval( $_POST['user'] );
 	$balance = floatval( str_replace( ',', '.', $_POST['balance'] ) );
 
-	if ( !$user_id ) {
+	if ( ! $user_id ) {
 		wp_send_json( array( 'error' => __( 'Balance was not changed', 'wp-recall' ) ) );
 	}
 
@@ -88,7 +88,7 @@ function rcl_edit_balance_user() {
 add_action( 'admin_menu', 'rcl_statistic_user_pay_page', 25 );
 function rcl_statistic_user_pay_page() {
 	$prim = 'manage-rmag';
-	if ( !function_exists( 'rcl_commerce_menu' ) ) {
+	if ( ! function_exists( 'rcl_commerce_menu' ) ) {
 		$prim = 'manage-wpm-options';
 		add_menu_page( 'Rcl Commerce', 'Rcl Commerce', 'manage_options', $prim, 'rmag_global_options' );
 		add_submenu_page( $prim, __( 'Payment systems', 'wp-recall' ), __( 'Payment systems', 'wp-recall' ), 'manage_options', $prim, 'rmag_global_options' );
@@ -114,7 +114,7 @@ function rcl_admin_statistic_cashe() {
 	global $Rcl_Payments_History;
 
 	$Rcl_Payments_History->prepare_items();
-	$sr = ($Rcl_Payments_History->sum) ? floor( $Rcl_Payments_History->sum / $Rcl_Payments_History->total_items ) : 0;
+	$sr = ($Rcl_Payments_History->total_items) ? floor( $Rcl_Payments_History->sum / $Rcl_Payments_History->total_items ) : 0;
 
 	echo '</pre><div class="wrap"><h2>' . __( 'Payment history', 'wp-recall' ) . '</h2>';
 

@@ -4,7 +4,7 @@ add_filter( 'rcl_chat_messages', 'rcl_chat_messages_add_important_meta', 10 );
 function rcl_chat_messages_add_important_meta( $messages ) {
 	global $wpdb, $user_ID;
 
-	if ( !$messages )
+	if ( ! $messages )
 		return $messages;
 
 	$ids = array();
@@ -14,7 +14,7 @@ function rcl_chat_messages_add_important_meta( $messages ) {
 
 	$metas = $wpdb->get_results( "SELECT * FROM " . RCL_PREF . "chat_messagemeta WHERE message_id IN (" . implode( ',', $ids ) . ") AND meta_key = 'important:$user_ID' AND meta_value = '1'" );
 
-	if ( !$metas )
+	if ( ! $metas )
 		return $messages;
 
 	$important = array();
@@ -33,7 +33,7 @@ add_filter( 'rcl_chat_messages', 'rcl_chat_messages_add_attachments_meta', 10 );
 function rcl_chat_messages_add_attachments_meta( $messages ) {
 	global $wpdb, $user_ID;
 
-	if ( !$messages )
+	if ( ! $messages )
 		return $messages;
 
 	$ids = array();
@@ -43,7 +43,7 @@ function rcl_chat_messages_add_attachments_meta( $messages ) {
 
 	$metas = $wpdb->get_results( "SELECT * FROM " . RCL_PREF . "chat_messagemeta WHERE message_id IN (" . implode( ',', $ids ) . ") AND meta_key = 'attachment'" );
 
-	if ( !$metas )
+	if ( ! $metas )
 		return $messages;
 
 	$attachments = array();
@@ -78,9 +78,9 @@ add_filter( 'rcl_pre_insert_chat_message', 'rcl_chat_check_message_blocked', 10 
 function rcl_chat_check_message_blocked( $message ) {
 	global $user_ID;
 
-	if ( !defined( 'DOING_AJAX' ) || !DOING_AJAX )
+	if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
 		return $message;
-	if ( !$message['private_key'] )
+	if ( ! $message['private_key'] )
 		return $message;
 
 	if ( get_user_meta( $message['private_key'], 'rcl_black_list:' . $user_ID ) ) {
@@ -93,7 +93,7 @@ function rcl_chat_check_message_blocked( $message ) {
 add_action( 'rcl_chat_add_message', 'rcl_chat_update_attachment_data', 10 );
 function rcl_chat_update_attachment_data( $message ) {
 
-	if ( !isset( $message['attachment'] ) )
+	if ( ! isset( $message['attachment'] ) )
 		return false;
 
 	wp_update_post( array(
@@ -138,25 +138,15 @@ function rcl_chat_delete_message_attachment( $attachment_id ) {
 add_action( 'delete_user', 'rcl_chat_delete_userdata', 10 );
 function rcl_chat_delete_userdata( $user_id ) {
 
-	$Users	 = new Rcl_Chat_Users_Query();
-	$Chats	 = new Rcl_Chats_Query();
-
 	//получаем все чаты пользователя
-	$chats = $Chats->get_results( array(
-		'fields'	 => array(
+	$chats = RQ::tbl( new Rcl_Chats_Query() )
+		->select( [
 			'chat_id',
 			'chat_status'
-		),
-		'number'	 => -1,
-		'join_query' => array(
-			array(
-				'table'		 => $Users->query['table'],
-				'on_chat_id' => 'chat_id',
-				'user_id'	 => $user_id,
-				'fields'	 => false
-			)
-		)
-		) );
+		] )
+		->join( ['chat_id', 'chat_id' ], RQ::tbl( new Rcl_Chat_Users_Query() )->where( ['user_id' => $user_id ] ) )
+		->number( -1 )
+		->get_results();
 
 	if ( $chats ) {
 

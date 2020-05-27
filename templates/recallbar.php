@@ -18,7 +18,7 @@
 			</a>
 		</div>
 
-		<?php if ( !is_user_logged_in() ): $logIn = rcl_get_option( 'login_form_recall' ); ?>
+		<?php if ( ! is_user_logged_in() ): $logIn = rcl_get_option( 'login_form_recall' ); ?>
 
 			<?php
 			if ( $logIn == 1 ) {

@@ -19,10 +19,10 @@ function rcl_stats_metabox() {
 			foreach ( scandir( $path, 1 ) as $namedir ) {
 				$addon_dir	 = $path . '/' . $namedir;
 				$index_src	 = $addon_dir . '/index.php';
-				if ( !is_dir( $addon_dir ) || !file_exists( $index_src ) )
+				if ( ! is_dir( $addon_dir ) || ! file_exists( $index_src ) )
 					continue;
 				$info_src	 = $addon_dir . '/info.txt';
-				if ( !file_exists( $info_src ) )
+				if ( ! file_exists( $info_src ) )
 					continue;
 				$countAddons ++;
 			}
@@ -55,7 +55,7 @@ function rcl_news_metabox() {
 
 	$xmlData = @simplexml_load_file( $url );
 
-	if ( !$xmlData ) {
+	if ( ! $xmlData ) {
 		echo __( 'Unable to retrieve news', 'wp-recall' );
 		return;
 	}

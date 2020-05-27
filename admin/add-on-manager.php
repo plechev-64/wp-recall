@@ -1,12 +1,12 @@
 <?php
 
-if ( !class_exists( 'WP_List_Table' ) ) {
+if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
-add_action( 'admin_init', 'rcl_update_status_addon' );
-add_action( 'admin_init', 'rcl_update_status_group_addon' );
-add_action( 'admin_init', 'rcl_init_upload_addon' );
+add_action( 'rcl_init_addons_manager', 'rcl_update_status_addon' );
+add_action( 'rcl_init_addons_manager', 'rcl_update_status_group_addon' );
+add_action( 'rcl_init_addons_manager', 'rcl_init_upload_addon' );
 
 class Rcl_Addons_Manager extends WP_List_Table {
 
@@ -24,7 +24,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
 			'ajax'		 => false
 		) );
 
-		$this->need_update	 = get_option( 'rcl_addons_need_update' );
+		$this->need_update	 = get_site_option( 'rcl_addons_need_update' );
 		$this->column_info	 = $this->get_column_info();
 
 		add_action( 'admin_head', array( &$this, 'admin_header' ) );
@@ -44,7 +44,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
 				foreach ( ( array ) $addons as $namedir ) {
 					$addon_dir	 = $path . '/' . $namedir;
 					$index_src	 = $addon_dir . '/index.php';
-					if ( !is_dir( $addon_dir ) || !file_exists( $index_src ) )
+					if ( ! is_dir( $addon_dir ) || ! file_exists( $index_src ) )
 						continue;
 					$info_src	 = $addon_dir . '/info.txt';
 					if ( file_exists( $info_src ) ) {
@@ -150,8 +150,8 @@ class Rcl_Addons_Manager extends WP_List_Table {
 	}
 
 	function usort_reorder( $a, $b ) {
-		$orderby = (!empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'addon_name';
-		$order	 = (!empty( $_GET['order'] ) ) ? $_GET['order'] : 'asc';
+		$orderby = ( ! empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'addon_name';
+		$order	 = ( ! empty( $_GET['order'] ) ) ? $_GET['order'] : 'asc';
 		$result	 = strcmp( $a[$orderby], $b[$orderby] );
 		return ( $order === 'asc' ) ? $result : -$result;
 	}
@@ -254,14 +254,21 @@ class Rcl_Addons_Manager extends WP_List_Table {
 
 //class
 function rcl_init_upload_addon() {
+
+	if ( ! current_user_can( 'manage_options' ) )
+		return false;
+
 	if ( isset( $_POST['install-addon-submit'] ) ) {
-		if ( !wp_verify_nonce( $_POST['_wpnonce'], 'install-addons-rcl' ) )
+		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'install-addons-rcl' ) )
 			return false;
 		rcl_upload_addon();
 	}
 }
 
 function rcl_update_status_addon() {
+
+	if ( ! current_user_can( 'manage_options' ) )
+		return false;
 
 	$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
 	if ( 'manage-addon-recall' != $page )
@@ -270,7 +277,7 @@ function rcl_update_status_addon() {
 	if ( isset( $_GET['addon'] ) && isset( $_GET['action'] ) ) {
 
 		global $wpdb, $user_ID, $active_addons;
-		if ( !current_user_can( 'activate_plugins' ) )
+		if ( ! current_user_can( 'activate_plugins' ) )
 			wp_die( __( 'Insufficient rights to install plugins on this site.', 'wp-recall' ) );
 
 		$addon	 = $_GET['addon'];
@@ -295,6 +302,9 @@ function rcl_update_status_addon() {
 }
 
 function rcl_update_status_group_addon() {
+
+	if ( ! current_user_can( 'manage_options' ) )
+		return false;
 
 	$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
 	if ( 'manage-addon-recall' != $page )
@@ -364,11 +374,18 @@ function rcl_update_status_group_addon() {
 
 function rcl_upload_addon() {
 
+	if ( ! class_exists( 'ZipArchive' ) ) {
+		wp_die( __( 'ZipArchive class is not defined.', 'wp-recall' ) );
+	}
+
 	$paths = rcl_get_addon_paths();
 
 	$filename	 = $_FILES['addonzip']['tmp_name'];
 	$arch		 = current( wp_upload_dir() ) . "/" . basename( $filename );
-	copy( $filename, $arch );
+
+	if ( ! copy( $filename, $arch ) ) {
+		wp_die( __( 'Error copying file.', 'wp-recall' ) );
+	}
 
 	$zip = new ZipArchive;
 
@@ -376,7 +393,7 @@ function rcl_upload_addon() {
 
 	if ( $res === TRUE ) {
 
-		for ( $i = 0; $i < $zip->numFiles; $i++ ) {
+		for ( $i = 0; $i < $zip->numFiles; $i ++ ) {
 			//echo $zip->getNameIndex($i).'<br>';
 			if ( $i == 0 )
 				$dirzip = $zip->getNameIndex( $i );
@@ -386,7 +403,7 @@ function rcl_upload_addon() {
 			}
 		}
 
-		if ( !$info ) {
+		if ( ! $info ) {
 			$zip->close();
 			wp_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=error-info' ) );
 			exit;
@@ -415,18 +432,4 @@ function rcl_upload_addon() {
 add_filter( 'set-screen-option', 'rcl_manager_set_option', 10, 3 );
 function rcl_manager_set_option( $status, $option, $value ) {
 	return $value;
-}
-
-function rcl_add_options_addons_manager() {
-	global $Rcl_Addons_Manager;
-
-	$option	 = 'per_page';
-	$args	 = array(
-		'label'		 => __( 'Add-ons', 'wp-recall' ),
-		'default'	 => 100,
-		'option'	 => 'addons_per_page'
-	);
-
-	add_screen_option( $option, $args );
-	$Rcl_Addons_Manager = new Rcl_Addons_Manager();
 }

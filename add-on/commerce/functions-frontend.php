@@ -51,7 +51,7 @@ function rcl_add_cart_button( $content ) {
 
 		$archiveCart = (isset( $rmag_options['cart_button_archive_page'] )) ? $rmag_options['cart_button_archive_page'] : 1;
 
-		if ( !$archiveCart )
+		if ( ! $archiveCart )
 			return $content;
 	}
 
@@ -59,7 +59,7 @@ function rcl_add_cart_button( $content ) {
 
 		$productCart = (isset( $rmag_options['cart_button_single_page'] )) ? $rmag_options['cart_button_single_page'] : array( 'top', 'bottom' );
 
-		if ( !in_array( 'bottom', $productCart ) )
+		if ( ! in_array( 'bottom', $productCart ) )
 			return $content;
 	}
 
@@ -79,12 +79,12 @@ add_action( 'wp', 'rcl_add_products_meta' );
 function rcl_add_products_meta() {
 	global $wp_query, $wpdb;
 
-	if ( !$wp_query->is_tax && !$wp_query->is_archive )
+	if ( ! $wp_query->is_tax && ! $wp_query->is_archive )
 		return false;
 
 	if ( $wp_query->query_vars['post_type'] == 'products' ) {
 
-		if ( !$wp_query->posts )
+		if ( ! $wp_query->posts )
 			return false;
 
 		$posts = array();
@@ -112,7 +112,7 @@ function rcl_add_products_meta() {
 add_action( 'wp', 'rcl_commerce_actions', 10 );
 function rcl_commerce_actions() {
 
-	if ( !isset( $_POST['rcl-commerce-action'] ) )
+	if ( ! isset( $_POST['rcl-commerce-action'] ) )
 		return false;
 
 	$action = $_POST['rcl-commerce-action'];

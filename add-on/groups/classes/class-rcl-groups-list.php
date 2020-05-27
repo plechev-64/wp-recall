@@ -17,7 +17,7 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 
 		$this->init_properties( $args );
 
-		$this->set_query( $args );
+		$this->parse( $args );
 
 		$this->setup_termdata();
 
@@ -81,12 +81,10 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 
 		$where = "rcl_groups.admin_id='$this->user_id'";
 
-		$users = new Rcl_Groups_Users_Query();
-
-		$groups_ids = $users->get_col( array(
-			'user_id'	 => $this->user_id,
-			'fields'	 => array( 'group_id' )
-			) );
+		$groups_ids = RQ::tbl( new Rcl_Groups_Users_Query() )->parse( array(
+				'user_id'	 => $this->user_id,
+				'fields'	 => array( 'group_id' )
+			) )->get_col();
 
 		if ( $groups_ids )
 			$where = "($where OR rcl_groups.ID IN (" . implode( ',', $groups_ids ) . "))";
@@ -105,62 +103,30 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 
 	//добавляем выборку данных постов в основной запрос
 	function add_query_orderby_posts( $query ) {
-
 		$query['orderby'] = "wp_term_taxonomy.count";
-
 		return $query;
 	}
 
 	function add_query_orderby_date( $query ) {
-
 		$query['orderby'] = "wp_terms.term_id";
-
 		return $query;
 	}
 
 	function add_query_orderby_name( $query ) {
-
-		$query['orderby'] = "wp_terms.name";
-
+		$query['orderby']	 = "wp_terms.name";
+		$query['order']		 = "ASC";
 		return $query;
 	}
 
 	function add_query_orderby_users( $query ) {
-
 		$query['orderby'] = "rcl_groups.group_users";
-
 		return $query;
-	}
-
-	function search_request() {
-		global $user_LK;
-
-		$rqst = '';
-
-		if ( isset( $_GET['group-name'] ) || $user_LK ) {
-			$rqst = array();
-			foreach ( $_GET as $k => $v ) {
-				if ( $k == 'rcl-page' || $k == 'groups-filter' )
-					continue;
-				$rqst[$k] = $k . '=' . $v;
-			}
-		}
-
-		if ( $this->add_uri ) {
-			foreach ( $this->add_uri as $k => $v ) {
-				$rqst[$k] = $k . '=' . $v;
-			}
-		}
-
-		$rqst = apply_filters( 'rcl_groups_uri', $rqst );
-
-		return $rqst;
 	}
 
 	function get_filters( $count_groups = false ) {
 		global $post, $active_addons, $user_LK;
 
-		if ( !$this->filters )
+		if ( ! $this->filters )
 			return false;
 
 		$content = '';
@@ -187,21 +153,6 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 
 		$content .='<h3>' . __( 'Total number of groups', 'wp-recall' ) . ': ' . $count_groups . '</h3>';
 
-		if ( isset( $this->add_uri['groups-filter'] ) )
-			unset( $this->add_uri['groups-filter'] );
-
-		$s_array = $this->search_request();
-
-		$rqst = ($s_array) ? implode( '&', $s_array ) . '&' : '';
-
-		if ( $user_LK ) {
-			$url = (isset( $_POST['tab_url'] )) ? $_POST['tab_url'] : get_author_posts_url( $user_LK );
-		} else {
-			$url = get_permalink( $post->ID );
-		}
-
-		$perm = rcl_format_url( $url ) . $rqst;
-
 		$filters = array(
 			'name'	 => __( 'Name', 'wp-recall' ),
 			'date'	 => __( 'Date', 'wp-recall' ),
@@ -211,12 +162,15 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 
 		$filters = apply_filters( 'rcl_groups_filter', $filters );
 
-		$content .= '<div class="rcl-data-filters">' . __( 'Filter by', 'wp-recall' ) . ': ';
+		$content .= '<div class="rcl-data-filters">' . __( 'Сортировка по', 'wp-recall' ) . ': ';
 
 		foreach ( $filters as $key => $name ) {
+
 			$content .= rcl_get_button( array(
 				'label'	 => $name,
-				'href'	 => $perm . 'groups-filter=' . $key,
+				'href'	 => add_query_arg( array(
+					'groups-filter' => $key ? $key : false
+					), isset( $_POST['tab_url'] ) ? $_POST['tab_url'] : null  ),
 				'class'	 => 'data-filter ' . rcl_a_active( $this->orderby, $key )
 				) );
 		}

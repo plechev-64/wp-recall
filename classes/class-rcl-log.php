@@ -9,11 +9,11 @@ class Rcl_Log {
 		if ( $args )
 			$this->init_properties( $args );
 
-		if ( !$this->log_path ) {
+		if ( ! $this->log_path ) {
 
 			$logDir = RCL_TAKEPATH . 'logs/';
 
-			if ( !file_exists( $logDir ) )
+			if ( ! file_exists( $logDir ) )
 				wp_mkdir_p( $logDir );
 
 			$this->log_path = $logDir . date( 'Y-m-d' ) . '.log';
@@ -36,7 +36,7 @@ class Rcl_Log {
 
 	function insert_log( $data ) {
 
-		if ( !is_string( $data ) ) {
+		if ( ! is_string( $data ) ) {
 			$data = print_r( $data, true );
 		}
 

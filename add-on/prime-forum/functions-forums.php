@@ -99,7 +99,7 @@ function pfm_the_forum_icons() {
 
 	$icons = apply_filters( 'pfm_icons', $icons );
 
-	if ( !$icons )
+	if ( ! $icons )
 		return false;
 
 	$content = '<div class="prime-topic-icons">';
@@ -118,7 +118,7 @@ function pfm_the_forum_icons() {
 function pfm_subforums_list() {
 	global $PrimeForum;
 
-	if ( !$PrimeForum->subforum_count )
+	if ( ! $PrimeForum->subforum_count )
 		return false;
 
 	$content = pfm_get_subforums_list( $PrimeForum->forum_id );
@@ -136,7 +136,7 @@ function pfm_get_subforums_list( $forum_id ) {
 
 	$childs = pfm_get_subforums( $forum_id );
 
-	if ( !$childs )
+	if ( ! $childs )
 		return false;
 
 	$forums = array();

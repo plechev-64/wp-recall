@@ -246,7 +246,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 
 			foreach ( $this->taxonomies as $taxonomy => $object ) {
 
-				if ( !$this->is_hierarchical_tax( $taxonomy ) ) {
+				if ( ! $this->is_hierarchical_tax( $taxonomy ) ) {
 
 					$label = $object->labels->name;
 
@@ -314,7 +314,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 
 	function get_custom_fields() {
 
-		if ( !$this->fields )
+		if ( ! $this->fields )
 			return false;
 
 		$defaultSlugs = $this->get_default_ids();
@@ -334,7 +334,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 
 	function is_taxonomy_field( $field_id ) {
 
-		if ( !$this->taxonomies )
+		if ( ! $this->taxonomies )
 			return false;
 
 		foreach ( $this->taxonomies as $taxname => $object ) {
@@ -348,7 +348,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 
 	function is_hierarchical_tax( $taxonomy ) {
 
-		if ( !$this->taxonomies || !isset( $this->taxonomies[$taxonomy] ) )
+		if ( ! $this->taxonomies || ! isset( $this->taxonomies[$taxonomy] ) )
 			return false;
 
 		if ( $this->taxonomies[$taxonomy]->hierarchical )
@@ -361,7 +361,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 
 		$defaulFields = $this->get_default_fields();
 
-		if ( !$defaulFields )
+		if ( ! $defaulFields )
 			return false;
 
 		$default = array(

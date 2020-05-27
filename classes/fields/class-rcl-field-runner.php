@@ -87,7 +87,7 @@ class Rcl_Field_Runner extends Rcl_Field_Abstract {
 				'step'	 => $this->value_step
 			) ) . ');';
 
-		if ( !rcl_is_ajax() ) {
+		if ( ! rcl_is_ajax() ) {
 			$content .= '<script>jQuery(window).on("load", function() {' . $init . '});</script>';
 		} else {
 			$content .= '<script>' . $init . '</script>';
@@ -98,7 +98,7 @@ class Rcl_Field_Runner extends Rcl_Field_Abstract {
 
 	function get_value() {
 
-		if ( !$this->value )
+		if ( ! $this->value )
 			return false;
 
 		if ( $this->unit ) {

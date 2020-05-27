@@ -37,7 +37,7 @@ if ( $s ) {
 }
 
 $result = wp_remote_post( $url, array( 'body' => array(
-		'rcl-key'		 => get_option( 'rcl-key' ),
+		'rcl-key'		 => get_site_option( 'rcl-key' ),
 		'rcl-version'	 => VER_RCL,
 		'addons-data'	 => in_array( $sort, array( 'favorites', 'has_updated' ) ) ? $addonsData : false,
 		'host'			 => $_SERVER['SERVER_NAME']
@@ -51,7 +51,7 @@ if ( is_wp_error( $result ) ) {
 
 $result = json_decode( $result['body'] );
 
-if ( !$result ) {
+if ( ! $result ) {
 	echo '<h2>' . __( 'Failed to get data', 'wp-recall' ) . '.</h2>';
 	exit;
 }
@@ -67,7 +67,7 @@ $content = '<h2>' . __( 'Repository for WP-Recall add-ons', 'wp-recall' ) . '</h
 
 if ( isset( $_POST['save-rcl-key'] ) ) {
 	if ( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ) {
-		update_option( 'rcl-key', $_POST['rcl-key'] );
+		update_site_option( 'rcl-key', $_POST['rcl-key'] );
 		$content .= '<div id="message" class="updated"><p>' . __( 'Key has been saved', 'wp-recall' ) . '!</p></div>';
 	}
 }
@@ -76,7 +76,7 @@ $content .= '<div class="rcl-admin-service-box rcl-key-box">';
 
 $content .= '<h4>' . __( 'RCLKEY', 'wp-recall' ) . '</h4>
 <form action="" method="post">
-	' . __( 'Enter RCLKEY', 'wp-recall' ) . ' <input type="text" name="rcl-key" value="' . get_option( 'rcl-key' ) . '">
+	' . __( 'Enter RCLKEY', 'wp-recall' ) . ' <input type="text" name="rcl-key" value="' . get_site_option( 'rcl-key' ) . '">
 	<input class="button" type="submit" value="' . __( 'Save', 'wp-recall' ) . '" name="save-rcl-key">
 	' . wp_nonce_field( 'add-rcl-key', '_wpnonce', true, false ) . '
 </form>
@@ -117,7 +117,7 @@ if ( $result->count && $result->addons ) {
 	$content .= '<div class="wp-list-table widefat plugin-install rcl-repository-list">
 		<div id="the-list">';
 	foreach ( $result->addons as $add ) {
-		if ( !$add )
+		if ( ! $add )
 			continue;
 		$addon = array();
 		foreach ( $add as $k => $v ) {

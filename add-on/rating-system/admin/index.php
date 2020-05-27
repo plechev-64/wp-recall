@@ -41,7 +41,7 @@ function rcl_edit_rating_user() {
 	$user_id	 = intval( $_POST['user'] );
 	$new_rating	 = floatval( $_POST['rayting'] );
 
-	if ( !isset( $new_rating ) ) {
+	if ( ! isset( $new_rating ) ) {
 		wp_send_json( array( 'error' => __( 'Rating was not updated', 'wp-recall' ) ) );
 	}
 

@@ -87,7 +87,7 @@ function pfm_delete_post_meta( $user_id, $meta_key, $meta_value = false ) {
 
 function pfm_get_query_meta_value( $object_id, $object_type, $meta_key ) {
 	global $PrimeQuery;
-	if ( !$PrimeQuery )
+	if ( ! $PrimeQuery )
 		return false;
 	return $PrimeQuery->search_meta_value( $object_id, $object_type, $meta_key );
 }

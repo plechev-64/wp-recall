@@ -58,6 +58,13 @@ function rcl_user_account_options( $options ) {
 			'value'	 => is_array( $group->get_value( 'connect_sale' ) ) ? $group->get_value( 'connect_sale' ) : array( $group->get_value( 'connect_sale' ) ),
 			'notice' => __( 'Applied connection type', 'wp-recall' )
 		);
+
+		$groupOptions[] = array(
+			'type'	 => 'text',
+			'title'	 => __( 'Надпись на кнопке подтверждения способа оплаты', 'wp-recall' ),
+			'slug'	 => 'submit_choose',
+			'value'	 => $group->get_value( 'submit_choose' ) ? $group->get_value( 'submit_choose' ) : __( 'Продолжить' ),
+		);
 	} else {
 
 		$groupOptions[] = array(

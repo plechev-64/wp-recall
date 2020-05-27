@@ -98,7 +98,7 @@ function rcl_groups_admin_create( $term_id ) {
 		)
 	);
 
-	if ( !$result )
+	if ( ! $result )
 		return false;
 
 	rcl_update_group_option( $term_id, 'can_register', 1 );

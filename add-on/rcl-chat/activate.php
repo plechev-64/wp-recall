@@ -7,10 +7,10 @@ require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 $collate = '';
 
 if ( $wpdb->has_cap( 'collation' ) ) {
-	if ( !empty( $wpdb->charset ) ) {
+	if ( ! empty( $wpdb->charset ) ) {
 		$collate .= "DEFAULT CHARACTER SET $wpdb->charset";
 	}
-	if ( !empty( $wpdb->collate ) ) {
+	if ( ! empty( $wpdb->collate ) ) {
 		$collate .= " COLLATE $wpdb->collate";
 	}
 }
@@ -72,10 +72,10 @@ dbDelta( $sql );
 
 global $rcl_options;
 
-if ( !isset( $rcl_options['chat']['contact_panel'] ) )
+if ( ! isset( $rcl_options['chat']['contact_panel'] ) )
 	$rcl_options['chat']['contact_panel'] = 1;
 
-if ( !isset( $rcl_options['chat']['place_contact_panel'] ) )
+if ( ! isset( $rcl_options['chat']['place_contact_panel'] ) )
 	$rcl_options['chat']['place_contact_panel'] = 0;
 
-update_option( 'rcl_global_options', $rcl_options );
+update_site_option( 'rcl_global_options', $rcl_options );

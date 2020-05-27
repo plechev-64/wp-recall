@@ -1,6 +1,6 @@
 <?php
 global $typeform;
-if ( !$typeform || $typeform == 'sign' )
+if ( ! $typeform || $typeform == 'sign' )
 	$f_sign = 'style="display:block;"';
 ?>
 
@@ -8,7 +8,7 @@ if ( !$typeform || $typeform == 'sign' )
 	<div class="form_head">
 		<div class="form_auth form_active"><?php _e( 'Authorization', 'wp-recall' ); ?></div>
 		<?php if ( rcl_is_register_open() ): ?>
-			<div class="form_reg"><?php if ( !$typeform ) { ?><a href="#" class="link-register-rcl link-tab-rcl "><?php _e( 'Registration', 'wp-recall' ); ?></a><?php } ?></div>
+			<div class="form_reg"><?php if ( ! $typeform ) { ?><a href="#" class="link-register-rcl link-tab-rcl "><?php _e( 'Registration', 'wp-recall' ); ?></a><?php } ?></div>
 		<?php endif; ?>
 	</div>
 
@@ -46,7 +46,7 @@ if ( !$typeform || $typeform == 'sign' )
 				'class'	 => 'link-tab-form'
 			) );
 			?>
-			<a href="#" class="link-remember-rcl link-tab-rcl "><?php _e( 'Lost your Password', 'wp-recall' ); // Забыли пароль	  ?>?</a>
+			<a href="#" class="link-remember-rcl link-tab-rcl "><?php _e( 'Забыли пароль?', 'wp-recall' ); // Забыли пароль	         ?></a>
 			<?php echo wp_nonce_field( 'login-key-rcl', 'login_wpnonce', true, false ); ?>
 			<input type="hidden" name="redirect_to" value="<?php rcl_referer_url( 'login' ); ?>">
 			<input type="hidden" name="submit-login" value="1">

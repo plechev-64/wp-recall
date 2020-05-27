@@ -1,19 +1,22 @@
 <?php
 
 function rcl_get_groups( $args ) {
-	$groups = new Rcl_Groups_Query();
-	$groups->setup_termdata();
-	return $groups->get_results( $args );
+	return RQ::tbl( new Rcl_Groups_Query() )
+			->setup_termdata()
+			->parse( $args )
+			->get_results();
 }
 
 function rcl_get_groups_users( $args ) {
-	$users = new Rcl_Groups_Users_Query();
-	return $users->get_results( $args );
+	return RQ::tbl( new Rcl_Groups_Users_Query() )
+			->parse( $args )
+			->get_results();
 }
 
 function rcl_get_groups_options( $args ) {
-	$options = new Rcl_Groups_Options_Query();
-	return $options->get_results( $args );
+	return RQ::tbl( new Rcl_Groups_Options_Query() )
+			->parse( $args )
+			->get_results();
 }
 
 function rcl_group_init( $group_id = false ) {
@@ -48,6 +51,8 @@ function rcl_single_group() {
 function rcl_get_single_group() {
 	global $rcl_group;
 
+	do_action( 'rcl_group_before' );
+
 	rcl_dialog_scripts();
 
 	if ( rcl_is_group_can( 'admin' ) ) {
@@ -75,6 +80,11 @@ function rcl_get_single_group() {
 
 function rcl_create_group( $groupdata ) {
 	global $wpdb;
+
+	$groupdata = wp_parse_args( [
+		'group_status'	 => 'open',
+		'group_date'	 => current_time( 'mysql' )
+		] );
 
 	$args = array(
 		'alias_of'		 => ''
@@ -106,8 +116,8 @@ function rcl_create_group( $groupdata ) {
 		RCL_PREF . 'groups', array(
 		'ID'			 => $group_id,
 		'admin_id'		 => $groupdata['admin_id'],
-		'group_status'	 => isset( $groupdata['group_status'] ) ? $groupdata['group_status'] : 'open',
-		'group_date'	 => current_time( 'mysql' )
+		'group_status'	 => $groupdata['group_status'],
+		'group_date'	 => $groupdata['group_date']
 		)
 	);
 
@@ -243,7 +253,10 @@ function rcl_is_group_user() {
 }
 
 function rcl_is_group_can( $role ) {
-	global $rcl_group;
+	global $rcl_group, $user_ID;
+
+	//if ( rcl_is_user_role( $user_ID, array( 'administrator', 'editor' ) ) )
+	//return true;
 
 	$group_roles = rcl_get_group_roles();
 
@@ -269,13 +282,13 @@ function rcl_get_group_permalink( $term_id ) {
 
 		$homeUrl = untrailingslashit( get_the_permalink( $page_id ) );
 
-		if ( '' != get_option( 'permalink_structure' ) ) {
+		if ( '' != get_site_option( 'permalink_structure' ) ) {
 
 			$term = get_term( $term_id, 'groups' );
 
 			$url = $homeUrl . '/' . $term->slug;
 
-			if ( preg_match( "/\/$/", get_option( 'permalink_structure' ) ) ) {
+			if ( preg_match( "/\/$/", get_site_option( 'permalink_structure' ) ) ) {
 				$url .= '/';
 			}
 		} else {
@@ -483,24 +496,13 @@ function rcl_group_add_page_link_attributes( $attrs ) {
 }
 
 function rcl_get_group_option( $group_id, $option_key ) {
-	global $wpdb;
 
-	$cachekey	 = json_encode( array( 'rcl_get_group_option', $group_id, $option_key ) );
-	$cache		 = wp_cache_get( $cachekey );
-	if ( $cache )
-		return $cache;
-
-	$options = new Rcl_Groups_Options_Query();
-
-	$value = $options->get_var( array(
-		'group_id'	 => $group_id,
-		'option_key' => $option_key,
-		'fields'	 => array( 'option_value' )
-		) );
-
-	wp_cache_add( $cachekey, maybe_unserialize( $value ) );
-
-	return maybe_unserialize( $value );
+	return RQ::tbl( new Rcl_Groups_Options_Query() )
+			->select( ['option_value' ] )
+			->where( [
+				'group_id'	 => $group_id,
+				'option_key' => $option_key,
+			] )->get_var( 'cache' );
 }
 
 function rcl_update_group_option( $group_id, $option_key, $new_value ) {
@@ -538,23 +540,9 @@ function rcl_delete_group_option( $group_id, $option_key ) {
 }
 
 function rcl_get_group( $group_id ) {
-
-	$cachekey	 = json_encode( array( 'rcl_get_group', $group_id ) );
-	$cache		 = wp_cache_get( $cachekey );
-	if ( $cache )
-		return $cache;
-
-	$groups = new Rcl_Groups_Query();
-
-	$groups->setup_termdata();
-
-	$group = $groups->get_row( array(
-		'ID' => $group_id
-		) );
-
-	wp_cache_add( $cachekey, $group );
-
-	return $group;
+	return RQ::tbl( new Rcl_Groups_Query() )->setup_termdata()->where( array(
+			'ID' => $group_id
+		) )->get_row( 'cache' );
 }
 
 function rcl_update_group_user_role( $user_id, $group_id, $new_role ) {
@@ -633,15 +621,13 @@ function rcl_group_remove_user( $user_id, $group_id ) {
 function rcl_group_update_users_count( $group_id ) {
 	global $wpdb;
 
-	$users = new Rcl_Groups_Users_Query();
-
-	$amount = $users->count( array(
-		'group_id' => $group_id
-		) );
-
 	$result = $wpdb->update(
 		RCL_PREF . "groups", array(
-		'group_users' => $amount
+		'group_users' => RQ::tbl( new Rcl_Groups_Users_Query() )
+			->where( array(
+				'group_id' => $group_id
+			) )
+			->get_count()
 		), array(
 		'ID' => $group_id
 		)
@@ -667,11 +653,13 @@ function rcl_group_add_request_for_membership( $user_id, $group_id ) {
 			<p>%s</p>', sprintf(
 			__( 'You have received a new request for access to group managed by you "%s" on the site "%s"', 'wp-recall' ), $rcl_group->name, get_bloginfo( 'name' )
 		), __( 'User information', 'wp-recall' ), sprintf(
-			'<b>%s</b>: <a href="' . get_author_posts_url( $user_id ) . '">' . get_the_author_meta( 'display_name', $user_id ) . '</a>', __( 'Profile', 'wp-recall' )
+			'<b>%s</b>: <a href="' . rcl_get_user_url( $user_id ) . '">' . get_the_author_meta( 'display_name', $user_id ) . '</a>', __( 'Profile', 'wp-recall' )
 		), __( 'You can approve or reject the request by clicking on the link', 'wp-recall' ), rcl_get_group_permalink( $group_id )
 	);
 	$admin_email = get_the_author_meta( 'user_email', $rcl_group->admin_id );
 	rcl_mail( $admin_email, $subject, $textmail );
+
+	do_action( 'rcl_group_new_access_request', $user_id, $group_id );
 }
 
 /* deprecated */
@@ -780,7 +768,11 @@ function rcl_get_group_link_content() {
 
 	$group_id	 = intval( $_POST['group_id'] );
 	$callback	 = $_POST['callback'];
-	$rcl_group	 = rcl_get_group( $group_id );
+
+	if ( ! function_exists( $callback ) )
+		exit;
+
+	$rcl_group = rcl_get_group( $group_id );
 
 	$content = '<div id="group-link-content">';
 	$content .= $callback( $group_id );
@@ -801,7 +793,11 @@ function rcl_group_callback() {
 	$group_id	 = intval( $_POST['group_id'] );
 	$user_id	 = intval( $_POST['user_id'] );
 	$callback	 = $_POST['callback'];
-	$rcl_group	 = rcl_get_group( $group_id );
+
+	if ( ! function_exists( $callback ) )
+		exit;
+
+	$rcl_group = rcl_get_group( $group_id );
 
 	$result = $callback( $group_id, $user_id );
 
@@ -858,7 +854,7 @@ function rcl_get_group_category_list() {
 	$content .= '<div class="search-form-rcl">';
 	$content .= '<form method="get">';
 
-	if ( rcl_get_option( 'group-output' ) && '' == get_option( 'permalink_structure' ) ) {
+	if ( rcl_get_option( 'group-output' ) && '' == get_site_option( 'permalink_structure' ) ) {
 		$content .= '<input type="hidden" name="page_id" value="' . rcl_get_option( 'group-page' ) . '">';
 		$content .= '<input type="hidden" name="group-id" value="' . $rcl_group->term_id . '">';
 	}
@@ -893,6 +889,9 @@ function rcl_group_admin_panel() {
 	if ( $rcl_group->group_status == 'closed' ) {
 
 		$requests = rcl_get_group_option( $rcl_group->term_id, 'requests_group_access' );
+
+		if ( ! $requests )
+			$requests = array();
 
 		$admins_buttons[] = array(
 			'callback'	 => 'rcl_get_group_requests_content',
@@ -931,7 +930,7 @@ function rcl_init_group_data( $query ) {
 
 			$group_var = get_query_var( 'group-id' );
 
-			if ( '' != get_option( 'permalink_structure' ) ) {
+			if ( '' != get_site_option( 'permalink_structure' ) ) {
 
 				$term = get_term_by( 'slug', $group_var, 'groups' );
 
@@ -1072,29 +1071,18 @@ function rcl_close_group_comments( $open ) {
 }
 
 function rcl_get_closed_groups( $user_id ) {
-	global $user_ID;
 
-	$cachekey	 = json_encode( array( 'rcl_get_closed_groups', $user_id ) );
-	$cache		 = wp_cache_get( $cachekey );
-	if ( $cache )
-		return $cache;
-
-	$groups = new Rcl_Groups_Query();
-
-	$groups->set_query( array(
-		'fields'			 => array( 'ID' ),
-		'group_status'		 => 'closed',
-		'admin_id__not_in'	 => $user_id
-	) );
-
-	$groups->query['join'][]	 = "LEFT JOIN " . RCL_PREF . "groups_users AS groups_users ON " . $groups->query['table']['as'] . ".ID=groups_users.group_id";
-	$groups->query['where'][]	 = "(groups_users.user_id != '$user_id' OR groups_users.user_id IS NULL)";
-
-	$groups = $groups->get_data( 'get_col' );
-
-	wp_cache_add( $cachekey, $groups );
-
-	return $groups;
+	return RQ::tbl( new Rcl_Groups_Query() )
+			->select( ['ID' ] )
+			->where( [
+				'group_status'		 => 'closed',
+				'admin_id__not_in'	 => $user_id
+			] )
+			->join(
+				['ID', 'group_id', 'LEFT' ], RQ::tbl( new Rcl_Groups_Users_Query( 'groups_users' ) )
+				->where_string( "(groups_users.user_id != '$user_id' OR groups_users.user_id IS NULL)" )
+			)
+			->get_col( 'cache' );
 }
 
 function rcl_get_closed_group_posts( $user_id ) {

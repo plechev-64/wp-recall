@@ -4,9 +4,6 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
-add_action( 'rcl_addons_included', array( 'Prime_Themes_Manager', 'update_status' ) );
-add_action( 'admin_init', 'pfm_init_upload_template' );
-
 class Prime_Themes_Manager extends WP_List_Table {
 
 	var $addon		 = array();
@@ -24,7 +21,7 @@ class Prime_Themes_Manager extends WP_List_Table {
 			'ajax'		 => false
 		) );
 
-		$this->need_update	 = get_option( 'rcl_addons_need_update' );
+		$this->need_update	 = get_site_option( 'rcl_addons_need_update' );
 		$this->column_info	 = $this->get_column_info();
 
 		add_action( 'admin_head', array( &$this, 'admin_header' ) );
@@ -180,10 +177,10 @@ class Prime_Themes_Manager extends WP_List_Table {
 
 	function get_description_column( $data ) {
 		$content = '<div class="plugin-description">
-				<p>' . $data['description'] . '</p>
-			</div>
-			<div class="active second plugin-version-author-uri">
-			' . __( 'Version', 'wp-recall' ) . ' ' . $data['version'];
+                <p>' . $data['description'] . '</p>
+            </div>
+            <div class="active second plugin-version-author-uri">
+            ' . __( 'Version', 'wp-recall' ) . ' ' . $data['version'];
 		if ( isset( $data['author-uri'] ) )
 			$content .= ' | ' . __( 'Author', 'wp-recall' ) . ': <a title="' . __( 'Visit the author’s page', 'wp-recall' ) . '" href="' . $data['author-uri'] . '" target="_blank">' . $data['author'] . '</a>';
 		if ( isset( $data['add-on-uri'] ) )
@@ -216,7 +213,7 @@ class Prime_Themes_Manager extends WP_List_Table {
 			. '<div class="update-message notice inline notice-warning notice-alt">'
 			. '<p>'
 			. __( 'New version available', 'wp-recall' ) . ' ' . $this->addon['name'] . ' ' . $this->need_update[$item['ID']]['new-version'] . '. ';
-			echo ' <a href="#"  onclick=\'rcl_get_details_addon(' . json_encode( array( 'slug' => $item['ID'] ) ) . ',this);return false;\' title="' . $this->addon['name'] . '">' . __( 'view information about the version', 'wp-recall' ) . '</a> ' . __( 'or', 'wp-recall' );
+			echo ' <a href="#"  onclick=\'rcl_get_details_addon(' . json_encode( array( 'slug' => $item['ID'] ) ) . ',this);return false;\' title="' . $this->addon['name'] . '">' . __( 'view information about the version', 'wp-recall' ) . '</a> или';
 			echo ' <a class="update-add-on" data-addon="' . $item['ID'] . '" href="#">' . __( 'update automatically', 'wp-recall' ) . '</a>'
 			. '</p>'
 			. '</div>'
@@ -244,53 +241,14 @@ class Prime_Themes_Manager extends WP_List_Table {
 		$this->items = array_slice( $addons, ( ( $current_page - 1 ) * $per_page ), $per_page );
 	}
 
-	static function update_status() {
-
-		$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
-		if ( 'pfm-themes' != $page )
-			return;
-
-		if ( isset( $_GET['template'] ) && isset( $_GET['action'] ) ) {
-
-			global $wpdb, $user_ID, $active_addons;
-
-			$addon	 = $_GET['template'];
-			$action	 = rcl_wp_list_current_action();
-
-			if ( $action == 'connect' ) {
-
-				if ( rcl_exist_addon( get_option( 'rcl_pforum_template' ) ) && ! isset( $_GET['redirect'] ) ) {
-					rcl_deactivate_addon( get_option( 'rcl_pforum_template' ) );
-					header( "Location: " . admin_url( 'admin.php?page=pfm-themes&action=' . $action . '&template=' . $addon . '&redirect=1' ), true, 302 );
-					exit;
-				}
-
-				$templates = pfm_get_templates();
-
-				if ( ! isset( $templates[$addon] ) )
-					return false;
-
-				$template = $templates[$addon];
-
-				rcl_activate_addon( $addon, true, dirname( $template['path'] ) );
-
-				update_option( 'rcl_pforum_template', $addon );
-				header( "Location: " . admin_url( 'admin.php?page=pfm-themes&update-template=activate' ), true, 302 );
-				exit;
-			}
-
-			if ( $action == 'delete' ) {
-				rcl_delete_addon( $addon );
-				header( "Location: " . admin_url( 'admin.php?page=pfm-themes&update-template=delete' ), true, 302 );
-				exit;
-			}
-		}
-	}
-
 }
 
-//class
+add_action( 'pfm_init_themes_manager', 'pfm_init_upload_template' );
 function pfm_init_upload_template() {
+
+	if ( ! current_user_can( 'manage_options' ) )
+		return false;
+
 	if ( isset( $_POST['pfm-install-template-submit'] ) ) {
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'install-template-pfm' ) )
 			return false;
@@ -346,18 +304,4 @@ function pfm_upload_template() {
 	} else {
 		wp_die( __( 'ZIP archive not found.', 'wp-recall' ) );
 	}
-}
-
-function pfm_add_options_themes_manager() {
-	global $Prime_Themes_Manager;
-
-	$option	 = 'per_page';
-	$args	 = array(
-		'label'		 => __( 'Templates', 'wp-recall' ),
-		'default'	 => 100,
-		'option'	 => 'templates_per_page'
-	);
-
-	add_screen_option( $option, $args );
-	$Prime_Themes_Manager = new Prime_Themes_Manager();
 }

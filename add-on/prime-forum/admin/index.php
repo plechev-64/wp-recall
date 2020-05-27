@@ -1,7 +1,6 @@
 <?php
 require_once 'classes/class-prime-form-manager.php';
 require_once 'classes/class-prime-manager.php';
-require_once 'themes-manager.php';
 
 add_action( 'admin_init', 'pfm_admin_scripts', 10 );
 function pfm_admin_scripts() {
@@ -25,6 +24,24 @@ function pfm_init_admin_menu() {
 	add_submenu_page( 'pfm-menu', __( 'Topic form', 'wp-recall' ), __( 'Topic form', 'wp-recall' ), 'manage_options', 'manage-topic-form', 'pfm_page_topic_form' );
 }
 
+function pfm_add_options_themes_manager() {
+	global $Prime_Themes_Manager;
+
+	require_once 'themes-manager.php';
+
+	$option	 = 'per_page';
+	$args	 = array(
+		'label'		 => __( 'Templates', 'wp-recall' ),
+		'default'	 => 100,
+		'option'	 => 'templates_per_page'
+	);
+
+	add_screen_option( $option, $args );
+	$Prime_Themes_Manager = new Prime_Themes_Manager();
+
+	do_action( 'pfm_init_themes_manager' );
+}
+
 function pfm_page_topic_form() {
 
 	$group_id	 = (isset( $_GET['group-id'] )) ? intval( $_GET['group-id'] ) : 0;
@@ -32,13 +49,9 @@ function pfm_page_topic_form() {
 
 	if ( ! $group_id ) {
 
-		$GroupsQuery = new PrimeGroups();
-
-		$group_id = $GroupsQuery->get_var( array(
-			'order'		 => 'ASC',
-			'orderby'	 => 'group_seq',
-			'fields'	 => array( 'group_id' )
-			) );
+		$group_id = RQ::tbl( new PrimeGroups() )
+				->select( ['group_id' ] )
+				->orderby( 'group_id', 'ASC' )->get_var();
 	}
 
 	if ( ! $group_id ) {
@@ -346,7 +359,7 @@ function pfm_page_themes() {
 
 	if ( isset( $_POST['save-rcl-key'] ) ) {
 		if ( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ) {
-			update_option( 'rcl-key', $_POST['rcl-key'] );
+			update_site_option( 'rcl-key', $_POST['rcl-key'] );
 			echo '<div id="message" class="' . $type . '"><p>' . __( 'Key has been saved', 'wp-recall' ) . '!</p></div>';
 		}
 	}
@@ -355,7 +368,7 @@ function pfm_page_themes() {
 
 	echo '<h4>' . __( 'RCLKEY', 'wp-recall' ) . '</h4>
 		<form action="" method="post">
-			' . __( 'Enter RCLKEY', 'wp-recall' ) . ' <input type="text" name="rcl-key" value="' . get_option( 'rcl-key' ) . '">
+			' . __( 'Enter RCLKEY', 'wp-recall' ) . ' <input type="text" name="rcl-key" value="' . get_site_option( 'rcl-key' ) . '">
 			<input class="button" type="submit" value="' . __( 'Save', 'wp-recall' ) . '" name="save-rcl-key">
 			' . wp_nonce_field( 'add-rcl-key', '_wpnonce', true, false ) . '
 		</form>
@@ -388,431 +401,494 @@ function pfm_page_themes() {
 		<?php
 		$Prime_Themes_Manager->search_box( 'Search by name', 'search_id' );
 		$Prime_Themes_Manager->display();
-		echo '</form></div>';
+		?>
+	</form>
+	</div>
+	<?php
+}
+
+if ( is_admin() ):
+	add_action( 'profile_personal_options', 'pfm_admin_role_field' );
+	add_action( 'edit_user_profile', 'pfm_admin_role_field' );
+endif;
+function pfm_admin_role_field( $user ) {
+
+	$PrimeUser = new PrimeUser( array( 'user_id' => $user->ID ) );
+
+	$values = array();
+	foreach ( $PrimeUser->roles as $role => $prop ) {
+		$values[$role] = $prop['name'];
 	}
 
-	if ( is_admin() ):
-		add_action( 'profile_personal_options', 'pfm_admin_role_field' );
-		add_action( 'edit_user_profile', 'pfm_admin_role_field' );
-	endif;
-	function pfm_admin_role_field( $user ) {
+	$fields = array(
+		array(
+			'type'	 => 'select',
+			'title'	 => __( 'Current role', 'wp-recall' ),
+			'slug'	 => 'pfm_role',
+			'values' => $values
+		)
+	);
 
-		$PrimeUser = new PrimeUser( array( 'user_id' => $user->ID ) );
+	if ( $fields ) {
 
-		$values = array();
-		foreach ( $PrimeUser->roles as $role => $prop ) {
-			$values[$role] = $prop['name'];
+		$content = '<h3>' . __( 'Role of the user on the forum', 'wp-recall' ) . ':</h3>
+		<table class="form-table rcl-form">';
+
+		foreach ( $fields as $field ) {
+
+			$field['value'] = $PrimeUser->user_role;
+
+			$fieldObject = Rcl_Field::setup( $field );
+
+			$content .= '<tr><th><label>' . $fieldObject->get_title() . ':</label></th>';
+			$content .= '<td>' . $fieldObject->get_field_input() . '</td>';
+			$content .= '</tr>';
+		}
+
+		$content .= '</table>';
+	}
+
+	echo $content;
+}
+
+add_action( 'personal_options_update', 'pfm_update_user_role' );
+add_action( 'edit_user_profile_update', 'pfm_update_user_role' );
+function pfm_update_user_role( $user_id ) {
+
+	if ( ! current_user_can( 'edit_user', $user_id ) )
+		return false;
+
+	if ( ! isset( $_POST['pfm_role'] ) )
+		return false;
+
+	update_user_meta( $user_id, 'pfm_role', $_POST['pfm_role'] );
+}
+
+rcl_ajax_action( 'pfm_ajax_manager_update_data', false );
+function pfm_ajax_manager_update_data() {
+
+	$post = $_POST;
+
+	if ( isset( $post['group_id'] ) ) {
+
+		if ( isset( $post['forum_id'] ) )
+			$result	 = pfm_manager_update_forum( $post );
+		else
+			$result	 = pfm_manager_update_group( $post );
+
+		wp_send_json( $result );
+	}
+
+	exit;
+}
+
+function pfm_manager_update_group( $options ) {
+
+	pfm_update_group( array(
+		'group_id'	 => $options['group_id'],
+		'group_name' => $options['group_name'],
+		'group_slug' => $options['group_slug'],
+		'group_desc' => $options['group_desc']
+	) );
+
+	return array(
+		'success'	 => __( 'Changes saved!', 'wp-recall' ),
+		'title'		 => $options['group_name'],
+		'id'		 => $options['group_id']
+	);
+}
+
+function pfm_manager_update_forum( $options ) {
+
+	$forum = pfm_get_forum( $options['forum_id'] );
+
+	pfm_update_forum( array(
+		'forum_id'		 => $options['forum_id'],
+		'forum_name'	 => $options['forum_name'],
+		'forum_desc'	 => $options['forum_desc'],
+		'forum_slug'	 => $options['forum_slug'],
+		'forum_closed'	 => $options['forum_closed'],
+		'group_id'		 => $options['group_id'],
+	) );
+
+	$result = array(
+		'success'	 => __( 'Changes saved!', 'wp-recall' ),
+		'title'		 => $options['forum_name'],
+		'id'		 => $options['forum_id']
+	);
+
+	if ( isset( $options['group_id'] ) && $forum->group_id != $options['group_id'] ) {
+
+		$result['update-page']		 = 1;
+		$result['preloader_live']	 = 1;
+	}
+
+	return $result;
+}
+
+rcl_ajax_action( 'pfm_ajax_update_sort_groups', false );
+function pfm_ajax_update_sort_groups() {
+	global $wpdb;
+
+	$sort = json_decode( wp_unslash( $_POST['sort'] ) );
+
+	$k = 0;
+	foreach ( $sort as $s => $group ) {
+
+		if ( ! $group || ! isset( $group->id ) )
+			continue;
+		//убрал функции допа на апдейт группы,
+		//ибо срабатывают хуки, а тут они ни к чему
+		$wpdb->update(
+			RCL_PREF . 'pforum_groups', array(
+			'group_seq' => $k
+			), array(
+			'group_id' => $group->id
+			)
+		);
+
+		$k ++;
+	}
+
+	wp_send_json( array(
+		'success' => __( 'Changes saved!', 'wp-recall' )
+	) );
+}
+
+rcl_ajax_action( 'pfm_ajax_update_sort_forums', false );
+function pfm_ajax_update_sort_forums() {
+	global $wpdb;
+
+	$sort = json_decode( wp_unslash( $_POST['sort'] ) );
+
+	$k = 0;
+	foreach ( $sort as $s => $forum ) {
+
+		if ( ! $forum || ! isset( $forum->id ) )
+			continue;
+
+		//убрал функции допа на апдейт форума,
+		//ибо срабатывают хуки, а тут они ни к чему
+		$wpdb->update(
+			RCL_PREF . 'pforums', array(
+			'parent_id'	 => $forum->parent,
+			'forum_seq'	 => $k
+			), array(
+			'forum_id' => $forum->id
+			)
+		);
+
+		$k ++;
+	}
+
+	wp_send_json( array(
+		'success' => __( 'Changes saved!', 'wp-recall' )
+	) );
+}
+
+rcl_ajax_action( 'pfm_ajax_get_manager_item_delete_form', false );
+function pfm_ajax_get_manager_item_delete_form() {
+
+	$itemType	 = $_POST['item-type'];
+	$itemID		 = $_POST['item-id'];
+
+	if ( $itemType == 'groups' ) {
+
+		$groups = pfm_get_groups( array(
+			'order'				 => 'ASC',
+			'orderby'			 => 'group_seq',
+			'group_id__not_in'	 => array( $itemID )
+			) );
+
+		$values = array( '' => __( 'Delete all forums inside the group', 'wp-recall' ) );
+
+		if ( $groups ) {
+
+			foreach ( $groups as $group ) {
+				$values[$group->group_id] = $group->group_name;
+			}
 		}
 
 		$fields = array(
 			array(
 				'type'	 => 'select',
-				'title'	 => __( 'Current role', 'wp-recall' ),
-				'slug'	 => 'pfm_role',
+				'slug'	 => 'migrate_group',
+				'title'	 => __( 'New group for child forums', 'wp-recall' ),
+				'notice' => __( 'If new group is not assigned for child forums, when deleting the selected '
+					. 'group, the forums will also be deleted', 'wp-recall' ),
 				'values' => $values
+			),
+			array(
+				'type'	 => 'hidden',
+				'slug'	 => 'group_id',
+				'value'	 => $itemID
+			),
+			array(
+				'type'	 => 'hidden',
+				'slug'	 => 'pfm-action',
+				'value'	 => 'group_delete'
 			)
 		);
+	} else if ( $itemType == 'forums' ) {
 
-		if ( $fields ) {
+		$forums = pfm_get_forums( array(
+			'order'				 => 'ASC',
+			'orderby'			 => 'forum_seq',
+			'forum_id__not_in'	 => array( $itemID )
+			) );
 
-			$content = '<h3>' . __( 'Role of the user on the forum', 'wp-recall' ) . ':</h3>
-		<table class="form-table rcl-form">';
+		$values = array( '' => __( 'Delete all topic inside the forum', 'wp-recall' ) );
 
-			foreach ( $fields as $field ) {
+		if ( $forums ) {
 
-				$field['value'] = $PrimeUser->user_role;
-
-				$fieldObject = Rcl_Field::setup( $field );
-
-				$content .= '<tr><th><label>' . $fieldObject->get_title() . ':</label></th>';
-				$content .= '<td>' . $fieldObject->get_field_input() . '</td>';
-				$content .= '</tr>';
+			foreach ( $forums as $forum ) {
+				$values[$forum->forum_id] = $forum->forum_name;
 			}
-
-			$content .= '</table>';
 		}
 
-		echo $content;
-	}
-
-	add_action( 'personal_options_update', 'pfm_update_user_role' );
-	add_action( 'edit_user_profile_update', 'pfm_update_user_role' );
-	function pfm_update_user_role( $user_id ) {
-
-		if ( ! current_user_can( 'edit_user', $user_id ) )
-			return false;
-
-		if ( ! isset( $_POST['pfm_role'] ) )
-			return false;
-
-		update_user_meta( $user_id, 'pfm_role', $_POST['pfm_role'] );
-	}
-
-	rcl_ajax_action( 'pfm_ajax_manager_update_data', false );
-	function pfm_ajax_manager_update_data() {
-
-		$post = $_POST;
-
-		if ( isset( $post['group_id'] ) ) {
-
-			if ( isset( $post['forum_id'] ) )
-				$result	 = pfm_manager_update_forum( $post );
-			else
-				$result	 = pfm_manager_update_group( $post );
-
-			wp_send_json( $result );
-		}
-
-		exit;
-	}
-
-	function pfm_manager_update_group( $options ) {
-
-		pfm_update_group( array(
-			'group_id'	 => $options['group_id'],
-			'group_name' => $options['group_name'],
-			'group_slug' => $options['group_slug'],
-			'group_desc' => $options['group_desc']
-		) );
-
-		return array(
-			'success'	 => __( 'Changes saved!', 'wp-recall' ),
-			'title'		 => $options['group_name'],
-			'id'		 => $options['group_id']
+		$fields = array(
+			array(
+				'type'	 => 'select',
+				'slug'	 => 'migrate_forum',
+				'title'	 => __( 'New forum for child topics', 'wp-recall' ),
+				'notice' => __( 'If new forum is not assigned for child forums, when deleting the selected '
+					. 'forum, the topics will also be deleted', 'wp-recall' ),
+				'values' => $values
+			),
+			array(
+				'type'	 => 'hidden',
+				'slug'	 => 'forum_id',
+				'value'	 => $itemID
+			),
+			array(
+				'type'	 => 'hidden',
+				'slug'	 => 'pfm-action',
+				'value'	 => 'forum_delete'
+			)
 		);
 	}
 
-	function pfm_manager_update_forum( $options ) {
+	$form = pfm_get_manager_item_delete_form( $fields );
 
-		$forum = pfm_get_forum( $options['forum_id'] );
+	wp_send_json( array(
+		'form' => $form
+	) );
+}
 
-		pfm_update_forum( array(
-			'forum_id'		 => $options['forum_id'],
-			'forum_name'	 => $options['forum_name'],
-			'forum_desc'	 => $options['forum_desc'],
-			'forum_slug'	 => $options['forum_slug'],
-			'forum_closed'	 => $options['forum_closed'],
-			'group_id'		 => $options['group_id'],
-		) );
+function pfm_get_manager_item_delete_form( $fields ) {
 
-		$result = array(
-			'success'	 => __( 'Changes saved!', 'wp-recall' ),
-			'title'		 => $options['forum_name'],
-			'id'		 => $options['forum_id']
-		);
+	$content = '<div id="manager-deleted-form" class="rcl-custom-fields-box">';
+	$content .= '<form method="post">';
 
-		if ( isset( $options['group_id'] ) && $forum->group_id != $options['group_id'] ) {
+	foreach ( $fields as $field ) {
 
-			$result['update-page']		 = 1;
-			$result['preloader_live']	 = 1;
+		$fieldObject = Rcl_Field::setup( $field );
+
+		$content .= '<div id="field-' . $field['slug'] . '" class="form-field rcl-custom-field">';
+
+		if ( isset( $field['title'] ) ) {
+			$content .= '<label>';
+			$content .= $fieldObject->get_title();
+			$content .= '</label>';
 		}
 
-		return $result;
-	}
+		$content .= $fieldObject->get_field_input();
 
-	rcl_ajax_action( 'pfm_ajax_update_sort_groups', false );
-	function pfm_ajax_update_sort_groups() {
-		global $wpdb;
-
-		$sort = json_decode( wp_unslash( $_POST['sort'] ) );
-
-		foreach ( $sort as $s => $group ) {
-			//убрал функции допа на апдейт группы,
-			//ибо срабатывают хуки, а тут они ни к чему
-			$wpdb->update(
-				RCL_PREF . 'pforum_groups', array(
-				'group_seq' => $s + 1
-				), array(
-				'group_id' => $group->id
-				)
-			);
-		}
-
-		wp_send_json( array(
-			'success' => __( 'Changes saved!', 'wp-recall' )
-		) );
-	}
-
-	rcl_ajax_action( 'pfm_ajax_update_sort_forums', false );
-	function pfm_ajax_update_sort_forums() {
-		global $wpdb;
-
-		$sort = json_decode( wp_unslash( $_POST['sort'] ) );
-
-		foreach ( $sort as $s => $forum ) {
-			//убрал функции допа на апдейт форума,
-			//ибо срабатывают хуки, а тут они ни к чему
-			$wpdb->update(
-				RCL_PREF . 'pforums', array(
-				'parent_id'	 => $forum->parent,
-				'forum_seq'	 => $s + 1
-				), array(
-				'forum_id' => $forum->id
-				)
-			);
-		}
-
-		wp_send_json( array(
-			'success' => __( 'Changes saved!', 'wp-recall' )
-		) );
-	}
-
-	rcl_ajax_action( 'pfm_ajax_get_manager_item_delete_form', false );
-	function pfm_ajax_get_manager_item_delete_form() {
-
-		$itemType	 = $_POST['item-type'];
-		$itemID		 = $_POST['item-id'];
-
-		if ( $itemType == 'groups' ) {
-
-			$groups = pfm_get_groups( array(
-				'order'				 => 'ASC',
-				'orderby'			 => 'group_seq',
-				'group_id__not_in'	 => array( $itemID )
-				) );
-
-			$values = array( '' => __( 'Delete all forums inside the group', 'wp-recall' ) );
-
-			if ( $groups ) {
-
-				foreach ( $groups as $group ) {
-					$values[$group->group_id] = $group->group_name;
-				}
-			}
-
-			$fields = array(
-				array(
-					'type'	 => 'select',
-					'slug'	 => 'migrate_group',
-					'title'	 => __( 'New group for child forums', 'wp-recall' ),
-					'notice' => __( 'If new group is not assigned for child forums, when deleting the selected '
-						. 'group, the forums will also be deleted', 'wp-recall' ),
-					'values' => $values
-				),
-				array(
-					'type'	 => 'hidden',
-					'slug'	 => 'group_id',
-					'value'	 => $itemID
-				),
-				array(
-					'type'	 => 'hidden',
-					'slug'	 => 'pfm-action',
-					'value'	 => 'group_delete'
-				)
-			);
-		} else if ( $itemType == 'forums' ) {
-
-			$forums = pfm_get_forums( array(
-				'order'				 => 'ASC',
-				'orderby'			 => 'forum_seq',
-				'forum_id__not_in'	 => array( $itemID )
-				) );
-
-			$values = array( '' => __( 'Delete all topic inside the forum', 'wp-recall' ) );
-
-			if ( $forums ) {
-
-				foreach ( $forums as $forum ) {
-					$values[$forum->forum_id] = $forum->forum_name;
-				}
-			}
-
-			$fields = array(
-				array(
-					'type'	 => 'select',
-					'slug'	 => 'migrate_forum',
-					'title'	 => __( 'New forum for child topics', 'wp-recall' ),
-					'notice' => __( 'If new forum is not assigned for child forums, when deleting the selected '
-						. 'forum, the topics will also be deleted', 'wp-recall' ),
-					'values' => $values
-				),
-				array(
-					'type'	 => 'hidden',
-					'slug'	 => 'forum_id',
-					'value'	 => $itemID
-				),
-				array(
-					'type'	 => 'hidden',
-					'slug'	 => 'pfm-action',
-					'value'	 => 'forum_delete'
-				)
-			);
-		}
-
-		$form = pfm_get_manager_item_delete_form( $fields );
-
-		wp_send_json( array(
-			'form' => $form
-		) );
-	}
-
-	function pfm_get_manager_item_delete_form( $fields ) {
-
-		$content = '<div id="manager-deleted-form" class="rcl-custom-fields-box">';
-		$content .= '<form method="post">';
-
-		foreach ( $fields as $field ) {
-
-			$fieldObject = Rcl_Field::setup( $field );
-
-			$content .= '<div id="field-' . $field['slug'] . '" class="form-field rcl-custom-field">';
-
-			if ( isset( $field['title'] ) ) {
-				$content .= '<label>';
-				$content .= $fieldObject->get_title();
-				$content .= '</label>';
-			}
-
-			$content .= $fieldObject->get_field_input();
-
-			$content .= '</div>';
-		}
-
-		$content .= '<div class="form-field fields-submit">';
-		$content .= '<input type="submit" class="button-primary" value="' . __( 'Confirm the deletion', 'wp-recall' ) . '">';
 		$content .= '</div>';
-		$content .= wp_nonce_field( 'pfm-nonce', '_wpnonce', true, false );
-		$content .= '</form>';
-		$content .= '</div>';
-
-		return $content;
 	}
 
-	function pfm_get_templates() {
+	$content .= '<div class="form-field fields-submit">';
+	$content .= '<input type="submit" class="button-primary" value="' . __( 'Confirm the deletion', 'wp-recall' ) . '">';
+	$content .= '</div>';
+	$content .= wp_nonce_field( 'pfm-nonce', '_wpnonce', true, false );
+	$content .= '</form>';
+	$content .= '</div>';
 
-		$paths = array(
-			rcl_addon_path( __FILE__ ) . 'themes',
-			RCL_PATH . 'add-on',
-			RCL_TAKEPATH . 'add-on'
-		);
+	return $content;
+}
 
-		$add_ons = array();
-		foreach ( $paths as $path ) {
-			if ( file_exists( $path ) ) {
-				$addons = scandir( $path, 1 );
+function pfm_get_templates() {
 
-				foreach ( ( array ) $addons as $namedir ) {
-					$addon_dir	 = $path . '/' . $namedir;
-					$index_src	 = $addon_dir . '/index.php';
-					if ( ! is_dir( $addon_dir ) || ! file_exists( $index_src ) )
+	$paths = array(
+		rcl_addon_path( __FILE__ ) . 'themes',
+		RCL_PATH . 'add-on',
+		RCL_TAKEPATH . 'add-on'
+	);
+
+	$add_ons = array();
+	foreach ( $paths as $path ) {
+		if ( file_exists( $path ) ) {
+			$addons = scandir( $path, 1 );
+
+			foreach ( ( array ) $addons as $namedir ) {
+				$addon_dir	 = $path . '/' . $namedir;
+				$index_src	 = $addon_dir . '/index.php';
+				if ( ! is_dir( $addon_dir ) || ! file_exists( $index_src ) )
+					continue;
+				$info_src	 = $addon_dir . '/info.txt';
+				if ( file_exists( $info_src ) ) {
+					$info	 = file( $info_src );
+					$data	 = rcl_parse_addon_info( $info );
+
+					if ( ! isset( $data['custom-manager'] ) || $data['custom-manager'] != 'prime-forum' )
 						continue;
-					$info_src	 = $addon_dir . '/info.txt';
-					if ( file_exists( $info_src ) ) {
-						$info	 = file( $info_src );
-						$data	 = rcl_parse_addon_info( $info );
 
-						if ( ! isset( $data['custom-manager'] ) || $data['custom-manager'] != 'prime-forum' )
-							continue;
-
-						$add_ons[$namedir]			 = $data;
-						$add_ons[$namedir]['path']	 = $addon_dir;
-					}
+					$add_ons[$namedir]			 = $data;
+					$add_ons[$namedir]['path']	 = $addon_dir;
 				}
 			}
 		}
-
-		return $add_ons;
 	}
 
-	add_action( 'pfm_deleted_group', 'pfm_delete_group_custom_fields', 10 );
-	function pfm_delete_group_custom_fields( $group_id ) {
-		delete_option( 'rcl_fields_pfm_group_' . $group_id );
+	return $add_ons;
+}
+
+add_action( 'pfm_deleted_group', 'pfm_delete_group_custom_fields', 10 );
+function pfm_delete_group_custom_fields( $group_id ) {
+	delete_site_option( 'rcl_fields_pfm_group_' . $group_id );
+}
+
+add_action( 'pfm_deleted_forum', 'pfm_delete_forum_custom_fields', 10 );
+function pfm_delete_forum_custom_fields( $forum_id ) {
+	delete_site_option( 'rcl_fields_pfm_forum_' . $forum_id );
+}
+
+add_action( 'rcl_add_dashboard_metabox', 'rcl_add_forum_metabox' );
+function rcl_add_forum_metabox( $screen ) {
+	add_meta_box( 'rcl-forum-metabox', __( 'Last forum topics', 'wp-recall' ), 'rcl_forum_metabox', $screen->id, 'side' );
+}
+
+function rcl_forum_metabox() {
+
+	$topics = pfm_get_topics( array( 'number' => 5 ) );
+
+	if ( ! $topics ) {
+		echo '<p>' . __( 'No topics on the forum yet', 'wp-recall' ) . '</p>';
+		return;
 	}
 
-	add_action( 'pfm_deleted_forum', 'pfm_delete_forum_custom_fields', 10 );
-	function pfm_delete_forum_custom_fields( $forum_id ) {
-		delete_option( 'rcl_fields_pfm_forum_' . $forum_id );
-	}
-
-	add_action( 'rcl_add_dashboard_metabox', 'rcl_add_forum_metabox' );
-	function rcl_add_forum_metabox( $screen ) {
-		add_meta_box( 'rcl-forum-metabox', __( 'Last forum topics', 'wp-recall' ), 'rcl_forum_metabox', $screen->id, 'side' );
-	}
-
-	function rcl_forum_metabox() {
-
-		$topics = pfm_get_topics( array( 'number' => 5 ) );
-
-		if ( ! $topics ) {
-			echo '<p>' . __( 'No topics on the forum yet', 'wp-recall' ) . '</p>';
-			return;
-		}
-
-		echo '<table class="wp-list-table widefat fixed striped">';
+	echo '<table class="wp-list-table widefat fixed striped">';
+	echo '<tr>'
+	. '<th>' . __( 'Topic', 'wp-recall' ) . '</th>'
+	. '<th>' . __( 'Messages', 'wp-recall' ) . '</th>'
+	. '<th>' . __( 'Author', 'wp-recall' ) . '</th>'
+	. '</tr>';
+	foreach ( $topics as $topic ) {
 		echo '<tr>'
-		. '<th>' . __( 'Topic', 'wp-recall' ) . '</th>'
-		. '<th>' . __( 'Messages', 'wp-recall' ) . '</th>'
-		. '<th>' . __( 'Author', 'wp-recall' ) . '</th>'
+		. '<td><a href="' . pfm_get_topic_permalink( $topic->topic_id ) . '" target="_blank">' . $topic->topic_name . '</a></td>'
+		. '<td>' . $topic->post_count . '</td>'
+		. '<td>' . get_the_author_meta( 'user_login', $topic->user_id ) . '</td>'
 		. '</tr>';
-		foreach ( $topics as $topic ) {
-			echo '<tr>'
-			. '<td><a href="' . pfm_get_topic_permalink( $topic->topic_id ) . '" target="_blank">' . $topic->topic_name . '</a></td>'
-			. '<td>' . $topic->post_count . '</td>'
-			. '<td>' . get_the_author_meta( 'user_login', $topic->user_id ) . '</td>'
-			. '</tr>';
-		}
-		echo '</table>';
-		echo '<p><a href="' . pfm_get_home_url() . '" target="_blank">' . __( 'Go to forum', 'wp-recall' ) . '</a></p>';
+	}
+	echo '</table>';
+	echo '<p><a href="' . pfm_get_home_url() . '" target="_blank">' . __( 'Go to forum', 'wp-recall' ) . '</a></p>';
+}
+
+add_action( 'admin_init', 'pfm_init_admin_actions' );
+function pfm_init_admin_actions() {
+	global $user_ID;
+
+	if ( ! isset( $_REQUEST['pfm-action'] ) || ! isset( $_REQUEST['_wpnonce'] ) )
+		return;
+
+	if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'pfm-nonce' ) )
+		return;
+
+	$action = $_REQUEST['pfm-action'];
+
+	switch ( $action ) {
+		case 'group_create': //добавление группы
+
+			pfm_add_group( array(
+				'group_name' => $_REQUEST['group_name'],
+				'group_slug' => $_REQUEST['group_slug'],
+				'group_desc' => $_REQUEST['group_desc']
+			) );
+
+			break;
+		case 'forum_create': //создание форума
+
+			pfm_add_forum( array(
+				'forum_name' => $_REQUEST['forum_name'],
+				'forum_desc' => $_REQUEST['forum_desc'],
+				'forum_slug' => $_REQUEST['forum_slug'],
+				'group_id'	 => $_REQUEST['group_id']
+			) );
+
+			break;
+		case 'group_delete': //удаление группы
+
+			if ( ! $_REQUEST['group_id'] )
+				return false;
+
+			pfm_delete_group( $_REQUEST['group_id'], $_REQUEST['migrate_group'] );
+
+			wp_redirect( admin_url( 'admin.php?page=pfm-forums' ) );
+			exit;
+
+			break;
+		case 'forum_delete': //удаление форума
+
+			if ( ! $_REQUEST['forum_id'] )
+				return false;
+
+			$group = pfm_get_forum( $_REQUEST['forum_id'] );
+
+			pfm_delete_forum( $_REQUEST['forum_id'], $_REQUEST['migrate_forum'] );
+
+			wp_redirect( admin_url( 'admin.php?page=pfm-forums&group-id=' . $group->group_id ) );
+			exit;
+
+			break;
 	}
 
-	add_action( 'admin_init', 'pfm_init_admin_actions' );
-	function pfm_init_admin_actions() {
-		global $user_ID;
+	wp_redirect( $_POST['_wp_http_referer'] );
+	exit;
+}
 
-		if ( ! isset( $_REQUEST['pfm-action'] ) || ! isset( $_REQUEST['_wpnonce'] ) )
-			return;
+add_action( 'rcl_addons_included', 'pfm_template_update_status' );
+function pfm_template_update_status() {
 
-		if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'pfm-nonce' ) )
-			return;
+	if ( wp_doing_ajax() )
+		return false;
 
-		$action = $_REQUEST['pfm-action'];
+	$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
+	if ( 'pfm-themes' != $page )
+		return;
 
-		switch ( $action ) {
-			case 'group_create': //добавление группы
+	if ( isset( $_GET['template'] ) && isset( $_GET['action'] ) ) {
 
-				pfm_add_group( array(
-					'group_name' => $_REQUEST['group_name'],
-					'group_slug' => $_REQUEST['group_slug'],
-					'group_desc' => $_REQUEST['group_desc']
-				) );
+		global $wpdb, $user_ID, $active_addons;
 
-				break;
-			case 'forum_create': //создание форума
+		$addon	 = $_GET['template'];
+		$action	 = rcl_wp_list_current_action();
 
-				pfm_add_forum( array(
-					'forum_name' => $_REQUEST['forum_name'],
-					'forum_desc' => $_REQUEST['forum_desc'],
-					'forum_slug' => $_REQUEST['forum_slug'],
-					'group_id'	 => $_REQUEST['group_id']
-				) );
+		if ( $action == 'connect' ) {
 
-				break;
-			case 'group_delete': //удаление группы
-
-				if ( ! $_REQUEST['group_id'] )
-					return false;
-
-				pfm_delete_group( $_REQUEST['group_id'], $_REQUEST['migrate_group'] );
-
-				wp_redirect( admin_url( 'admin.php?page=pfm-forums' ) );
+			if ( rcl_exist_addon( get_site_option( 'rcl_pforum_template' ) ) && ! isset( $_GET['redirect'] ) ) {
+				rcl_deactivate_addon( get_site_option( 'rcl_pforum_template' ) );
+				header( "Location: " . admin_url( 'admin.php?page=pfm-themes&action=' . $action . '&template=' . $addon . '&redirect=1' ), true, 302 );
 				exit;
+			}
 
-				break;
-			case 'forum_delete': //удаление форума
+			$templates = pfm_get_templates();
 
-				if ( ! $_REQUEST['forum_id'] )
-					return false;
+			if ( ! isset( $templates[$addon] ) )
+				return false;
 
-				$group = pfm_get_forum( $_REQUEST['forum_id'] );
+			$template = $templates[$addon];
 
-				pfm_delete_forum( $_REQUEST['forum_id'], $_REQUEST['migrate_forum'] );
+			rcl_activate_addon( $addon, true, dirname( $template['path'] ) );
 
-				wp_redirect( admin_url( 'admin.php?page=pfm-forums&group-id=' . $group->group_id ) );
-				exit;
-
-				break;
+			update_site_option( 'rcl_pforum_template', $addon );
+			header( "Location: " . admin_url( 'admin.php?page=pfm-themes&update-template=activate' ), true, 302 );
+			exit;
 		}
 
-		wp_redirect( $_POST['_wp_http_referer'] );
-		exit;
+		if ( $action == 'delete' ) {
+			rcl_delete_addon( $addon );
+			header( "Location: " . admin_url( 'admin.php?page=pfm-themes&update-template=delete' ), true, 302 );
+			exit;
+		}
 	}
+}

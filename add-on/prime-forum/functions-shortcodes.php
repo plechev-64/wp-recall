@@ -18,7 +18,7 @@ function pfm_get_shortcodes() {
 
 	$PrimeShorts = array();
 	foreach ( $shortcode_tags as $tag => $function ) {
-		if ( !in_array( $tag, $whiteList ) )
+		if ( ! in_array( $tag, $whiteList ) )
 			continue;
 		$PrimeShorts[$tag] = $function;
 	}
@@ -29,7 +29,7 @@ function pfm_get_shortcodes() {
 add_filter( 'pfm_whitelist_shortcodes', 'pfm_add_admin_support_shortcodes', 10 );
 function pfm_add_admin_support_shortcodes( $whiteList ) {
 	$adminShorts = array_map( 'trim', explode( "\n", pfm_get_option( 'support-shortcodes' ) ) );
-	if ( !$adminShorts )
+	if ( ! $adminShorts )
 		return $whiteList;
 	$whiteList	 = array_merge( $whiteList, $adminShorts );
 	return $whiteList;
@@ -42,7 +42,7 @@ function pfm_do_shortcode( $content, $ignore_html = false ) {
 		return $content;
 	}
 
-	if ( empty( $PrimeShorts ) || !is_array( $PrimeShorts ) )
+	if ( empty( $PrimeShorts ) || ! is_array( $PrimeShorts ) )
 		return $content;
 
 	// Find all registered tag names in $content.
@@ -101,7 +101,7 @@ function pfm_get_posts_shortcode( $attrs ) {
 
 	$LastPosts = new PrimeLastPosts( $attrs );
 
-	if ( !$LastPosts->posts ) {
+	if ( ! $LastPosts->posts ) {
 		return '<p>' . __( 'Not found', 'wp-recall' ) . '</p>';
 	}
 

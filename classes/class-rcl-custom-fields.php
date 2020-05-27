@@ -47,14 +47,14 @@ class Rcl_Custom_Fields {
 		$this->placeholder	 = (isset( $field['placeholder'] ) && $field['placeholder']) ? "placeholder='" . str_replace( "'", '"', $field['placeholder'] ) . "'" : '';
 		$this->maxlength	 = (isset( $field['maxlength'] ) && $field['maxlength']) ? "maxlength='" . $field['maxlength'] . "'" : '';
 
-		if ( !$field['type'] )
+		if ( ! $field['type'] )
 			return false;
 
-		if ( !isset( $field['name'] ) )
+		if ( ! isset( $field['name'] ) )
 			$field['name'] = $this->slug;
 
 		if ( $user_ID ) {
-			if ( isset( $field['admin'] ) && $field['admin'] == 1 && !rcl_is_user_role( $user_ID, array( 'administrator' ) ) ) {
+			if ( isset( $field['admin'] ) && $field['admin'] == 1 && ! rcl_is_user_role( $user_ID, array( 'administrator' ) ) ) {
 				$value = get_user_meta( $user_LK, $this->slug, 1 );
 				if ( $value ) {
 					$html = $this->get_field_value( $field, $value, false );
@@ -135,7 +135,7 @@ class Rcl_Custom_Fields {
 		global $user_ID;
 		$input = '';
 
-		if ( is_admin() && !(defined( 'DOING_AJAX' ) && DOING_AJAX) ) {
+		if ( is_admin() && ! (defined( 'DOING_AJAX' ) && DOING_AJAX) ) {
 
 			$post_id = (isset( $_GET['post'] )) ? intval( $_GET['post'] ) : false;
 			$user_id = (isset( $_GET['user_id'] )) ? intval( $_GET['user_id'] ) : false;
@@ -158,7 +158,7 @@ class Rcl_Custom_Fields {
 
 			$input .= $this->get_field_value( $field, $this->value, 0 );
 
-			if ( !$field['required'] )
+			if ( ! $field['required'] )
 				$input .= '<span class="delete-file-url"><a href="' . wp_nonce_url( $url, 'user-' . $user_ID ) . '"> <i class="rcli fa-times-circle-o"></i>' . __( 'delete', 'wp-recall' ) . '</a></span>';
 
 			$input = '<span class="file-manage-box">' . $input . '</span>';
@@ -171,7 +171,7 @@ class Rcl_Custom_Fields {
 			$accTypes = rcl_get_mime_types( $extTypes );
 
 		$accept		 = ($accTypes) ? 'accept="' . implode( ',', $accTypes ) . '"' : '';
-		$required	 = (!$this->value) ? $this->required : '';
+		$required	 = ( ! $this->value) ? $this->required : '';
 
 		$size = ($field['sizefile']) ? $field['sizefile'] : 2;
 
@@ -182,7 +182,7 @@ class Rcl_Custom_Fields {
 		$input .= '<br>';
 
 		if ( $extTypes )
-			$input .= '<span class="allowed-types">' . __( 'Allowed extensions', 'wp-recall' ) . ': ' . $field['ext-files'] . '</span>. ';
+			$input .= '<span class="allowed-types">' . __( 'Типы файлов', 'wp-recall' ) . ': ' . $field['ext-files'] . '</span>. ';
 
 		$input .= __( 'Max size', 'wp-recall' ) . ': ' . $size . 'MB';
 
@@ -239,12 +239,12 @@ class Rcl_Custom_Fields {
 		if ( isset( $field['field_select'] ) )
 			$field['values'] = rcl_edit_old_option_fields( $field['field_select'], $field['type'] );
 
-		if ( !$field['values'] )
+		if ( ! $field['values'] )
 			return false;
 
 		$this->value = ($this->value) ? $this->value : array();
 
-		if ( !is_array( $this->value ) )
+		if ( ! is_array( $this->value ) )
 			$this->value = array( $this->value );
 
 		$content = '<select ' . $this->required . ' name="' . $field['name'] . '[]" id="' . $this->field_id . '" ' . $this->get_class( $field ) . ' multiple>';
@@ -261,7 +261,7 @@ class Rcl_Custom_Fields {
 
 		$init = 'jQuery("#' . $this->field_id . '").fSelect();';
 
-		if ( !defined( 'DOING_AJAX' ) ) {
+		if ( ! defined( 'DOING_AJAX' ) ) {
 			$content .= '<script>jQuery(window).on("load", function() {' . $init . '});</script>';
 		} else {
 			$content .= '<script>' . $init . '</script>';
@@ -274,7 +274,7 @@ class Rcl_Custom_Fields {
 
 		$values = $field['values'];
 
-		if ( !$values )
+		if ( ! $values )
 			return false;
 
 		$currentValues = array();
@@ -297,11 +297,11 @@ class Rcl_Custom_Fields {
 			$input .='<span class="rcl-checkbox-box">'
 				. '<input ' . $this->required . ' ' . $checked . ' id="' . $this->field_id . '_' . $k . $this->rand . '" type="checkbox" ' . $this->get_class( $field ) . ' name="' . $field['name'] . '[]" value="' . trim( $k ) . '"> ';
 			$input .='<label class="block-label" for="' . $this->field_id . '_' . $k . $this->rand . '">';
-			$input .= (!isset( $field['before'] )) ? '' : $field['before'];
+			$input .= ( ! isset( $field['before'] )) ? '' : $field['before'];
 			$input .= $value
 				. '</label>'
 				. '</span>';
-			$input .= (!isset( $field['after'] )) ? '' : $field['after'];
+			$input .= ( ! isset( $field['after'] )) ? '' : $field['after'];
 		}
 
 		return $input;
@@ -312,7 +312,7 @@ class Rcl_Custom_Fields {
 		if ( isset( $field['field_select'] ) )
 			$field['values'] = rcl_edit_old_option_fields( $field['field_select'], $field['type'] );
 
-		if ( !$field['values'] )
+		if ( ! $field['values'] )
 			return false;
 
 		$emptyFirst	 = (isset( $field['empty-first'] )) ? $field['empty-first'] : false;
@@ -329,7 +329,7 @@ class Rcl_Custom_Fields {
 
 		$a = 0;
 
-		if ( !$emptyFirst && !$this->value )
+		if ( ! $emptyFirst && ! $this->value )
 			$this->value = ($this->value_in_key) ? $field['values'][0] : 0;
 
 		foreach ( $field['values'] as $k => $value ) {
@@ -342,7 +342,7 @@ class Rcl_Custom_Fields {
 			$content .= '<label class="block-label" for="' . $this->field_id . '_' . $k . $this->rand . '">' . $value . '</label>';
 			$content .= '</span>';
 
-			$a++;
+			$a ++;
 		}
 
 		return $content;
@@ -355,10 +355,10 @@ class Rcl_Custom_Fields {
 		if ( isset( $field['editor-id'] ) )
 			$editor_id = $field['editor-id'];
 
-		if ( !$editor_id )
+		if ( ! $editor_id )
 			$editor_id = ($this->field && isset( $this->field['slug'] )) ? $this->field['slug'] : $this->new_slug;
 
-		if ( !$editor_id )
+		if ( ! $editor_id )
 			$editor_id = $field['slug'];
 
 		$editor_id = 'editor-' . $editor_id;
@@ -432,7 +432,7 @@ class Rcl_Custom_Fields {
 				'step'	 => $step,
 			) ) . ');';
 
-		if ( !defined( 'DOING_AJAX' ) ) {
+		if ( ! defined( 'DOING_AJAX' ) ) {
 			$content .= '<script>jQuery(window).on("load", function() {' . $init . '});</script>';
 		} else {
 			$content .= '<script>' . $init . '</script>';
@@ -466,7 +466,7 @@ class Rcl_Custom_Fields {
 				'step'	 => $step,
 			) ) . ');';
 
-		if ( !defined( 'DOING_AJAX' ) ) {
+		if ( ! defined( 'DOING_AJAX' ) ) {
 			$content .= '<script>jQuery(window).on("load", function() {' . $init . '});</script>';
 		} else {
 			$content .= '<script>' . $init . '</script>';
@@ -487,7 +487,7 @@ class Rcl_Custom_Fields {
 				'defaultColor' => $this->value
 			) ) . ')';
 
-		if ( !defined( 'DOING_AJAX' ) ) {
+		if ( ! defined( 'DOING_AJAX' ) ) {
 			$content .= '<script>jQuery(window).on("load", function() {' . $init . '});</script>';
 		} else {
 			$content .= '<script>' . $init . '</script>';
@@ -564,7 +564,7 @@ class Rcl_Custom_Fields {
 	function get_field_value( $field, $value = false, $title = true ) {
 		global $user_ID;
 
-		if ( !isset( $field['type'] ) || !$value )
+		if ( ! isset( $field['type'] ) || ! $value )
 			return false;
 
 		$show = '';
@@ -580,7 +580,7 @@ class Rcl_Custom_Fields {
 
 				foreach ( $value as $val ) {
 
-					if ( !$val )
+					if ( ! $val )
 						continue;
 
 					$links[] = '<a href="' . $this->get_filter_url( $field['slug'], $val ) . '" target="_blank">' . $val . '</a>';
@@ -629,7 +629,7 @@ class Rcl_Custom_Fields {
 		if ( $field['type'] == 'agree' )
 			$show	 = __( 'Accepted', 'wp-recall' );
 
-		if ( !$show )
+		if ( ! $show )
 			return false;
 
 		$show = '<span class="rcl-field-value type-' . $field['type'] . '-value">' . $show . '</span>';
@@ -648,7 +648,7 @@ class Rcl_Custom_Fields {
 	}
 
 	function get_filter_url( $slug, $value ) {
-		if ( !rcl_get_option( 'users_page_rcl' ) )
+		if ( ! rcl_get_option( 'users_page_rcl' ) )
 			return false;
 		return rcl_format_url( get_permalink( rcl_get_option( 'users_page_rcl' ) ) ) . 'usergroup=' . $slug . ':' . urlencode( $value );
 	}
@@ -669,12 +669,12 @@ function rcl_upload_meta_file( $field, $user_id, $post_id = 0 ) {
 	$slug	 = $field->slug;
 	$maxsize = $field->max_size;
 
-	if ( !isset( $_FILES[$slug] ) && $post_id ) {
+	if ( ! isset( $_FILES[$slug] ) && $post_id ) {
 		delete_post_meta( $post_id, $slug );
 		return false;
 	}
 
-	if ( !$_FILES[$slug]['tmp_name'] ) {
+	if ( ! $_FILES[$slug]['tmp_name'] ) {
 		return false;
 	}
 
@@ -687,14 +687,14 @@ function rcl_upload_meta_file( $field, $user_id, $post_id = 0 ) {
 
 	if ( $field->file_types ) {
 
-		if ( !is_array( $field->file_types ) )
+		if ( ! is_array( $field->file_types ) )
 			$valid_types = array_map( 'trim', explode( ',', $field->file_types ) );
 		else
 			$valid_types = $field->file_types;
 
 		$filetype = wp_check_filetype_and_ext( $_FILES[$slug]['tmp_name'], $_FILES[$slug]['name'] );
 
-		if ( !in_array( $filetype['ext'], $valid_types ) ) {
+		if ( ! in_array( $filetype['ext'], $valid_types ) ) {
 			wp_die( __( 'Prohibited file type!', 'wp-recall' ) );
 		}
 	}
@@ -742,31 +742,31 @@ function rcl_get_custom_fields( $post_id, $post_type = false, $id_form = false )
 		case 'post':
 			if ( isset( $post ) )
 				$id_form	 = get_post_meta( $post->ID, 'publicform-id', 1 );
-			if ( !$id_form )
+			if ( ! $id_form )
 				$id_form	 = 1;
 			$id_field	 = 'rcl_fields_post_' . $id_form;
 			break;
 		default: $id_field	 = 'rcl_fields_' . $post_type;
 	}
 
-	return apply_filters( 'rcl_custom_fields_post', get_option( $id_field ), $post_id, $post_type );
+	return apply_filters( 'rcl_custom_fields_post', get_site_option( $id_field ), $post_id, $post_type );
 }
 
 add_action( 'wp', 'rcl_download_file' );
 function rcl_download_file() {
 	global $user_ID;
 
-	if ( !isset( $_GET['rcl-download-file'] ) )
+	if ( ! isset( $_GET['rcl-download-file'] ) )
 		return false;
 
 	$fileID = intval( base64_decode( $_GET['rcl-download-file'] ) );
 
-	if ( !$fileID || !wp_verify_nonce( $_GET['_wpnonce'], 'user-' . $user_ID ) )
+	if ( ! $fileID || ! wp_verify_nonce( $_GET['_wpnonce'], 'user-' . $user_ID ) )
 		return false;
 
 	$file = get_post( $fileID );
 
-	if ( !$file )
+	if ( ! $file )
 		wp_die( __( 'File does not exist on the server!', 'wp-recall' ) );
 
 	while ( ob_get_level() ) {
@@ -786,21 +786,21 @@ function rcl_download_file() {
 	exit;
 }
 
-if ( !is_admin() )
+if ( ! is_admin() )
 	add_action( 'wp', 'rcl_delete_file' );
 function rcl_delete_file() {
 	global $user_ID;
 
-	if ( !isset( $_GET['rcl-delete-file'] ) )
+	if ( ! isset( $_GET['rcl-delete-file'] ) )
 		return false;
 	$id_file = intval( base64_decode( $_GET['rcl-delete-file'] ) );
 
-	if ( !$user_ID || !wp_verify_nonce( $_GET['_wpnonce'], 'user-' . $user_ID ) )
+	if ( ! $user_ID || ! wp_verify_nonce( $_GET['_wpnonce'], 'user-' . $user_ID ) )
 		return false;
 
 	$file = get_post( $id_file );
 
-	if ( !$file )
+	if ( ! $file )
 		wp_die( __( 'File does not exist on the server!', 'wp-recall' ) );
 
 	wp_delete_attachment( $file->ID );
@@ -819,11 +819,11 @@ if ( is_admin() )
 function rcl_delete_file_admin() {
 	global $user_ID;
 
-	if ( !isset( $_GET['rcl-delete-file'] ) )
+	if ( ! isset( $_GET['rcl-delete-file'] ) )
 		return false;
 	$id_file = intval( base64_decode( $_GET['rcl-delete-file'] ) );
 
-	if ( !$user_ID || !wp_verify_nonce( $_GET['_wpnonce'], 'user-' . $user_ID ) )
+	if ( ! $user_ID || ! wp_verify_nonce( $_GET['_wpnonce'], 'user-' . $user_ID ) )
 		return false;
 
 	$post_id = (isset( $_GET['post_id'] )) ? intval( $_GET['post_id'] ) : false;
@@ -831,7 +831,7 @@ function rcl_delete_file_admin() {
 
 	$file = get_post( $id_file );
 
-	if ( !$file )
+	if ( ! $file )
 		wp_die( __( 'File does not exist on the server!', 'wp-recall' ) );
 
 	wp_delete_attachment( $file->ID );

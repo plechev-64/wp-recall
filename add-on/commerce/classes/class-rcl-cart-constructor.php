@@ -170,7 +170,7 @@ class Rcl_Cart_Constructor {
 
 	function get_cart_fields() {
 
-		$cartFields = get_option( 'rcl_cart_fields' );
+		$cartFields = get_site_option( 'rcl_cart_fields' );
 
 		if ( ! $cartFields )
 			return false;

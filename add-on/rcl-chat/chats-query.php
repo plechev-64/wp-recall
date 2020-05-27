@@ -1,11 +1,11 @@
 <?php
 
 class Rcl_Chats_Query extends Rcl_Query {
-	function __construct() {
+	function __construct( $as = false ) {
 
 		$table = array(
 			'name'	 => RCL_PREF . "chats",
-			'as'	 => 'rcl_chats',
+			'as'	 => $as ? $as : 'rcl_chats',
 			'cols'	 => array(
 				'chat_id',
 				'chat_room',
@@ -19,11 +19,11 @@ class Rcl_Chats_Query extends Rcl_Query {
 }
 
 class Rcl_Chat_Users_Query extends Rcl_Query {
-	function __construct() {
+	function __construct( $as = false ) {
 
 		$table = array(
 			'name'	 => RCL_PREF . "chat_users",
-			'as'	 => 'rcl_chat_users',
+			'as'	 => $as ? $as : 'rcl_chat_users',
 			'cols'	 => array(
 				'room_place',
 				'chat_id',
@@ -40,11 +40,11 @@ class Rcl_Chat_Users_Query extends Rcl_Query {
 }
 
 class Rcl_Chat_Messages_Query extends Rcl_Query {
-	function __construct() {
+	function __construct( $as = false ) {
 
 		$table = array(
 			'name'	 => RCL_PREF . "chat_messages",
-			'as'	 => 'rcl_chat_messages',
+			'as'	 => $as ? $as : 'rcl_chat_messages',
 			'cols'	 => array(
 				'message_id',
 				'chat_id',
@@ -62,11 +62,11 @@ class Rcl_Chat_Messages_Query extends Rcl_Query {
 }
 
 class Rcl_Chat_Messagemeta_Query extends Rcl_Query {
-	function __construct() {
+	function __construct( $as = false ) {
 
 		$table = array(
 			'name'	 => RCL_PREF . "chat_messagemeta",
-			'as'	 => 'rcl_chat_messagemeta',
+			'as'	 => $as ? $as : 'rcl_chat_messagemeta',
 			'cols'	 => array(
 				'meta_id',
 				'message_id',

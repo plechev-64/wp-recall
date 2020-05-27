@@ -17,7 +17,7 @@ add_shortcode( 'feed', 'rcl_get_feed_list' );
 function rcl_get_feed_list( $atts = array() ) {
 	global $wpdb, $user_ID, $rcl_feed;
 
-	if ( !$user_ID ) {
+	if ( ! $user_ID ) {
 		return '<p class="aligncenter rcl-feed-notice">'
 			. __( 'Login or register to view the latest publications and comments from users for which you have subscribed.', 'wp-recall' )
 			. '</p>';
@@ -25,14 +25,14 @@ function rcl_get_feed_list( $atts = array() ) {
 
 	add_filter( 'rcl_rating_user_can', 'rcl_feed_unset_can_vote', 10 );
 
-	if ( !$atts )
+	if ( ! $atts )
 		$atts = array();
 
 	include_once 'classes/class-rcl-feed-list.php';
 
 	$list = new Rcl_Feed_List( $atts );
 
-	if ( !isset( $atts['number'] ) ) {
+	if ( ! isset( $atts['number'] ) ) {
 
 		$rclnavi = new Rcl_PageNavi(
 			'rcl-feed', $list->count_feed(), array(
@@ -47,7 +47,7 @@ function rcl_get_feed_list( $atts = array() ) {
 
 	$feedsdata = $list->get_feed();
 
-	if ( !$feedsdata ) {
+	if ( ! $feedsdata ) {
 		$content .= '<p class="feed_not_news" align="center">' . __( 'No news found', 'wp-recall' ) . '</p>';
 		return $content;
 	}

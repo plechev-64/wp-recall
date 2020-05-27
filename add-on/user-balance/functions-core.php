@@ -12,8 +12,7 @@ function rcl_gateway_register( $gateway_id, $gatewayClassName ) {
 //получение данных из таблицы произведенных платежей
 function rcl_get_payments( $args = false ) {
 	require_once 'classes/class-rcl-payments.php';
-	$payments = new Rcl_Payments();
-	return $payments->get_results( $args );
+	return RQ::tbl( new Rcl_Payments() )->parse( $args )->get_results();
 }
 
 function rcl_payform( $attr ) {
@@ -28,17 +27,17 @@ function rcl_get_user_balance( $user_id = false ) {
 
 	$balance = $wpdb->get_var( $wpdb->prepare( "SELECT user_balance FROM " . RMAG_PREF . "users_balance WHERE user_id='%d'", $user_id ) );
 
-	return $balance;
+	return $balance ? $balance : 0;
 }
 
 function rcl_update_user_balance( $newmoney, $user_id, $comment = '' ) {
 	global $wpdb;
 
-	$newmoney = round( str_replace( ',', '.', $newmoney ), 2 );
+	$newmoney = rcl_commercial_round( str_replace( ',', '.', $newmoney ) );
 
-	$money = rcl_get_user_balance( $user_id );
+	$balance = $wpdb->get_var( $wpdb->prepare( "SELECT user_balance FROM " . RMAG_PREF . "users_balance WHERE user_id='%d'", $user_id ) );
 
-	if ( isset( $money ) ) {
+	if ( isset( $balance ) ) {
 
 		do_action( 'rcl_pre_update_user_balance', $newmoney, $user_id, $comment );
 
@@ -126,7 +125,7 @@ function rcl_mail_payment_error( $hash = false, $other = false ) {
 	$textmail .= 'RESULT - ' . $rmag_options['page_result_pay'] . '<br>';
 	$textmail .= 'SUCCESS - ' . $rmag_options['page_success_pay'] . '<br>';
 
-	$email = get_option( 'admin_email' );
+	$email = get_site_option( 'admin_email' );
 
 	rcl_mail( $email, $title, $textmail );
 }

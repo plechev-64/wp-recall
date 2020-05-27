@@ -5,12 +5,12 @@
 	<?php if ( $rcl_feed->is_options ) rcl_feed_options(); ?>
 
 	<div class="feed-author-avatar">
-		<a href="<?php echo get_author_posts_url( $rcl_feed->feed_author ); ?>">
+		<a href="<?php echo rcl_get_user_url( $rcl_feed->feed_author ); ?>">
 			<?php echo get_avatar( $rcl_feed->feed_author, 40 ); ?>
 		</a>
 	</div>
 	<div class="feed-author-name">
-		<a href="<?php echo get_author_posts_url( $rcl_feed->feed_author ); ?>">
+		<a href="<?php echo rcl_get_user_url( $rcl_feed->feed_author ); ?>">
 			<?php echo get_the_author_meta( 'display_name', $rcl_feed->feed_author ); ?>
 		</a>
 	</div>

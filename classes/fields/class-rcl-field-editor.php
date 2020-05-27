@@ -110,7 +110,7 @@ class Rcl_Field_Editor extends Rcl_Field_Abstract {
 
 	function get_value() {
 
-		if ( !$this->value )
+		if ( ! $this->value )
 			return false;
 
 		return nl2br( $this->value );

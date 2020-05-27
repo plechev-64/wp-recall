@@ -57,8 +57,8 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		if ( ! $this->option_name )
 			$this->option_name = 'rcl_fields_' . $this->manager_id;
 
-		if ( $this->sortable )
-			rcl_sortable_scripts();
+		//if ( $this->sortable )
+		rcl_sortable_scripts();
 
 		rcl_resizable_scripts();
 
@@ -370,7 +370,8 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			$content .= '<div class="rcl-areas-manager">';
 			$content .= '<a href="#" onclick="rcl_remove_manager_area(\'' . __( 'Вы уверены?', 'wp-recall' ) . '\',this);return false"><i class="rcli fa-remove" aria-hidden="true"></i> ' . __( 'Удалить область', 'wp-recall' ) . '</a>';
 
-			$content .= '<span class="area-move left-align"><i class="rcli fa-arrows" aria-hidden="true"></i></span>';
+			if ( $this->sortable )
+				$content .= '<span class="area-move left-align"><i class="rcli fa-arrows" aria-hidden="true"></i></span>';
 			if ( $this->create_field ) {
 				$content .= '<a href="#" onclick="rcl_manager_get_new_field(this);return false;" title="' . __( 'Добавить поле', 'wp-recall' ) . '" class="add-field left-align"><i class="rcli fa-plus-square" aria-hidden="true"></i> ' . __( 'Новое поле', 'wp-recall' ) . '</a>';
 			}
@@ -544,7 +545,8 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			$content .= '<a href="#" class="control-delete" onclick="rcl_manager_field_delete(this);return false;"><i class="rcli fa-remove" aria-hidden="true"></i></a>';
 		}
 		$content .= '<a href="#" class="control-edit" onclick="rcl_manager_field_switch(this);return false;"><i class="rcli fa-sliders" aria-hidden="true"></i></a>';
-		$content .= '<span href="#" class="control-move"><i class="rcli fa-arrows" aria-hidden="true"></i></span>';
+		if ( $this->sortable )
+			$content .= '<span href="#" class="control-move"><i class="rcli fa-arrows" aria-hidden="true"></i></span>';
 		$content .= '</span>';
 		$content .= '</div>';
 

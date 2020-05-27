@@ -107,12 +107,12 @@ class Rcl_PageNavi {
 
 	function get_string( $params = array() ) {
 
-		if ( !$params )
+		if ( ! $params )
 			return $this->uri['string'];
 
 		if ( isset( $this->uri['args'] ) && $this->uri['args'] ) {
 			foreach ( $this->uri['args'] as $k => $val ) {
-				if ( !in_array( $k, $params ) )
+				if ( ! in_array( $k, $params ) )
 					continue;
 				$str[] = $k . '=' . $val;
 			}
@@ -144,7 +144,7 @@ class Rcl_PageNavi {
 			}
 
 
-			for ( $num = $query['args']['number_left']; $num > 0; $num-- ) {
+			for ( $num = $query['args']['number_left']; $num > 0; $num -- ) {
 				$query['output'][]['page'] = $this->current_page - $num;
 			}
 		}
@@ -152,7 +152,7 @@ class Rcl_PageNavi {
 		$query['output'][]['current'] = $this->current_page;
 
 		if ( $query['args']['number_right'] ) {
-			for ( $num = 1; $num <= $query['args']['number_right']; $num++ ) {
+			for ( $num = 1; $num <= $query['args']['number_right']; $num ++ ) {
 				$query['output'][]['page'] = $this->current_page + $num;
 			}
 		}
@@ -176,7 +176,7 @@ class Rcl_PageNavi {
 	function pagenavi( $classes = '' ) {
 		global $rcl_tab, $user_LK;
 
-		if ( !$this->data_amount || $this->pages_amount == 1 )
+		if ( ! $this->data_amount || $this->pages_amount == 1 )
 			return false;
 
 		$query = $this->pager_query();

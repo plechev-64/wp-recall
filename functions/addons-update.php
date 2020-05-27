@@ -2,7 +2,7 @@
 
 add_action( 'wp', 'rcl_hand_addon_update' );
 function rcl_hand_addon_update() {
-	if ( !isset( $_GET['rcl-addon-update'] ) || $_GET['rcl-addon-update'] != 'now' )
+	if ( ! isset( $_GET['rcl-addon-update'] ) || $_GET['rcl-addon-update'] != 'now' )
 		return false;
 	rcl_check_addon_update();
 }
@@ -19,24 +19,24 @@ function rcl_check_addon_update() {
 			$a		 = 0;
 			foreach ( ( array ) $addons as $namedir ) {
 				$addon_dir	 = $path . '/' . $namedir;
-				if ( !is_dir( $addon_dir ) )
+				if ( ! is_dir( $addon_dir ) )
 					continue;
 				$index_src	 = $addon_dir . '/index.php';
-				if ( !file_exists( $index_src ) )
+				if ( ! file_exists( $index_src ) )
 					continue;
 				$info_src	 = $addon_dir . '/info.txt';
 				if ( file_exists( $info_src ) ) {
 					$info							 = file( $info_src );
 					$addons_data[$namedir]			 = rcl_parse_addon_info( $info );
 					$addons_data[$namedir]['src']	 = $index_src;
-					$a++;
+					$a ++;
 					flush();
 				}
 			}
 		}
 	}
 
-	if ( !$addons_data )
+	if ( ! $addons_data )
 		return false;
 
 	rcl_add_log( __( 'Sending request to the update server to get the latest versions of the installed add-ons', 'wp-recall' ) );
@@ -45,7 +45,7 @@ function rcl_check_addon_update() {
 
 	$xml_array = @simplexml_load_file( $url );
 
-	if ( !$xml_array ) {
+	if ( ! $xml_array ) {
 		rcl_add_log(
 			__( 'Failed to open file with add-ons data to check for updates', 'wp-recall' ), $url
 		);
@@ -57,12 +57,12 @@ function rcl_check_addon_update() {
 
 	foreach ( $xml_array as $xml_data ) {
 
-		if ( !$xml_data )
+		if ( ! $xml_data )
 			continue;
 
 		$key = ( string ) $xml_data->slug;
 
-		if ( !isset( $addons_data[$key] ) )
+		if ( ! isset( $addons_data[$key] ) )
 			continue;
 
 		$last_ver = ( string ) $xml_data->version;
@@ -75,7 +75,7 @@ function rcl_check_addon_update() {
 		}
 	}
 
-	update_option( 'rcl_addons_need_update', $need_update );
+	update_site_option( 'rcl_addons_need_update', $need_update );
 }
 
 add_action( 'rcl_cron_daily', 'rcl_send_addons_data', 10 );
@@ -90,24 +90,24 @@ function rcl_send_addons_data() {
 			$a		 = 0;
 			foreach ( ( array ) $addons as $namedir ) {
 				$addon_dir	 = $path . '/' . $namedir;
-				if ( !is_dir( $addon_dir ) )
+				if ( ! is_dir( $addon_dir ) )
 					continue;
 				$index_src	 = $addon_dir . '/index.php';
-				if ( !file_exists( $index_src ) )
+				if ( ! file_exists( $index_src ) )
 					continue;
 				$info_src	 = $addon_dir . '/info.txt';
 				if ( file_exists( $info_src ) ) {
 					$info							 = file( $info_src );
 					$addons_data[$namedir]			 = rcl_parse_addon_info( $info );
 					$addons_data[$namedir]['src']	 = $index_src;
-					$a++;
+					$a ++;
 					flush();
 				}
 			}
 		}
 	}
 
-	if ( !$addons_data )
+	if ( ! $addons_data )
 		return false;
 
 	$need_update = array();
@@ -145,7 +145,7 @@ function rcl_get_details_addon() {
 
 	$data = array(
 		'addon'			 => $slug,
-		'rcl-key'		 => get_option( 'rcl-key' ),
+		'rcl-key'		 => get_site_option( 'rcl-key' ),
 		'rcl-version'	 => VER_RCL,
 		'host'			 => $_SERVER['SERVER_NAME']
 	);
@@ -179,9 +179,9 @@ function rcl_update_addon() {
 
 	$addonID = $_POST['addon'];
 
-	$need_update = get_option( 'rcl_addons_need_update' );
+	$need_update = get_site_option( 'rcl_addons_need_update' );
 
-	if ( !class_exists( 'ZipArchive' ) ) {
+	if ( ! class_exists( 'ZipArchive' ) ) {
 		wp_send_json( array( 'error' => __( 'Update is impossible! ZipArchive class is not defined.', 'wp-recall' ) ) );
 	}
 
@@ -190,7 +190,7 @@ function rcl_update_addon() {
 	$pathdir	 = RCL_TAKEPATH . 'update/';
 	$new_addon	 = $pathdir . $addonID . '.zip';
 
-	if ( !file_exists( $pathdir ) ) {
+	if ( ! file_exists( $pathdir ) ) {
 		mkdir( $pathdir );
 		chmod( $pathdir, 0755 );
 	}
@@ -200,7 +200,7 @@ function rcl_update_addon() {
 
 	$data = array(
 		'addon'			 => $addonID,
-		'rcl-key'		 => get_option( 'rcl-key' ),
+		'rcl-key'		 => get_site_option( 'rcl-key' ),
 		'rcl-version'	 => VER_RCL,
 		'host'			 => $_SERVER['SERVER_NAME']
 	);
@@ -231,7 +231,7 @@ function rcl_update_addon() {
 
 	if ( $res === TRUE ) {
 
-		for ( $i = 0; $i < $zip->numFiles; $i++ ) {
+		for ( $i = 0; $i < $zip->numFiles; $i ++ ) {
 			if ( $i == 0 )
 				$dirzip = $zip->getNameIndex( $i );
 			if ( $zip->getNameIndex( $i ) == $dirzip . 'info.txt' ) {
@@ -240,7 +240,7 @@ function rcl_update_addon() {
 			}
 		}
 
-		if ( !$info ) {
+		if ( ! $info ) {
 			$zip->close();
 			wp_send_json( array( 'error' => __( 'Update has incorrect title!', 'wp-recall' ) ) );
 		}
@@ -272,7 +272,7 @@ function rcl_update_addon() {
 
 		if ( isset( $need_update[$addonID] ) ) {
 			unset( $need_update[$addonID] );
-			update_option( 'rcl_addons_need_update', $need_update );
+			update_site_option( 'rcl_addons_need_update', $need_update );
 		}
 
 		wp_send_json( array(

@@ -7,10 +7,10 @@ require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 $collate = '';
 
 if ( $wpdb->has_cap( 'collation' ) ) {
-	if ( !empty( $wpdb->charset ) ) {
+	if ( ! empty( $wpdb->charset ) ) {
 		$collate .= "DEFAULT CHARACTER SET $wpdb->charset";
 	}
-	if ( !empty( $wpdb->collate ) ) {
+	if ( ! empty( $wpdb->collate ) ) {
 		$collate .= " COLLATE $wpdb->collate";
 	}
 }

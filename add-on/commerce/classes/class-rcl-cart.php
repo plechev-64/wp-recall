@@ -20,7 +20,7 @@ class Rcl_Cart {
 
 	function get_cookie() {
 
-		if ( !isset( $_COOKIE['rcl_cart'] ) )
+		if ( ! isset( $_COOKIE['rcl_cart'] ) )
 			return array();
 
 		return json_decode( wp_unslash( $_COOKIE['rcl_cart'] ) );
@@ -66,7 +66,7 @@ class Rcl_Cart {
 
 		$product_price = $productPrice->get_price( $vars );
 
-		if ( !$product_price )
+		if ( ! $product_price )
 			$product_price = 0;
 
 		$key = $this->search_product( $product_id, $vars );
@@ -102,7 +102,7 @@ class Rcl_Cart {
 		$amount			 = $this->products[$key]->product_amount;
 		$product_price	 = $this->products[$key]->product_price;
 
-		if ( !$amount )
+		if ( ! $amount )
 			return false;
 
 		$this->products_amount --;
@@ -123,7 +123,7 @@ class Rcl_Cart {
 
 	function search_product( $product_id, $vars = false ) {
 
-		if ( !$this->products )
+		if ( ! $this->products )
 			return false;
 
 		$Vars = new Rcl_Product_Variations( array( 'product_id' => $product_id ) );
@@ -137,10 +137,10 @@ class Rcl_Cart {
 
 			if ( $product->product_id == $product_id ) {
 
-				if ( !$productVars )
+				if ( ! $productVars )
 					return $key;
 
-				if ( !$vars )
+				if ( ! $vars )
 					return $key;
 
 				$productHash = md5( json_encode( ( array ) $product->variations ) );
@@ -163,7 +163,7 @@ class Rcl_Cart {
 		$newVars = array();
 		foreach ( $productVars as $var ) {
 
-			if ( !isset( $vars[$var['slug']] ) )
+			if ( ! isset( $vars[$var['slug']] ) )
 				continue;
 
 			$newVars[$var['slug']] = array(

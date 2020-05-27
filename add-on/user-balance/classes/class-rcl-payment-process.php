@@ -14,18 +14,18 @@ class Rcl_Payment_Process extends Rcl_Payment_Core {
 
 		$this->ids = $rmag_options['connect_sale'];
 
-		if ( !is_array( $this->ids ) )
+		if ( ! is_array( $this->ids ) )
 			$this->ids = array_map( 'trim', explode( ',', $this->ids ) );
 	}
 
 	function get_id_is_payment() {
 
-		if ( !Rcl_Gateways()->gateways )
+		if ( ! Rcl_Gateways()->gateways )
 			return false;
 
 		foreach ( Rcl_Gateways()->gateways as $id => $className ) {
 
-			if ( !in_array( $id, $this->ids ) )
+			if ( ! in_array( $id, $this->ids ) )
 				continue;
 
 			if ( isset( $_REQUEST[Rcl_Gateways()->gateway( $id )->request] ) )

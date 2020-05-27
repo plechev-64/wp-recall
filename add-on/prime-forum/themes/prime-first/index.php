@@ -1,6 +1,6 @@
 <?php
 
-if ( !is_admin() ):
+if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'ftf_scripts', 10 );
 endif;
 function ftf_scripts() {
@@ -10,10 +10,10 @@ function ftf_scripts() {
 add_filter( 'rcl_inline_styles', 'pfm_color_from_elements', 10, 2 );
 function pfm_color_from_elements( $styles, $rgb ) {
 
-	if ( !pfm_get_option( 'forum-colors' ) )
+	if ( ! pfm_get_option( 'forum-colors' ) )
 		return $styles;
 
-	if ( !is_prime_forum() )
+	if ( ! is_prime_forum() )
 		return $styles; // не нужны за пределами форума
 
 	list($r, $g, $b) = $rgb;

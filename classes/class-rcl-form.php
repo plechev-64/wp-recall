@@ -5,6 +5,7 @@ class Rcl_Form extends Rcl_Fields {
 	public $class		 = '';
 	public $action		 = '';
 	public $method		 = 'post';
+	public $icon		 = 'fa-check-circle';
 	public $target		 = '';
 	public $submit;
 	public $submit_args;
@@ -58,13 +59,13 @@ class Rcl_Form extends Rcl_Fields {
 		if ( $this->onclick ) {
 			$content .= rcl_get_button( wp_parse_args( $this->submit_args, array(
 				'label'		 => $this->submit,
-				'icon'		 => 'fa-check-circle',
+				'icon'		 => $this->icon,
 				'onclick'	 => $this->onclick
 				) ) );
 		} else {
 			$content .= rcl_get_button( wp_parse_args( $this->submit_args, array(
 				'label'	 => $this->submit,
-				'icon'	 => 'fa-check-circle',
+				'icon'	 => $this->icon,
 				'submit' => true
 				) ) );
 		}
@@ -82,27 +83,43 @@ class Rcl_Form extends Rcl_Fields {
 		$content = '';
 
 		foreach ( $this->fields as $field_id => $field ) {
-
-			if ( ! isset( $field->value ) )
-				$field->value = (isset( $this->values[$field->slug] )) ? $this->values[$field->slug] : null;
-
-			if ( $field->type == 'hidden' ) {
-				$content .= $field->get_field_input();
-				continue;
-			}
-
-			$content .= '<div id="field-' . $field->slug . '" class="form-field field-type-' . $field->slug . ' rcl-option">';
-
-			if ( $field->title ) {
-				$content .= '<span class="field-title">';
-				$content .= $field->get_title();
-				$content .= '</span>';
-			}
-
-			$content .= $field->get_field_input();
-
-			$content .= '</div>';
+			$content .= $this->get_form_field( $field_id );
 		}
+
+		return $content;
+	}
+
+	function get_form_field( $field_id ) {
+
+		$field = $this->get_field( $field_id );
+
+		if ( ! $field )
+			return false;
+
+		if ( ! isset( $field->value ) )
+			$field->value = (isset( $this->values[$field->slug] )) ? $this->values[$field->slug] : null;
+
+		if ( $field->type == 'hidden' ) {
+			return $field->get_field_input();
+		}
+
+		$classes = array( 'form-field', 'field-type-' . $field->type, 'rcl-option' );
+
+		if ( $field->class ) {
+			$classes[] = $field->class;
+		}
+
+		$content = '<div id="field-' . $field->slug . '" class="' . implode( ' ', $classes ) . '">';
+
+		if ( $field->title ) {
+			$content .= '<span class="field-title">';
+			$content .= $field->get_title();
+			$content .= '</span>';
+		}
+
+		$content .= $field->get_field_input();
+
+		$content .= '</div>';
 
 		return $content;
 	}

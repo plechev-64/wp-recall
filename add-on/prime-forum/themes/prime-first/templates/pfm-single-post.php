@@ -5,7 +5,7 @@
 
 		<div class="prime-author-avatar">
 			<?php if ( pfm_post_field( 'user_id', 0 ) ): ?>
-				<a href="<?php echo get_author_posts_url( pfm_post_field( 'user_id', 0 ) ); ?>" title="<?php _e( 'To personal account', 'wp-recall' ); ?>">
+				<a href="<?php echo rcl_get_user_url( pfm_post_field( 'user_id', 0 ) ); ?>" title="<?php _e( 'To personal account', 'wp-recall' ); ?>">
 					<?php pfm_author_avatar(); ?>
 				</a>
 			<?php else: ?>

@@ -586,9 +586,9 @@ function rcl_ajax( prop ) {
 
 	if ( typeof Rcl != 'undefined' ) {
 		if ( typeof prop.data === 'string' ) {
-			prop.data += '&ajax_nonce=' + Rcl.nonce;
+			prop.data += '&_wpnonce=' + Rcl.nonce;
 		} else if ( typeof prop.data === 'object' ) {
-			prop.data.ajax_nonce = Rcl.nonce;
+			prop.data._wpnonce = Rcl.nonce;
 		}
 	}
 
@@ -604,19 +604,53 @@ function rcl_ajax( prop ) {
 		action = prop.data.action;
 	}
 
+	var url;
+
+	if ( prop.rest ) {
+
+		var restAction = prop.data.action;
+		var restRoute = restAction;
+		var restSpace = 'rcl';
+
+		if ( typeof prop.rest === 'object' ) {
+
+			if ( prop.rest.action )
+				restAction = prop.rest.action;
+			if ( prop.rest.space )
+				restSpace = prop.rest.space;
+			if ( prop.rest.route )
+				restRoute = prop.rest.route;
+			else
+				restRoute = restAction;
+
+		}
+
+		if ( Rcl.permalink )
+			url = Rcl.wpurl + '/wp-json/' + restSpace + '/' + restRoute + '/';
+		else
+			url = Rcl.wpurl + '/?rest_route=/' + restSpace + '/' + restRoute + '/';
+
+	} else {
+
+		url = ( typeof ajax_url !== 'undefined' ) ? ajax_url : Rcl.ajaxurl;
+
+	}
+
 	jQuery.ajax( {
 		type: 'POST',
 		data: prop.data,
 		dataType: 'json',
 		headers: typeof prop.headers !== 'undefined' ? prop.headers : { },
-		url: ( typeof ajax_url !== 'undefined' ) ? ajax_url : Rcl.ajax_url,
+		url: url,
 		success: function( result, post ) {
+
+			var noticeTime = result.notice_time ? result.notice_time : 5000;
 
 			if ( prop.response )
 				prop.response( result );
 
 			if ( !result ) {
-				rcl_notice( Rcl.local.error, 'error', 5000 );
+				rcl_notice( Rcl.local.error, 'error', noticeTime );
 				return false;
 			}
 
@@ -626,10 +660,10 @@ function rcl_ajax( prop ) {
 
 				if ( result.errors ) {
 					jQuery.each( result.errors, function( index, error ) {
-						rcl_notice( error, 'error', 5000 );
+						rcl_notice( error, 'error', noticeTime );
 					} );
 				} else {
-					rcl_notice( result.error, 'error', 5000 );
+					rcl_notice( result.error, 'error', noticeTime );
 				}
 
 				if ( prop.error )
@@ -644,11 +678,11 @@ function rcl_ajax( prop ) {
 			}
 
 			if ( result.success ) {
-				rcl_notice( result.success, 'success', 5000 );
+				rcl_notice( result.success, 'success', noticeTime );
 			}
 
 			if ( result.warning ) {
-				rcl_notice( result.warning, 'warning', 5000 );
+				rcl_notice( result.warning, 'warning', noticeTime );
 			}
 
 			rcl_do_action( 'rcl_ajax_success', result );
@@ -670,7 +704,11 @@ function rcl_ajax( prop ) {
 
 }
 
-function rcl_send_form_data( action, e ) {
+function rcl_send_form_data( action, e, confirmText ) {
+
+	if ( confirmText && !confirm( confirmText ) ) {
+		return false;
+	}
 
 	var form = jQuery( e ).parents( 'form' );
 
@@ -1251,7 +1289,7 @@ function RclForm( form ) {
 		 }*/
 	};
 
-	this.send = function( action, success, headers ) {
+	this.send = function( action, success, error ) {
 
 		if ( !this.validate() )
 			return false;
@@ -1266,8 +1304,8 @@ function RclForm( form ) {
 			sendData.success = success;
 		}
 
-		if ( headers ) {
-			sendData.headers = headers;
+		if ( error ) {
+			sendData.error = error;
 		}
 
 		rcl_ajax( sendData );
@@ -1287,4 +1325,18 @@ function rcl_submit_form( e ) {
 
 function rcl_init_iconpicker() {
 	jQuery( '.rcl-iconpicker' ).iconpicker();
+}
+
+function rcl_check_all_actions_manager( nameField, e ) {
+	checkboxes = document.getElementsByName( nameField );
+	for ( var i = 0, n = checkboxes.length; i < n; i++ ) {
+		checkboxes[i].checked = true;
+	}
+}
+
+function rcl_uncheck_all_actions_manager( nameField, e ) {
+	checkboxes = document.getElementsByName( nameField );
+	for ( var i = 0, n = checkboxes.length; i < n; i++ ) {
+		checkboxes[i].checked = false;
+	}
 }

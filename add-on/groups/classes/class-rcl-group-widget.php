@@ -11,7 +11,7 @@ class Rcl_Group_Widget {
 
 	function __construct( $args = false ) {
 
-		if ( !$args )
+		if ( ! $args )
 			return false;
 
 		$called = get_called_class();
@@ -33,7 +33,7 @@ class Rcl_Group_Widget {
 
 	function before( $object ) {
 
-		if ( !isset( $object->widget_type ) || !$object->widget_type )
+		if ( ! isset( $object->widget_type ) || ! $object->widget_type )
 			$object->widget_type = 'normal';
 
 		$before = sprintf( '<div %s class="sidebar-widget ' . $object->widget_type . '-widget">', 'id="' . $object->widget_id . '"' );
@@ -70,10 +70,10 @@ class Rcl_Group_Widget {
 
 		$content = '';
 
-		if ( !$rcl_group_widgets )
-			return $content;
-
 		$rcl_group_widgets = apply_filters( 'rcl_group_widgets', $rcl_group_widgets );
+
+		if ( ! $rcl_group_widgets )
+			return $content;
 
 		$group_widgets	 = rcl_get_group_option( $rcl_group->term_id, 'group_widgets' );
 		$widgets_options = rcl_get_group_option( $rcl_group->term_id, 'widgets_options' );
@@ -269,12 +269,12 @@ function rcl_edit_group_widgets( $widgets ) {
 
 	$group_widgets = rcl_get_group_option( $rcl_group->term_id, 'group_widgets' );
 
-	if ( !$group_widgets )
+	if ( ! $group_widgets )
 		return $widgets;
 
 	//удаляем данные о виджетах в незарегистрированных областях
 	foreach ( $group_widgets as $area_id => $ws ) {
-		if ( !rcl_is_group_area( $area_id ) ) {
+		if ( ! rcl_is_group_area( $area_id ) ) {
 			unset( $group_widgets[$area_id] );
 		}
 	}
@@ -283,7 +283,7 @@ function rcl_edit_group_widgets( $widgets ) {
 
 	foreach ( $rcl_group_area as $zone ) {
 
-		if ( !isset( $group_widgets[$zone['id']] ) )
+		if ( ! isset( $group_widgets[$zone['id']] ) )
 			continue;
 
 		foreach ( $widgets as $k => $widget ) {

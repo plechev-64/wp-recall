@@ -3,7 +3,7 @@
 add_action( 'init', 'pfm_register_rating_type' );
 function pfm_register_rating_type() {
 
-	if ( !rcl_exist_addon( 'rating-system' ) )
+	if ( ! rcl_exist_addon( 'rating-system' ) )
 		return false;
 
 	rcl_register_rating_type( array(
@@ -54,7 +54,7 @@ function pfm_init_feed() {
 			$PostsQuery = new PrimePosts();
 
 			$this->set_query( array(
-				'table'				 => $PostsQuery->query['table'],
+				'table'				 => $PostsQuery->table,
 				'user_id__not_in'	 => $user_ID
 			) );
 

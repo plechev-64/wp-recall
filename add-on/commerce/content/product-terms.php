@@ -18,7 +18,7 @@ function rcl_get_product_terms( $product_id ) {
 	$content = rcl_get_product_term_list( $product_id, 'prodcat', __( 'Categories', 'wp-recall' ), 'folder-open' );
 	$content .= rcl_get_product_term_list( $product_id, 'product_tag', __( 'Tags', 'wp-recall' ), 'tags' );
 
-	if ( !$content )
+	if ( ! $content )
 		return false;
 
 	return $content;
@@ -36,7 +36,7 @@ function rcl_get_product_term_list( $product_id, $taxonomy, $name, $icon ) {
 
 	$terms = get_the_term_list( $product_id, $taxonomy, sprintf( $start, $icon, $name ), ', ', $end );
 
-	if ( !$terms )
+	if ( ! $terms )
 		return false;
 
 	return $terms;

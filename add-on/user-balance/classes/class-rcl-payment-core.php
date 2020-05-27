@@ -14,16 +14,16 @@ class Rcl_Payment_Core {
 			$this->init_properties( $args );
 		}
 
-		if ( !$this->page_result && isset( $rmag_options['page_result_pay'] ) )
+		if ( ! $this->page_result && isset( $rmag_options['page_result_pay'] ) )
 			$this->page_result = $rmag_options['page_result_pay'];
 
-		if ( !$this->page_success && isset( $rmag_options['page_success_pay'] ) )
+		if ( ! $this->page_success && isset( $rmag_options['page_success_pay'] ) )
 			$this->page_success = $rmag_options['page_success_pay'];
 
-		if ( !$this->page_fail && isset( $rmag_options['page_fail_pay'] ) )
+		if ( ! $this->page_fail && isset( $rmag_options['page_fail_pay'] ) )
 			$this->page_fail = $rmag_options['page_fail_pay'];
 
-		if ( !$this->page_successfully && isset( $rmag_options['page_successfully_pay'] ) )
+		if ( ! $this->page_successfully && isset( $rmag_options['page_successfully_pay'] ) )
 			$this->page_successfully = $rmag_options['page_successfully_pay'];
 	}
 

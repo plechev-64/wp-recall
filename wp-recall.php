@@ -108,7 +108,7 @@ final class WP_Recall {
 
 		$this->define( 'RCL_SERVICE_HOST', 'http://downloads.codeseller.ru' );
 
-		$rcl_options = get_option( 'rcl_global_options' );
+		$rcl_options = get_site_option( 'rcl_global_options' );
 	}
 
 	private function define( $name, $value ) {
@@ -139,10 +139,16 @@ final class WP_Recall {
 		 * Остальные распихаем по соответсвующим функциям
 		 */
 
+		require_once 'classes/class-rcl-ajax.php';
 		require_once 'classes/class-rcl-cache.php';
 		require_once 'classes/class-rcl-custom-fields.php';
 		require_once 'classes/class-rcl-custom-fields-manager.php';
-		require_once 'classes/class-rcl-query.php';
+
+		require_once 'classes/query/class-rcl-old-query.php';
+		require_once 'classes/query/class-rcl-query.php';
+		require_once 'classes/query/class-rq.php';
+
+		//require_once 'classes/class-rcl-query.php';
 		require_once 'classes/class-rcl-query-tables.php';
 		require_once 'classes/class-rcl-includer.php';
 		require_once 'classes/class-rcl-pagenavi.php';
@@ -173,6 +179,7 @@ final class WP_Recall {
 		require_once 'classes/fields/class-rcl-field-number.php';
 		require_once 'classes/fields/class-rcl-field-textarea.php';
 		require_once 'classes/fields/class-rcl-field-uploader.php';
+		require_once 'classes/fields/class-rcl-field-hidden.php';
 
 		require_once 'classes/class-rcl-field.php';
 		require_once 'classes/class-rcl-fields.php';
@@ -280,7 +287,7 @@ final class WP_Recall {
 			),
 			'hidden'		 => array(
 				'label'	 => __( 'Скрытое поле', 'wp-recall' ),
-				'class'	 => 'Rcl_Field_Text'
+				'class'	 => 'Rcl_Field_Hidden'
 			),
 			'password'		 => array(
 				'label'	 => __( 'Password', 'wp-recall' ),
@@ -369,7 +376,7 @@ final class WP_Recall {
 		global $wpdb, $user_LK, $rcl_userlk_action, $user_ID, $rcl_office, $rcl_user_URL, $rcl_current_action, $wp_rewrite;
 
 		if ( $user_ID ) {
-			$rcl_user_URL		 = get_author_posts_url( $user_ID );
+			$rcl_user_URL		 = rcl_get_user_url( $user_ID );
 			$rcl_current_action	 = rcl_get_time_user_action( $user_ID );
 		}
 
@@ -388,7 +395,7 @@ final class WP_Recall {
 				}
 			}
 		} else { //если ЛК выводим через author.php
-			if ( '' == get_option( 'permalink_structure' ) ) {
+			if ( '' == get_site_option( 'permalink_structure' ) ) {
 
 				if ( isset( $_GET[$wp_rewrite->author_base] ) )
 					$user_LK = intval( $_GET[$wp_rewrite->author_base] );
@@ -418,8 +425,10 @@ final class WP_Recall {
 
 		$rcl_office = $user_LK;
 
-		if ( $user_LK ) {
+		if ( $user_LK && $user_LK != $user_ID ) {
 			$rcl_userlk_action = rcl_get_time_user_action( $user_LK );
+		} else if ( $user_LK && $user_LK == $user_ID ) {
+			$rcl_userlk_action = $rcl_current_action;
 		}
 	}
 

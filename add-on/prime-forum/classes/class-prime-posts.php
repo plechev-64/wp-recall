@@ -1,11 +1,14 @@
 <?php
 
 class PrimePosts extends Rcl_Query {
-	function __construct() {
+
+	public $serialize = ['post_edit' ];
+
+	function __construct( $as = false ) {
 
 		$table = array(
 			'name'	 => RCL_PREF . "pforum_posts",
-			'as'	 => 'pfm_posts',
+			'as'	 => $as ? $as : 'pfm_posts',
 			'cols'	 => array(
 				'post_id',
 				'post_content',
@@ -16,7 +19,6 @@ class PrimePosts extends Rcl_Query {
 				'post_edit',
 				'post_status',
 				'post_index',
-				'forum_id',
 				'topic_id'
 			)
 		);

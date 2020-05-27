@@ -14,7 +14,7 @@ echo '<div id="icon-plugins" class="icon32"><br></div>
 
 if ( isset( $_POST['save-rcl-key'] ) ) {
 	if ( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ) {
-		update_option( 'rcl-key', $_POST['rcl-key'] );
+		update_site_option( 'rcl-key', $_POST['rcl-key'] );
 		echo '<div id="message" class="' . $type . '"><p>' . __( 'Key has been saved', 'wp-recall' ) . '!</p></div>';
 	}
 }
@@ -23,7 +23,7 @@ echo '<div class="rcl-admin-service-box rcl-key-box">';
 
 echo '<h4>' . __( 'RCLKEY', 'wp-recall' ) . '</h4>
 	<form action="" method="post">
-		' . __( 'Enter RCLKEY', 'wp-recall' ) . ' <input type="text" name="rcl-key" value="' . get_option( 'rcl-key' ) . '">
+		' . __( 'Enter RCLKEY', 'wp-recall' ) . ' <input type="text" name="rcl-key" value="' . get_site_option( 'rcl-key' ) . '">
 		<input class="button" type="submit" value="' . __( 'Save', 'wp-recall' ) . '" name="save-rcl-key">
 		' . wp_nonce_field( 'add-rcl-key', '_wpnonce', true, false ) . '
 	</form>

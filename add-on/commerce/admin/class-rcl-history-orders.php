@@ -1,6 +1,6 @@
 <?php
 
-if ( !class_exists( 'WP_List_Table' ) ) {
+if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
@@ -140,7 +140,7 @@ class Rcl_History_Orders extends WP_List_Table {
 
 		if ( isset( $_REQUEST['action'] ) ) {
 			if ( isset( $_POST['action'] ) ) {
-				if ( !isset( $_POST['orders'] ) )
+				if ( ! isset( $_POST['orders'] ) )
 					return;
 				$action = $_POST['action'];
 				foreach ( $_POST['orders'] as $order_id ) {
@@ -170,10 +170,10 @@ class Rcl_History_Orders extends WP_List_Table {
 
 		if ( isset( $_GET['date-start'] ) && $_GET['date-start'] ) {
 
-			$args['date_query'][] = array(
-				'value'		 => array( $_GET['date-start'], $_GET['date-end'] ),
+			$args['date'][] = array(
+				'data'		 => array( $_GET['date-start'], $_GET['date-end'] ),
 				'compare'	 => 'BETWEEN',
-				'column'	 => 'order_date'
+				'colname'	 => 'order_date'
 			);
 
 			if ( isset( $_GET['sts'] ) && $_GET['sts'] )
@@ -184,7 +184,7 @@ class Rcl_History_Orders extends WP_List_Table {
 			} elseif ( isset( $_GET['user'] ) && $_GET['user'] ) {
 				$args['user_id'] = intval( $_GET['user'] );
 			} else {
-				$args['order_status__not_in'] = 6;
+				$args['order_status__not_in'] = array( 6 );
 			}
 		}
 
@@ -197,7 +197,7 @@ class Rcl_History_Orders extends WP_List_Table {
 
 		$this->total_items = rcl_count_orders( $args );
 
-		if ( !$this->total_items )
+		if ( ! $this->total_items )
 			return false;
 
 		$items = rcl_get_orders( $args );

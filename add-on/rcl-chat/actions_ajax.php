@@ -48,7 +48,7 @@ function rcl_get_chat_page() {
 	$chat_token	 = $_POST['token'];
 	$chat_room	 = rcl_chat_token_decode( $chat_token );
 
-	if ( !rcl_get_chat_by_room( $chat_room ) )
+	if ( ! rcl_get_chat_by_room( $chat_room ) )
 		return false;
 
 	require_once 'class-rcl-chat.php';
@@ -77,7 +77,7 @@ function rcl_chat_add_message() {
 
 	$chat_room = rcl_chat_token_decode( $POST['token'] );
 
-	if ( !rcl_get_chat_by_room( $chat_room ) )
+	if ( ! rcl_get_chat_by_room( $chat_room ) )
 		return false;
 
 	$attach = (isset( $POST['attachment'] )) ? $POST['attachment'] : false;
@@ -101,7 +101,7 @@ function rcl_chat_add_message() {
 
 	$result = $chat->add_message( $POST['message'], $attach );
 
-	if ( $result->errors ) {
+	if ( is_object( $result ) && $result->errors ) {
 		$res['errors'] = $result->errors;
 		wp_send_json( $res );
 	}
@@ -168,7 +168,7 @@ function rcl_chat_important_manager_shift() {
 	$status_important	 = $_POST['status_important'];
 	$chat_room			 = rcl_chat_token_decode( $chat_token );
 
-	if ( !rcl_get_chat_by_room( $chat_room ) )
+	if ( ! rcl_get_chat_by_room( $chat_room ) )
 		return false;
 
 	require_once 'class-rcl-chat.php';
@@ -187,10 +187,10 @@ function rcl_chat_delete_attachment() {
 
 	$attachment_id = intval( $_POST['attachment_id'] );
 
-	if ( !$attachment_id )
+	if ( ! $attachment_id )
 		return false;
 
-	if ( !$post = get_post( $attachment_id ) )
+	if ( ! $post = get_post( $attachment_id ) )
 		return false;
 
 	if ( $post->post_author != $user_ID )
@@ -209,7 +209,7 @@ function rcl_chat_ajax_delete_message() {
 
 	rcl_verify_ajax_nonce();
 
-	if ( !$message_id = intval( $_POST['message_id'] ) )
+	if ( ! $message_id = intval( $_POST['message_id'] ) )
 		return false;
 
 	if ( $current_user->user_level >= rcl_get_option( 'consol_access_rcl', 7 ) ) {
@@ -240,7 +240,7 @@ function rcl_chat_upload() {
 
 	$type = $filetype['ext'];
 
-	if ( !in_array( $type, $valid_types ) ) {
+	if ( ! in_array( $type, $valid_types ) ) {
 		wp_send_json( array( 'error' => __( 'Forbidden file extension. Allowed:', 'wp-recall' ) . ' ' . implode( ', ', $valid_types ) ) );
 	}
 

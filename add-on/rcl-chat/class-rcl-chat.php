@@ -199,7 +199,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 	function is_errors() {
 		global $wp_errors;
-		if ( $wp_errors->errors )
+		if ( $wp_errors && $wp_errors->errors )
 			return true;
 		return false;
 	}
@@ -357,10 +357,14 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 		global $user_ID;
 
 		if ( ! $user_ID ) {
-			$content = '<div class="chat-notice">'
-				. '<span class="notice-error">' . __( 'To post messages in the chat you need to login', 'wp-recall' ) . '</span>'
-				. '</div>'
-				. '<form><input type="hidden" name="chat[token]" value="' . $this->chat_token . '"></form>';
+
+			$content = rcl_get_notice( array(
+				'type'	 => 'error',
+				'text'	 => __( 'To post messages in the chat you need to login', 'wp-recall' )
+				) );
+
+			$content .= '<form><input type="hidden" name="chat[token]" value="' . $this->chat_token . '"></form>';
+
 			return $content;
 		}
 
@@ -506,7 +510,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 		$class = ($message['user_id'] == $this->user_id) ? 'nth' : '';
 
-		$content = '<div class="chat-message ' . $class . '" data-message="' . $message['message_id'] . '">'
+		$content = '<div class="chat-message ' . $class . '" data-message="' . $message['message_id'] . '" data-user_id="' . $message['user_id'] . '">'
 			. '<span class="user-avatar">';
 
 		if ( $message['user_id'] != $this->user_id )

@@ -67,13 +67,13 @@ function pfm_get_topic_meta_box( $topic_id ) {
 
 	$fields = array();
 
-	if ( $groupFields = get_option( 'rcl_fields_pfm_group_' . $group_id ) )
+	if ( $groupFields = get_site_option( 'rcl_fields_pfm_group_' . $group_id ) )
 		$fields		 = $groupFields;
 
-	if ( $forumFields = get_option( 'rcl_fields_pfm_forum_' . $forum_id ) )
+	if ( $forumFields = get_site_option( 'rcl_fields_pfm_forum_' . $forum_id ) )
 		$fields		 = array_merge( $fields, $forumFields );
 
-	if ( !$fields )
+	if ( ! $fields )
 		return false;
 
 	$content = '';
@@ -87,7 +87,7 @@ function pfm_get_topic_meta_box( $topic_id ) {
 		$content .= $fieldObject->get_field_value( true );
 	}
 
-	if ( !$content )
+	if ( ! $content )
 		return false;
 
 	$content = '<div class="prime-topic-metabox">' . $content . '</div>';
@@ -112,13 +112,13 @@ function pfm_update_topic_custom_fields( $topic_id ) {
 
 	$fields = array();
 
-	if ( $groupFields = get_option( 'rcl_fields_pfm_group_' . $group_id ) )
+	if ( $groupFields = get_site_option( 'rcl_fields_pfm_group_' . $group_id ) )
 		$fields		 = $groupFields;
 
-	if ( $forumFields = get_option( 'rcl_fields_pfm_forum_' . $forum_id ) )
+	if ( $forumFields = get_site_option( 'rcl_fields_pfm_forum_' . $forum_id ) )
 		$fields		 = array_merge( $fields, $forumFields );
 
-	if ( !$fields )
+	if ( ! $fields )
 		return false;
 
 	if ( $fields ) {
@@ -137,7 +137,7 @@ function pfm_update_topic_custom_fields( $topic_id ) {
 
 				if ( $value && is_array( $value ) ) {
 					foreach ( $value as $val ) {
-						for ( $a = 0; $a < $count_field; $a++ ) {
+						for ( $a = 0; $a < $count_field; $a ++ ) {
 							if ( $field['values'][$a] == $val ) {
 								$vals[] = $val;
 							}
@@ -180,15 +180,15 @@ add_action( 'pfm_add_topic', 'pfm_send_admin_mail_new_topic', 10 );
 function pfm_send_admin_mail_new_topic( $topic_id ) {
 	global $user_ID;
 
-	if ( !pfm_get_option( 'admin-notes' ) || rcl_is_user_role( $user_ID, 'administrator' ) )
+	if ( ! pfm_get_option( 'admin-notes' ) || rcl_is_user_role( $user_ID, 'administrator' ) )
 		return false;
 
 	$topic = pfm_get_topic( $topic_id );
 
-	if ( !$topic )
+	if ( ! $topic )
 		return false;
 
-	$email	 = get_option( 'admin_email' );
+	$email	 = get_site_option( 'admin_email' );
 	$subject = __( 'New forum topic', 'wp-recall' );
 
 	$textmail = '<p>' . sprintf( __( 'On the forum of the site "%s" created a new topic!', 'wp-recall' ), get_bloginfo( 'name' ) ) . '</p>';
@@ -204,7 +204,7 @@ function pfm_add_topic_form_custom_meta( $topic_id ) {
 
 	$topic = pfm_get_topic( $topic_id );
 
-	if ( !$topic )
+	if ( ! $topic )
 		return false;
 
 	if ( isset( $_REQUEST['pfm-action'] ) ) {
@@ -242,7 +242,7 @@ function pfm_delete_topic_form_custom_meta( $topic_id ) {
 		)
 		) );
 
-	if ( !$metas )
+	if ( ! $metas )
 		return false;
 
 	foreach ( $metas as $meta ) {
@@ -255,7 +255,7 @@ function pfm_update_topic_count( $topic_id ) {
 
 	$topic = pfm_get_topic( $topic_id );
 
-	if ( !$topic )
+	if ( ! $topic )
 		return false;
 
 	pfm_update_forum_counter( $topic->forum_id );
@@ -267,12 +267,12 @@ function pfm_update_topic_author_count( $topic_id ) {
 
 	$topic = pfm_get_topic( $topic_id );
 
-	if ( !$topic )
+	if ( ! $topic )
 		return false;
 
-	$Topics = new PrimeTopics();
-
-	$topicCount = $Topics->count( array( 'user_id' => $topic->user_id ) );
+	$topicCount = RQ::tbl( new PrimeTopics() )
+		->where( array( 'user_id' => $topic->user_id ) )
+		->get_count();
 
 	pfm_update_author_meta( $topic->user_id, 'topic_count', $topicCount );
 }

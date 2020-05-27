@@ -70,7 +70,7 @@ class Rcl_Form_Fields {
 	}
 
 	function selected() {
-		if ( !$this->checked )
+		if ( ! $this->checked )
 			return false;
 		switch ( $this->type ) {
 			case 'radio': return 'checked=checked';
@@ -81,7 +81,7 @@ class Rcl_Form_Fields {
 	}
 
 	function required() {
-		if ( !$this->required )
+		if ( ! $this->required )
 			return false;
 		return 'required=required';
 	}

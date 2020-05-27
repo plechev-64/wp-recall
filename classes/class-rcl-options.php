@@ -82,7 +82,7 @@ class Rcl_Options extends Rcl_Custom_Fields {
 	}
 
 	function title( $title ) {
-		if ( !$title )
+		if ( ! $title )
 			return false;
 		return '<h3>' . $title . '</h3>';
 	}
@@ -183,7 +183,7 @@ class Rcl_Options extends Rcl_Custom_Fields {
 
 		if ( isset( $args['group'] ) ) {
 			if ( isset( $args['type'] ) && $args['type'] == 'local' ) {
-				$value	 = get_option( $args['group'] );
+				$value	 = get_site_option( $args['group'] );
 				$value	 = $value[$args['name']];
 			} else if ( isset( $rcl_options[$args['group']][$args['name']] ) ) {
 				$value = $rcl_options[$args['group']][$args['name']];
@@ -192,8 +192,8 @@ class Rcl_Options extends Rcl_Custom_Fields {
 			}
 		} else {
 			if ( isset( $args['type'] ) && $args['type'] == 'local' )
-				$value	 = get_option( $args['name'] );
-			else if ( isset( $args['default'] ) && !isset( $rcl_options[$args['name']] ) )
+				$value	 = get_site_option( $args['name'] );
+			else if ( isset( $args['default'] ) && ! isset( $rcl_options[$args['name']] ) )
 				$value	 = $args['default'];
 			else
 				$value	 = isset( $rcl_options[$args['name']] ) ? $rcl_options[$args['name']] : '';

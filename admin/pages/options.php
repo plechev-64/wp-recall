@@ -349,7 +349,7 @@ if ( $rclOldOptionData ) {
 
 	foreach ( $rclOldOptionData as $box_id => $box ) {
 
-		if ( !$box['groups'] )
+		if ( ! $box['groups'] )
 			continue;
 
 		$options->add_box( $box_id, array(

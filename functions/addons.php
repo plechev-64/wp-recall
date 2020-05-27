@@ -2,7 +2,7 @@
 
 function rcl_get_addon( $addon_id ) {
 
-	if ( !rcl_exist_addon( $addon_id ) )
+	if ( ! rcl_exist_addon( $addon_id ) )
 		return false;
 
 	global $active_addons;
@@ -13,7 +13,7 @@ function rcl_get_addon( $addon_id ) {
 function rcl_get_addons() {
 	global $active_addons;
 
-	$need_update = get_option( 'rcl_addons_need_update' );
+	$need_update = get_site_option( 'rcl_addons_need_update' );
 
 	$paths = array( RCL_PATH . 'add-on', RCL_TAKEPATH . 'add-on' );
 
@@ -27,19 +27,19 @@ function rcl_get_addons() {
 
 			$addons = scandir( $path, 1 );
 
-			if ( !$addons )
+			if ( ! $addons )
 				continue;
 
 			foreach ( $addons as $namedir ) {
 
 				$addon_dir = $path . '/' . $namedir;
 
-				if ( !is_dir( $addon_dir ) || !file_exists( $addon_dir . '/index.php' ) )
+				if ( ! is_dir( $addon_dir ) || ! file_exists( $addon_dir . '/index.php' ) )
 					continue;
 
 				$info_src = $addon_dir . '/info.txt';
 
-				if ( !file_exists( $info_src ) )
+				if ( ! file_exists( $info_src ) )
 					continue;
 
 				$add_ons[$namedir]					 = rcl_parse_addon_info( file( $info_src ) );
@@ -58,7 +58,7 @@ function rcl_activate_addon( $addon, $activate = true, $dirpath = false ) {
 
 	$active_addons = get_site_option( 'rcl_active_addons' );
 
-	if ( !$active_addons )
+	if ( ! $active_addons )
 		$active_addons = array();
 
 	if ( isset( $active_addons[$addon] ) )
@@ -71,7 +71,7 @@ function rcl_activate_addon( $addon, $activate = true, $dirpath = false ) {
 			$path		 = str_replace( '\\', '/', $path );
 		$index_src	 = $path . '/' . $addon . '/index.php';
 
-		if ( !is_readable( $index_src ) )
+		if ( ! is_readable( $index_src ) )
 			continue;
 
 		if ( file_exists( $index_src ) ) {
@@ -79,7 +79,7 @@ function rcl_activate_addon( $addon, $activate = true, $dirpath = false ) {
 
 			$active_addons[$addon]				 = $addon_headers;
 			$active_addons[$addon]['path']		 = $path . '/' . $addon;
-			$active_addons[$addon]['priority']	 = (!$k) ? 1 : 0;
+			$active_addons[$addon]['priority']	 = ( ! $k) ? 1 : 0;
 
 			$install_src = $path . '/' . $addon . '/activate.php';
 
@@ -158,7 +158,7 @@ function rcl_register_shutdown() {
 
 		$addon = rcl_get_addon_dir( $error['file'] );
 
-		if ( !$addon )
+		if ( ! $addon )
 			exit();
 
 		$active_addons = get_site_option( 'rcl_active_addons' );
@@ -210,7 +210,7 @@ function rcl_get_addon_headers( $addon_name, $path = false ) {
 	foreach ( $paths as $path ) {
 		$addon_dir	 = $path . '/' . $addon_name;
 		$index_src	 = $addon_dir . '/index.php';
-		if ( !is_dir( $addon_dir ) || !file_exists( $index_src ) )
+		if ( ! is_dir( $addon_dir ) || ! file_exists( $index_src ) )
 			continue;
 		$info_src	 = $addon_dir . '/info.txt';
 		if ( file_exists( $info_src ) ) {
@@ -231,12 +231,12 @@ function rcl_check_active_template() {
 
 	if ( $templates ) {
 		//Если найденный шаблон указан как используемый, то активируем его
-		if ( !$rcl_template ) {
+		if ( ! $rcl_template ) {
 			foreach ( $templates as $addon_id => $data ) {
 
 				rcl_activate_addon( $addon_id );
 
-				update_option( 'rcl_active_template', $addon_id );
+				update_site_option( 'rcl_active_template', $addon_id );
 
 				$rcl_template				 = $addon_id;
 				$active_addons[$addon_id]	 = $data;
@@ -247,11 +247,11 @@ function rcl_check_active_template() {
 	}
 
 	//Если ни один шаблон не активен
-	if ( !$templates ) {
+	if ( ! $templates ) {
 		//ищем шаблоны в папке дополнений
 		$templates = rcl_search_templates();
 
-		if ( !$templates ) {
+		if ( ! $templates ) {
 			return false;
 		}
 
@@ -270,7 +270,7 @@ function rcl_check_active_template() {
 
 			rcl_activate_addon( $addon_id );
 
-			update_option( 'rcl_active_template', $addon_id );
+			update_site_option( 'rcl_active_template', $addon_id );
 			$rcl_template				 = $addon_id;
 			$active_addons[$addon_id]	 = $data;
 
@@ -284,7 +284,7 @@ function rcl_include_template_office() {
 	global $active_addons, $rcl_template;
 
 	//Если ни один шаблон не активен
-	if ( !$rcl_template ) {
+	if ( ! $rcl_template ) {
 		//если опять ничего не найдено
 		echo '<h3>' . __( 'Office templates not found!', 'wp-recall' ) . '</h3>';
 	} else {
@@ -298,11 +298,11 @@ function rcl_get_active_template() {
 
 	$list = array();
 
-	if ( !$active_addons )
+	if ( ! $active_addons )
 		return $list;
 
 	foreach ( $active_addons as $addon_id => $addon ) {
-		if ( !isset( $addon['template'] ) )
+		if ( ! isset( $addon['template'] ) )
 			continue;
 		$list[$addon_id] = $addon;
 	}
@@ -315,24 +315,24 @@ function rcl_search_templates() {
 
 	$templates = array();
 	foreach ( $paths as $path ) {
-		if ( !file_exists( $path ) )
+		if ( ! file_exists( $path ) )
 			continue;
 
 		$addons = scandir( $path, 1 );
 
-		if ( !$addons )
+		if ( ! $addons )
 			continue;
 
 		foreach ( $addons as $namedir ) {
 			$addon_dir	 = $path . '/' . $namedir;
 			$index_src	 = $addon_dir . '/index.php';
-			if ( !is_dir( $addon_dir ) || !file_exists( $index_src ) )
+			if ( ! is_dir( $addon_dir ) || ! file_exists( $index_src ) )
 				continue;
 			$info_src	 = $addon_dir . '/info.txt';
 			if ( file_exists( $info_src ) ) {
 				$file_data			 = file( $info_src );
 				$data				 = rcl_parse_addon_info( $file_data );
-				if ( !isset( $data['template'] ) )
+				if ( ! isset( $data['template'] ) )
 					continue;
 				$data['path']		 = $addon_dir;
 				$templates[$namedir] = $data;
@@ -376,7 +376,7 @@ function rcl_addon_url( $file, $path ) {
 function rcl_addon_path( $path ) {
 	global $active_addons;
 
-	if ( !$active_addons )
+	if ( ! $active_addons )
 		return false;
 
 	$cachekey	 = json_encode( array( 'rcl_addon_path', $path ) );
@@ -401,12 +401,12 @@ function rcl_addon_path( $path ) {
 		}
 	}
 
-	if ( !$addonPath && $paths ) {
+	if ( ! $addonPath && $paths ) {
 		ksort( $paths );
 		$addonPath = reset( $paths );
 	}
 
-	if ( !$addonPath )
+	if ( ! $addonPath )
 		return false;
 
 	$addonPath .= '/';

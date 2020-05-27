@@ -3,7 +3,7 @@
 //Перечень действующих валют
 function rcl_get_currency_list() {
 
-	$rub = (is_admin()) ? 'p' : '<i class="rcli fa-rub"></i>';
+	$rub = (wp_doing_ajax() || ! is_admin()) ? '<i class="rcli fa-rub"></i>' : 'p';
 
 	return array(
 		'RUB'	 => array( 'руб', $rub, '<span class="ruble-symbol">P<span>–</span></span>' ),
@@ -20,14 +20,14 @@ function rcl_get_currency( $cur = false, $type = 0 ) {
 
 	$curs = apply_filters( 'currency_list', $curs );
 
-	if ( !$cur ) {
+	if ( ! $cur ) {
 		foreach ( $curs as $cur => $nms ) {
 			$crs[$cur] = $cur;
 		}
 		return $crs;
 	}
 
-	if ( !isset( $curs[$cur][$type] ) )
+	if ( ! isset( $curs[$cur][$type] ) )
 		return false;
 
 	return $curs[$cur][$type];

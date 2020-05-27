@@ -1,11 +1,10 @@
 <?php
 
-if ( !class_exists( 'WP_List_Table' ) ) {
+if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
-add_action( 'rcl_before_include_addons', 'rcl_template_update_status' );
-add_action( 'admin_init', 'rcl_init_upload_template' );
+add_action( 'rcl_init_themes_manager', 'rcl_init_upload_template' );
 
 class Rcl_Templates_Manager extends WP_List_Table {
 
@@ -24,7 +23,7 @@ class Rcl_Templates_Manager extends WP_List_Table {
 			'ajax'		 => false
 		) );
 
-		$this->need_update	 = get_option( 'rcl_addons_need_update' );
+		$this->need_update	 = get_site_option( 'rcl_addons_need_update' );
 		$this->column_info	 = $this->get_column_info();
 
 		add_action( 'admin_head', array( &$this, 'admin_header' ) );
@@ -41,13 +40,13 @@ class Rcl_Templates_Manager extends WP_List_Table {
 				foreach ( ( array ) $addons as $namedir ) {
 					$addon_dir	 = $path . '/' . $namedir;
 					$index_src	 = $addon_dir . '/index.php';
-					if ( !is_dir( $addon_dir ) || !file_exists( $index_src ) )
+					if ( ! is_dir( $addon_dir ) || ! file_exists( $index_src ) )
 						continue;
 					$info_src	 = $addon_dir . '/info.txt';
 					if ( file_exists( $info_src ) ) {
 						$info	 = file( $info_src );
 						$data	 = rcl_parse_addon_info( $info );
-						if ( !isset( $data['template'] ) )
+						if ( ! isset( $data['template'] ) )
 							continue;
 						if ( isset( $_POST['s'] ) && $_POST['s'] ) {
 							if ( strpos( strtolower( trim( $data['name'] ) ), strtolower( trim( $_POST['s'] ) ) ) !== false ) {
@@ -144,8 +143,8 @@ class Rcl_Templates_Manager extends WP_List_Table {
 	}
 
 	function usort_reorder( $a, $b ) {
-		$orderby = (!empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'addon_name';
-		$order	 = (!empty( $_GET['order'] ) ) ? $_GET['order'] : 'asc';
+		$orderby = ( ! empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'addon_name';
+		$order	 = ( ! empty( $_GET['order'] ) ) ? $_GET['order'] : 'asc';
 		$result	 = strcmp( $a[$orderby], $b[$orderby] );
 		return ( $order === 'asc' ) ? $result : -$result;
 	}
@@ -237,40 +236,14 @@ class Rcl_Templates_Manager extends WP_List_Table {
 }
 
 //class
-function rcl_template_update_status() {
-
-	$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
-	if ( 'manage-templates-recall' != $page )
-		return;
-
-	if ( isset( $_GET['template'] ) && isset( $_GET['action'] ) ) {
-
-		global $wpdb, $user_ID, $active_addons;
-
-		$addon	 = $_GET['template'];
-		$action	 = rcl_wp_list_current_action();
-
-		if ( $action == 'connect' ) {
-			rcl_deactivate_addon( get_option( 'rcl_active_template' ) );
-
-			rcl_activate_addon( $addon );
-
-			update_option( 'rcl_active_template', $addon );
-			header( "Location: " . admin_url( 'admin.php?page=manage-templates-recall&update-template=activate' ), true, 302 );
-			exit;
-		}
-
-		if ( $action == 'delete' ) {
-			rcl_delete_addon( $addon );
-			header( "Location: " . admin_url( 'admin.php?page=manage-templates-recall&update-template=delete' ), true, 302 );
-			exit;
-		}
-	}
-}
 
 function rcl_init_upload_template() {
+
+	if ( ! current_user_can( 'manage_options' ) )
+		return false;
+
 	if ( isset( $_POST['install-template-submit'] ) ) {
-		if ( !wp_verify_nonce( $_POST['_wpnonce'], 'install-template-rcl' ) )
+		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'install-template-rcl' ) )
 			return false;
 		rcl_upload_template();
 	}
@@ -290,7 +263,7 @@ function rcl_upload_template() {
 
 	if ( $res === TRUE ) {
 
-		for ( $i = 0; $i < $zip->numFiles; $i++ ) {
+		for ( $i = 0; $i < $zip->numFiles; $i ++ ) {
 			//echo $zip->getNameIndex($i).'<br>';
 			if ( $i == 0 )
 				$dirzip = $zip->getNameIndex( $i );
@@ -300,7 +273,7 @@ function rcl_upload_template() {
 			}
 		}
 
-		if ( !$info ) {
+		if ( ! $info ) {
 			$zip->close();
 			wp_redirect( admin_url( 'admin.php?page=manage-templates-recall&update-template=error-info' ) );
 			exit;
@@ -324,18 +297,4 @@ function rcl_upload_template() {
 	} else {
 		wp_die( __( 'ZIP archive not found.', 'wp-recall' ) );
 	}
-}
-
-function rcl_add_options_templates_manager() {
-	global $Rcl_Templates_Manager;
-
-	$option	 = 'per_page';
-	$args	 = array(
-		'label'		 => __( 'Templates', 'wp-recall' ),
-		'default'	 => 100,
-		'option'	 => 'templates_per_page'
-	);
-
-	add_screen_option( $option, $args );
-	$Rcl_Templates_Manager = new Rcl_Templates_Manager();
 }

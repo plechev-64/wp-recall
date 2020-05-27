@@ -7,10 +7,13 @@ function rcl_gateway_robokassa_init() {
 
 class Rcl_Gateway_Robokassa extends Rcl_Gateway_Core {
 	function __construct() {
+		global $rmag_options;
+
 		parent::__construct( array(
 			'request'	 => 'OutSum',
-			'label'		 => 'Робокасса',
-			'submit'	 => __( 'Оплатить через РОБОКАССУ' ),
+			'name'		 => __( 'Робокасса' ),
+			'submit'	 => isset( $rmag_options['robo_submit'] ) && $rmag_options['robo_submit'] ? $rmag_options['robo_submit'] : __( 'Оплатить через РОБОКАССУ' ),
+			'label'		 => isset( $rmag_options['robo_label'] ) && $rmag_options['robo_label'] ? $rmag_options['robo_label'] : __( 'Робокасса' ),
 			'icon'		 => rcl_addon_url( 'assets/robokassa.jpg', __FILE__ )
 		) );
 	}
@@ -61,6 +64,27 @@ class Rcl_Gateway_Robokassa extends Rcl_Gateway_Core {
 								'title'	 => __( '2 Password', 'rcl-robokassa' )
 							)
 						)
+					)
+				),
+				array(
+					'type'			 => 'text',
+					'slug'			 => 'robo_label',
+					'title'			 => __( 'Наименование системы' ),
+					'placeholder'	 => $this->name
+				),
+				array(
+					'type'			 => 'text',
+					'slug'			 => 'robo_submit',
+					'title'			 => __( 'Текст на кнопке оплаты' ),
+					'placeholder'	 => __( 'Оплатить через РОБОКАССУ' )
+				),
+				array(
+					'type'	 => 'select',
+					'slug'	 => 'robo_curchange',
+					'title'	 => __( 'Выбор способа оплаты на стороне сайта', 'rcl-robokassa' ),
+					'values' => array(
+						__( 'Отключено' ),
+						__( 'Включено' )
 					)
 				),
 				array(
@@ -125,6 +149,8 @@ class Rcl_Gateway_Robokassa extends Rcl_Gateway_Core {
 
 		$formaction = 'https://merchant.roboxchange.com/Index.aspx';
 
+		$content = '';
+
 		if ( $rmag_options['robotest'] == 1 ) {
 			//$formaction = 'http://test.robokassa.ru/Index.aspx';
 			$pass1 = $rmag_options['test_onerobopass'];
@@ -141,12 +167,15 @@ class Rcl_Gateway_Robokassa extends Rcl_Gateway_Core {
 			$login,
 			$data->pay_summ,
 			$data->pay_id,
-			$data->currency,
 			$pass1,
 			'shp_a=' . $data->user_id,
 			'shp_b=' . $data->pay_type,
 			'shp_c=' . $baggage_data
 		);
+
+		if ( $data->currency != 'RUB' ) {
+			array_splice( $md_array, 3, 0, $data->currency );
+		}
 
 		if ( $receipt = $this->get_receipt( $data ) ) {
 			array_splice( $md_array, 3, 0, $receipt );
@@ -194,13 +223,16 @@ class Rcl_Gateway_Robokassa extends Rcl_Gateway_Core {
 				'slug'	 => 'shp_c',
 				'type'	 => 'hidden',
 				'value'	 => $baggage_data
-			),
-			array(
+			)
+		);
+
+		if ( $data->currency != 'RUB' ) {
+			$fields[] = array(
 				'slug'	 => 'OutSumCurrency',
 				'type'	 => 'hidden',
 				'value'	 => $data->currency
-			)
-		);
+			);
+		}
 
 		if ( $receipt ) {
 			$fields[] = array(
@@ -218,11 +250,45 @@ class Rcl_Gateway_Robokassa extends Rcl_Gateway_Core {
 			);
 		}
 
-		return parent::construct_form( array(
+		if ( $rmag_options['robo_curchange'] == 1 && $login ) {
+
+			$xml_array = @simplexml_load_file( 'https://auth.robokassa.ru/Merchant/WebService/Service.asmx/GetCurrencies?MerchantLogin=' . $login . '&Language=ru' );
+
+			if ( $xml_array ) {
+
+				$content .= '<h4>' . __( 'Выберите способ оплаты' ) . '</h4>';
+
+				foreach ( $xml_array->Groups->Group as $group ) {
+
+					$values = array();
+
+					foreach ( $group->Items->Currency as $currency ) {
+						$currencyAttrs								 = $currency->attributes();
+						$values[( string ) $currencyAttrs['Alias']]	 = ( string ) $currencyAttrs['Name'];
+					}
+
+					$groupAttrs = $group->attributes();
+
+					$fields[] = array(
+						'slug'		 => ( string ) $groupAttrs['Code'],
+						'input_name' => 'IncCurrLabel',
+						'type'		 => 'radio',
+						'display'	 => 'block',
+						'default'	 => 'BankCard',
+						'title'		 => ( string ) $groupAttrs['Description'],
+						'values'	 => $values
+					);
+				}
+			}
+		}
+
+		$content .= parent::construct_form( array(
 				'action' => $formaction,
 				'method' => 'post',
-				'fields' => $fields
+				'fields' => $fields,
 			) );
+
+		return $content;
 	}
 
 	function result( $data ) {
@@ -260,7 +326,7 @@ class Rcl_Gateway_Robokassa extends Rcl_Gateway_Core {
 			exit();
 		}
 
-		if ( !$this->get_payment( $_REQUEST["InvId"] ) )
+		if ( ! $this->get_payment( $_REQUEST["InvId"] ) )
 			$this->insert_payment( array(
 				'pay_id'		 => $_REQUEST["InvId"],
 				'pay_type'		 => $_REQUEST["shp_b"],
@@ -286,7 +352,7 @@ class Rcl_Gateway_Robokassa extends Rcl_Gateway_Core {
 	function get_receipt( $data ) {
 		global $rmag_options;
 
-		if ( !$rmag_options['robo_fn'] )
+		if ( ! $rmag_options['robo_fn'] )
 			return false;
 
 		$items = array();
@@ -294,7 +360,7 @@ class Rcl_Gateway_Robokassa extends Rcl_Gateway_Core {
 		if ( $data->pay_type == 1 ) {
 
 			$items[] = array(
-				"name"		 => __( 'Пополнение личного счета' ),
+				"name"		 => __( 'Пополнение лицевого счета' ),
 				"quantity"	 => 1,
 				"sum"		 => $data->pay_summ,
 				"tax"		 => $rmag_options['robo_nds']

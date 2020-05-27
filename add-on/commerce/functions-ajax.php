@@ -20,12 +20,12 @@ function rcl_add_to_cart() {
 
 	$cart = apply_filters( 'rcl_add_to_cart_data', $_POST['cart'] );
 
-	if ( !$cart )
+	if ( ! $cart )
 		exit;
 
 	$product_id = $cart['product_id'];
 
-	if ( !$product_id )
+	if ( ! $product_id )
 		exit;
 
 	$args = array();
@@ -33,7 +33,7 @@ function rcl_add_to_cart() {
 	$args['quantity']	 = isset( $cart['quantity'] ) ? absint( $cart['quantity'] ) : false;
 	$args['variations']	 = isset( $cart['variations'] ) ? $cart['variations'] : false;
 
-	if ( !isset( $cart['isset']['variations'] ) ) {
+	if ( ! isset( $cart['isset']['variations'] ) ) {
 
 		$PrVars = new Rcl_Product_Variations();
 
@@ -97,9 +97,9 @@ function rcl_check_cart_data() {
 
 	rcl_verify_ajax_nonce();
 
-	if ( !$user_ID ) {
+	if ( ! $user_ID ) {
 
-		if ( !isset( $_POST['user_email'] ) || !$_POST['user_email'] ) {
+		if ( ! isset( $_POST['user_email'] ) || ! $_POST['user_email'] ) {
 			wp_send_json( array( 'error' => __( 'Please fill in required fields!', 'wp-recall' ) ) );
 		}
 
@@ -112,7 +112,7 @@ function rcl_check_cart_data() {
 			$isEmail	 = is_email( $user_email );
 			$validName	 = validate_username( $user_email );
 
-			if ( !$validName || !$isEmail ) {
+			if ( ! $validName || ! $isEmail ) {
 				wp_send_json( array( 'error' => __( 'You have entered an invalid email!', 'wp-recall' ) ) );
 			}
 

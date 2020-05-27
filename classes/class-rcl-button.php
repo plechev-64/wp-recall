@@ -33,7 +33,7 @@ class Rcl_Button {
 
 	function __construct( $args ) {
 
-		if ( !isset( $args['title'] ) && isset( $args['label'] ) )
+		if ( ! isset( $args['title'] ) && isset( $args['label'] ) )
 			$args['title'] = $args['label'];
 
 		$this->init_properties( $args );
@@ -47,7 +47,7 @@ class Rcl_Button {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( isset( $args[$name] ) & !empty( $args[$name] ) )
+			if ( isset( $args[$name] ) & ! empty( $args[$name] ) )
 				$this->$name = $args[$name];
 		}
 	}
@@ -61,14 +61,14 @@ class Rcl_Button {
 		$this->attrs['id']		 = $this->id;
 		$this->attrs['class']	 = is_array( $this->class ) ? implode( ' ', $this->class ) : $this->class;
 
-		if ( $this->submit && !$this->onclick ) {
+		if ( $this->submit && ! $this->onclick ) {
 			$this->attrs['onclick'] = 'rcl_submit_form(this);return false;';
 		}
 
 		if ( $this->data ) {
 
 			foreach ( $this->data as $k => $value ) {
-				if ( !$value )
+				if ( ! $value )
 					continue;
 				$this->attrs['data-' . $k] = $value;
 			}
@@ -77,7 +77,7 @@ class Rcl_Button {
 
 	function setup_class() {
 
-		if ( $this->class && !is_array( $this->class ) )
+		if ( $this->class && ! is_array( $this->class ) )
 			$this->class	 = array( 'rcl-bttn', $this->class );
 		else
 			$this->class[]	 = 'rcl-bttn';
@@ -86,14 +86,14 @@ class Rcl_Button {
 
 			if ( $this->icon_align == 'right' && $this->label ) {
 
-				if ( !$this->counter ) {
+				if ( ! $this->counter ) {
 					// кнопка из текста и только иконки справа
 					$this->class[] = 'rcl-bttn__mod-text-rico';
-				} else if ( $this->counter && !$this->avatar ) {
+				} else if ( $this->counter && ! $this->avatar ) {
 					// текст иконка справа и счетчик
 					$this->class[] = 'rcl-bttn__mod-text-rico-count';
 				}
-			} else if ( !$this->counter && !$this->avatar && !$this->label ) {
+			} else if ( ! $this->counter && ! $this->avatar && ! $this->label ) {
 				// только иконка
 				$this->class[] = 'rcl-bttn__mod-only-icon';
 			}
@@ -124,7 +124,7 @@ class Rcl_Button {
 
 		$attrs = array();
 		foreach ( $this->attrs as $name => $value ) {
-			if ( !$value )
+			if ( ! $value )
 				continue;
 			$attrs[] = $name . '=\'' . $value . '\'';
 		}

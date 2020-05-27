@@ -63,7 +63,7 @@ foreach ( $fields as $key => $name ) {
 if ( $fields ) {
 	$n = 1;
 	foreach ( $fields as $key => $desc ) {
-		$n++;
+		$n ++;
 		$content .= '<td><input type="checkbox" name="product[meta][]" value="' . $key . '"> ' . $key . '</td>';
 		if ( $n % 2 )
 			$content .= '</tr><tr>';

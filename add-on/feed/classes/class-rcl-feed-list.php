@@ -12,10 +12,10 @@ class Rcl_Feed_List extends Rcl_Query {
 	function __construct( $args = array() ) {
 		global $user_ID;
 
-		if ( !$args )
+		if ( ! $args )
 			$args = array();
 
-		if ( !isset( $args['user_feed'] ) )
+		if ( ! isset( $args['user_feed'] ) )
 			$args['user_feed'] = $user_ID;
 
 		if ( isset( $_GET['feed-filter'] ) )
@@ -138,35 +138,31 @@ class Rcl_Feed_List extends Rcl_Query {
 	function setup_posts_query( $query, $args ) {
 		global $wpdb;
 
-		$feeds = new Rcl_Feed_Query();
-
 		//получаем игнорируемых авторов
-		$authors_ignor = $feeds->get_col( array(
-			'feed_type'		 => 'author',
-			'user_id'		 => $this->user_feed,
-			'feed_status'	 => 0,
-			'fields'		 => array( 'object_id' )
-			) );
+		$authors_ignor = RQ::tbl( new Rcl_Feed_Query() )->select( ['object_id' ] )->where( [
+				'feed_type'		 => 'author',
+				'user_id'		 => $this->user_feed,
+				'feed_status'	 => 0,
+			] )->get_col();
 
 		$authors_ignor[] = $this->user_feed;
 
 		$authors_feed = array();
 
-		$usersFeed1 = $feeds->get_col( array(
-			'feed_type'		 => 'author',
-			'user_id'		 => $this->user_feed,
-			'feed_status'	 => 1,
-			'fields'		 => array( 'object_id' )
-			) );
+		$usersFeed1 = RQ::tbl( new Rcl_Feed_Query() )->select( ['object_id' ] )->where( [
+				'feed_type'		 => 'author',
+				'user_id'		 => $this->user_feed,
+				'feed_status'	 => 1,
+			] )->get_col();
+
 
 		if ( $usersFeed1 ) {
 
-			$usersFeed2 = $feeds->get_col( array(
-				'feed_type'		 => 'author',
-				'user_id__in'	 => $usersFeed1,
-				'feed_status'	 => 1,
-				'fields'		 => array( 'object_id' )
-				) );
+			$usersFeed2 = RQ::tbl( new Rcl_Feed_Query() )->select( ['object_id' ] )->where( [
+					'feed_type'		 => 'author',
+					'user_id__in'	 => $usersFeed1,
+					'feed_status'	 => 1,
+				] )->get_col();
 
 			$authors_feed = array_unique( array_merge( $usersFeed1, $usersFeed2 ) );
 		}
@@ -329,7 +325,7 @@ class Rcl_Feed_List extends Rcl_Query {
 	function get_filters() {
 		global $post, $active_addons, $user_LK;
 
-		if ( !$this->filters )
+		if ( ! $this->filters )
 			return false;
 
 		$content = '';
@@ -342,7 +338,7 @@ class Rcl_Feed_List extends Rcl_Query {
 		$rqst = ($s_array) ? implode( '&', $s_array ) . '&' : '';
 
 		if ( $user_LK ) {
-			$url = (isset( $_POST['tab_url'] )) ? $_POST['tab_url'] : get_author_posts_url( $user_LK );
+			$url = (isset( $_POST['tab_url'] )) ? $_POST['tab_url'] : rcl_get_user_url( $user_LK );
 		} else {
 			$url = get_permalink( $post->ID );
 		}

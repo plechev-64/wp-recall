@@ -150,9 +150,11 @@ function rcl_chat_tab( $office_id ) {
 		$chatdata	 = rcl_get_chat_private( $office_id );
 		$chat		 = $chatdata['content'];
 	} else {
-		$chat = '<div class="chat-notice">'
-			. '<span class="notice-error">' . __( 'Sign in to send a message to the user', 'wp-recall' ) . '</span>'
-			. '</div>';
+
+		$chat = rcl_get_notice( array(
+			'type'	 => 'error',
+			'text'	 => __( 'Sign in to send a message to the user', 'wp-recall' )
+			) );
 	}
 
 	return $chat;
@@ -233,8 +235,13 @@ function rcl_get_user_contacts( $user_id, $limit ) {
 	return $messages;
 }
 
-function rcl_get_user_contacts_list( $user_id ) {
+function rcl_get_user_contacts_list( $user_id, $args = array() ) {
 	global $wpdb;
+
+	$args = wp_parse_args( $args, array(
+		'per_page'	 => 20,
+		'pagenavi'	 => true
+		) );
 
 	$amount = $wpdb->query(
 		"SELECT COUNT(chat_messages.chat_id) FROM " . RCL_PREF . "chat_messages AS chat_messages "
@@ -252,11 +259,9 @@ function rcl_get_user_contacts_list( $user_id ) {
 
 	rcl_dialog_scripts();
 
-	$inpage = 20;
+	$pagenavi = new Rcl_PageNavi( 'chat-contacts', $amount, array( 'in_page' => $args['per_page'] ) );
 
-	$pagenavi = new Rcl_PageNavi( 'chat-contacts', $amount, array( 'in_page' => $inpage ) );
-
-	$messages = rcl_get_user_contacts( $user_id, array( $pagenavi->offset, $inpage ) );
+	$messages = rcl_get_user_contacts( $user_id, array( $pagenavi->offset, $args['per_page'] ) );
 
 	foreach ( $messages as $k => $message ) {
 		$messages[$k]['user_id']	 = ($message['user_id'] == $user_id) ? $message['private_key'] : $message['user_id'];
@@ -298,7 +303,8 @@ function rcl_get_user_contacts_list( $user_id ) {
 
 	$content .= '</div>';
 
-	$content .= $pagenavi->pagenavi();
+	if ( $args['pagenavi'] )
+		$content .= $pagenavi->pagenavi();
 
 	return $content;
 }
@@ -308,9 +314,11 @@ function rcl_get_tab_user_important( $user_id ) {
 	$amount_messages = rcl_chat_count_important_messages( $user_id );
 
 	if ( ! $amount_messages ) {
-		return '<div class="chat-notice">'
-			. '<span class="notice-error">' . __( 'No important messages yet', 'wp-recall' ) . '</span>'
-			. '</div>';
+
+		return rcl_get_notice( array(
+			'type'	 => 'error',
+			'text'	 => __( 'No important messages yet', 'wp-recall' )
+			) );
 	}
 
 	require_once 'class-rcl-chat.php';

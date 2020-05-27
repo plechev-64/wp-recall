@@ -4,6 +4,7 @@ class Rcl_Gateway_Core {
 
 	public $id;
 	public $request;
+	public $name;
 	public $label;
 	public $icon;
 	public $submit;
@@ -13,7 +14,10 @@ class Rcl_Gateway_Core {
 
 		$this->init_properties( $args );
 
-		if ( !$this->submit )
+		if ( ! $this->label )
+			$this->label = $this->name;
+
+		if ( ! $this->submit )
 			$this->submit = __( 'Оплатить через' ) . ' "' . $this->label . '"';
 	}
 
@@ -36,13 +40,13 @@ class Rcl_Gateway_Core {
 
 	function add_gateway_options( $optionsManager ) {
 
-		if ( !$options = $this->get_options() )
+		if ( ! $options = $this->get_options() )
 			return $optionsManager;
 
 		$optionsManager->add_box( $this->id, array(
-			'title' => $this->label
+			'title' => $this->name
 		) )->add_group( $this->id, array(
-			'title' => __( 'Настройки' ) . ' ' . $this->label
+			'title' => __( 'Настройки' ) . ' ' . $this->name
 		) )->add_options( $options );
 
 		return $optionsManager;
@@ -50,7 +54,7 @@ class Rcl_Gateway_Core {
 
 	function construct_form( $args ) {
 
-		if ( !isset( $args['submit'] ) )
+		if ( ! isset( $args['submit'] ) )
 			$args['submit'] = $this->submit;
 
 		if ( $args['fields'] ) {
@@ -58,7 +62,7 @@ class Rcl_Gateway_Core {
 			$fields = array();
 			foreach ( $args['fields'] as $field_name => $value ) {
 
-				if ( !is_array( $value ) ) {
+				if ( ! is_array( $value ) ) {
 					$fields[] = array(
 						'type'	 => 'hidden',
 						'slug'	 => $field_name,
@@ -106,7 +110,7 @@ class Rcl_Gateway_Core {
 			)
 		);
 
-		if ( !$pay_status ) {
+		if ( ! $pay_status ) {
 
 			rcl_add_log(
 				'insert_pay: ' . __( 'Failed to add user payment', 'wp-recall' ), $args

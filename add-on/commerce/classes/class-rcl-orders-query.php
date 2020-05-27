@@ -1,11 +1,14 @@
 <?php
 
 class Rcl_Orders_Query extends Rcl_Query {
-	function __construct() {
+
+	public $serialize = array( 'order_details' );
+
+	function __construct( $as = false ) {
 
 		$table = array(
 			'name'	 => RCL_PREF . "orders",
-			'as'	 => 'rcl_orders',
+			'as'	 => $as ? $as : 'rcl_orders',
 			'cols'	 => array(
 				'order_id',
 				'user_id',
@@ -23,11 +26,14 @@ class Rcl_Orders_Query extends Rcl_Query {
 }
 
 class Rcl_Order_Items_Query extends Rcl_Query {
-	function __construct() {
+
+	public $serialize = array( 'variations' );
+
+	function __construct( $as = false ) {
 
 		$table = array(
 			'name'	 => RCL_PREF . "order_items",
-			'as'	 => 'rcl_order_items',
+			'as'	 => $as ? $as : 'rcl_order_items',
 			'cols'	 => array(
 				'order_id',
 				'product_id',

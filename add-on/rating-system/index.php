@@ -8,7 +8,7 @@ require_once 'core.php';
 if ( is_admin() )
 	require_once 'admin/index.php';
 
-if ( !is_admin() ):
+if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'rcl_rating_scripts', 10 );
 endif;
 function rcl_rating_scripts() {
@@ -47,7 +47,7 @@ function rcl_add_rating_tab() {
 	global $user_LK;
 
 	$count = 0;
-	if ( !is_admin() && rcl_is_office() ) {
+	if ( ! is_admin() && rcl_is_office() ) {
 		$count = rcl_format_rating( rcl_get_user_rating( $user_LK ) );
 	}
 
@@ -74,10 +74,10 @@ function rcl_rating_tab_add_types_data() {
 
 		$types[] = $type['rating_type'];
 
-		if ( !rcl_get_option( 'rating_' . $type['rating_type'] ) )
+		if ( ! rcl_get_option( 'rating_' . $type['rating_type'] ) )
 			continue;
 
-		if ( !rcl_get_option( 'rating_user_' . $type['rating_type'] ) )
+		if ( ! rcl_get_option( 'rating_user_' . $type['rating_type'] ) )
 			continue;
 
 		$args = array(
@@ -121,7 +121,7 @@ add_action( 'wp', 'rcl_add_data_rating_posts' );
 function rcl_add_data_rating_posts() {
 	global $wp_query, $wpdb;
 
-	if ( !$wp_query->is_tax && !$wp_query->is_archive )
+	if ( ! $wp_query->is_tax && ! $wp_query->is_archive )
 		return false;
 
 	$users		 = array();
@@ -131,7 +131,7 @@ function rcl_add_data_rating_posts() {
 
 	foreach ( $wp_query->posts as $post ) {
 
-		if ( !rcl_get_option( 'rating_' . $post->post_type ) )
+		if ( ! rcl_get_option( 'rating_' . $post->post_type ) )
 			continue;
 
 		$users[]		 = $post->post_author;
@@ -139,7 +139,7 @@ function rcl_add_data_rating_posts() {
 		$posts[]		 = $post->ID;
 	}
 
-	if ( !$posts )
+	if ( ! $posts )
 		return;
 
 	$users		 = array_unique( $users );
@@ -201,7 +201,7 @@ add_filter( 'comments_array', 'rcl_add_data_rating_comments' );
 function rcl_add_data_rating_comments( $comments ) {
 	global $user_ID;
 
-	if ( !$comments || !rcl_get_option( 'rating_comment' ) )
+	if ( ! $comments || ! rcl_get_option( 'rating_comment' ) )
 		return $comments;
 
 	$users	 = array();
@@ -259,7 +259,7 @@ function rcl_add_data_rating_comments( $comments ) {
 				$user_votes[$rating->object_id] = $rating->rating_value;
 			}
 
-			if ( !isset( $rt_values[$rating->object_id] ) )
+			if ( ! isset( $rt_values[$rating->object_id] ) )
 				$rt_values[$rating->object_id] = 0;
 
 			if ( $rating->rating_value > 0 ) {
@@ -351,8 +351,8 @@ function rcl_format_rating( $value ) {
 
 function rcl_rating_block( $args ) {
 
-	if ( !isset( $args['value'] ) ) {
-		if ( !isset( $args['ID'] ) || !isset( $args['type'] ) )
+	if ( ! isset( $args['value'] ) ) {
+		if ( ! isset( $args['ID'] ) || ! isset( $args['type'] ) )
 			return false;
 		switch ( $args['type'] ) {
 			case 'user': $value	 = rcl_get_user_rating( $args['ID'] );
@@ -387,7 +387,7 @@ function rcl_get_html_post_rating( $object_id, $rating_type, $object_author = fa
 	return $content;
 }
 
-if ( !is_admin() ):
+if ( ! is_admin() ):
 	add_filter( 'the_content', 'rcl_post_content_rating', 10 );
 	add_filter( 'the_excerpt', 'rcl_post_content_rating', 10 );
 endif;
@@ -399,12 +399,12 @@ function rcl_post_content_rating( $content ) {
 	return $content;
 }
 
-if ( !is_admin() ):
+if ( ! is_admin() ):
 	add_filter( 'comment_text', 'rcl_comment_content_rating', 20 );
 endif;
 function rcl_comment_content_rating( $content ) {
 	global $comment;
-	if ( !$comment )
+	if ( ! $comment )
 		return $content;
 	$content .= rcl_get_html_post_rating( $comment->comment_ID, 'comment' );
 	return $content;
@@ -498,7 +498,7 @@ function rcl_edit_rating_post() {
 
 	do_action( 'rcl_pre_edit_rating_post', $args );
 
-	if ( $rcl_options['rating_' . $args['rating_status'] . '_limit_' . $args['rating_type']] ) {
+	if ( isset( $rcl_options['rating_' . $args['rating_status'] . '_limit_' . $args['rating_type']] ) && $rcl_options['rating_' . $args['rating_status'] . '_limit_' . $args['rating_type']] ) {
 		$timelimit	 = ($rcl_options['rating_' . $args['rating_status'] . '_time_' . $args['rating_type']]) ? $rcl_options['rating_' . $args['rating_status'] . '_time_' . $args['rating_type']] : 3600;
 		$votes		 = rcl_count_votes_time( $args, $timelimit );
 		if ( $votes >= $rcl_options['rating_' . $args['rating_status'] . '_limit_' . $args['rating_type']] ) {
@@ -532,7 +532,7 @@ function rcl_edit_rating_post() {
 
 		$type = $args['rating_type'];
 
-		if ( !isset( $args['rating_value'] ) && !$args['rating_value'] )
+		if ( ! isset( $args['rating_value'] ) || ! $args['rating_value'] )
 			$args['rating_value'] = (isset( $rcl_rating_types[$type]['type_point'] )) ? $rcl_rating_types[$type]['type_point'] : 1;
 
 		rcl_insert_rating( $args );
@@ -598,7 +598,7 @@ function rcl_view_rating_votes() {
 		$content = rcl_rating_window_content( $string );
 	}
 
-	if ( !$content ) {
+	if ( ! $content ) {
 		wp_send_json( array(
 			'error' => __( 'Unable to obtain data', 'wp-recall' )
 		) );

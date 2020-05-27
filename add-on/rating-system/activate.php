@@ -7,10 +7,10 @@ require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 $collate = '';
 
 if ( $wpdb->has_cap( 'collation' ) ) {
-	if ( !empty( $wpdb->charset ) ) {
+	if ( ! empty( $wpdb->charset ) ) {
 		$collate .= "DEFAULT CHARACTER SET $wpdb->charset";
 	}
-	if ( !empty( $wpdb->collate ) ) {
+	if ( ! empty( $wpdb->collate ) ) {
 		$collate .= " COLLATE $wpdb->collate";
 	}
 }
@@ -60,7 +60,7 @@ $sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
 dbDelta( $sql );
 
 global $rcl_options;
-if ( !isset( $rcl_options['rating_post'] ) ) {
+if ( ! isset( $rcl_options['rating_post'] ) ) {
 	$rcl_options['rating_post']			 = 1;
 	$rcl_options['rating_comment']		 = 1;
 	$rcl_options['rating_type_post']	 = 0;
@@ -69,5 +69,5 @@ if ( !isset( $rcl_options['rating_post'] ) ) {
 	$rcl_options['rating_point_comment'] = 1;
 	$rcl_options['rating_user_post']	 = 1;
 	$rcl_options['rating_user_comment']	 = 1;
-	update_option( 'rcl_global_options', $rcl_options );
+	update_site_option( 'rcl_global_options', $rcl_options );
 }

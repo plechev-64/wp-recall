@@ -13,7 +13,7 @@ function rcl_add_product_box( $content ) {
 
 		$productCart = (isset( $rmag_options['cart_button_single_page'] )) ? $rmag_options['cart_button_single_page'] : array( 'top', 'bottom' );
 
-		if ( !in_array( 'top', $productCart ) )
+		if ( ! in_array( 'top', $productCart ) )
 			return $content;
 	}
 

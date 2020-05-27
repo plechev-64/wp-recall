@@ -43,6 +43,9 @@ class Rcl_Field_Dynamic extends Rcl_Field_Abstract {
 
 	function get_input() {
 
+		if ( ! $this->default )
+			$this->default = '';
+
 		$content = '<span class="dynamic-values">';
 
 		if ( $this->value && is_array( $this->value ) ) {

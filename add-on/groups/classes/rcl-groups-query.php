@@ -1,11 +1,11 @@
 <?php
 
 class Rcl_Groups_Query extends Rcl_Query {
-	function __construct() {
+	function __construct( $as = false ) {
 
 		$table = array(
 			'name'	 => RCL_PREF . "groups",
-			'as'	 => 'rcl_groups',
+			'as'	 => $as ? $as : 'rcl_groups',
 			'cols'	 => array(
 				'ID',
 				'admin_id',
@@ -21,7 +21,13 @@ class Rcl_Groups_Query extends Rcl_Query {
 	function setup_termdata() {
 		global $wpdb;
 
-		$this->set_query();
+		$this->select( [
+			'ID',
+			'admin_id',
+			'group_users',
+			'group_status',
+			'group_date'
+		] );
 
 		$this->query['select'][] = "wp_terms.term_id";
 		$this->query['select'][] = "wp_terms.name";
@@ -32,16 +38,18 @@ class Rcl_Groups_Query extends Rcl_Query {
 
 		$this->query['where'][]	 = "wp_term_taxonomy.taxonomy = 'groups'";
 		$this->query['where'][]	 = "wp_term_taxonomy.parent = '0'";
+
+		return $this;
 	}
 
 }
 
 class Rcl_Groups_Users_Query extends Rcl_Query {
-	function __construct() {
+	function __construct( $as = false ) {
 
 		$table = array(
 			'name'	 => RCL_PREF . "groups_users",
-			'as'	 => 'rcl_groups_users',
+			'as'	 => $as ? $as : 'rcl_groups_users',
 			'cols'	 => array(
 				'ID',
 				'group_id',
@@ -58,11 +66,11 @@ class Rcl_Groups_Users_Query extends Rcl_Query {
 }
 
 class Rcl_Groups_Options_Query extends Rcl_Query {
-	function __construct() {
+	function __construct( $as = false ) {
 
 		$table = array(
 			'name'	 => RCL_PREF . "groups_options",
-			'as'	 => 'rcl_groups_options',
+			'as'	 => $as ? $as : 'rcl_groups_options',
 			'cols'	 => array(
 				'ID',
 				'group_id',

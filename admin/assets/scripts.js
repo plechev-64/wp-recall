@@ -208,6 +208,22 @@ jQuery( function( $ ) {
 
 } );
 
+function rcl_get_wizard_page( page_id, e ) {
+
+	var step = Rcl.Wizard.steps[page_id - 1];
+
+	var FormFactory = new RclForm( jQuery( '#wizard-step-content form' ) );
+
+	FormFactory.send( 'rcl_save_wizard_page_data&page_id=' + page_id + '&step=' + JSON.stringify( step ), function( result ) {
+
+		rcl_proccess_ajax_return( result );
+
+	} );
+
+	return false;
+
+}
+
 function rcl_onclick_options_label( e ) {
 
 	var label = jQuery( e );

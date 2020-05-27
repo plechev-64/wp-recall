@@ -30,7 +30,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 
 		global $rcl_group, $user_ID;
 
-		if ( !$user_ID || rcl_is_group_can( 'admin' ) )
+		if ( ! $user_ID || rcl_is_group_can( 'admin' ) )
 			return false;
 
 		//if($rcl_group->current_user=='banned') return false;
@@ -167,7 +167,7 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
 
 	function widget( $args, $instance ) {
 
-		if ( !rcl_is_group_can( 'author' ) )
+		if ( ! rcl_is_group_can( 'author' ) )
 			return false;
 
 		extract( $args );
@@ -223,7 +223,7 @@ class Group_CategoryList_Widget extends Rcl_Group_Widget {
 		global $rcl_group;
 
 		$category = rcl_get_group_category_list();
-		if ( !$category )
+		if ( ! $category )
 			return false;
 
 		echo $before;
@@ -274,7 +274,7 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 
 	function get_group_administrators( $number, $template = 'mini' ) {
 		global $rcl_group;
-		if ( !$rcl_group )
+		if ( ! $rcl_group )
 			return false;
 
 		switch ( $template ) {
@@ -310,7 +310,7 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 add_action( 'init', 'rcl_group_add_posts_widget', 10 );
 function rcl_group_add_posts_widget() {
 
-	if ( !rcl_get_option( 'group-output' ) && !rcl_get_option( 'groups_posts_widget' ) )
+	if ( ! rcl_get_option( 'group-output' ) && ! rcl_get_option( 'groups_posts_widget' ) )
 		return false;
 
 	rcl_group_register_widget( 'Group_Posts_Widget' );

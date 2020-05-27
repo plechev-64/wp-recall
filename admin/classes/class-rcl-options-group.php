@@ -30,7 +30,7 @@ class Rcl_Options_Group {
 		}
 	}
 
-	function get_value( $option, $default = false, $group = false ) {
+	function get_value( $option, $default = false, $group = false, $local = false ) {
 
 		if ( $group ) {
 			if ( isset( $this->option_values[$group][$option] ) ) {
@@ -38,6 +38,8 @@ class Rcl_Options_Group {
 					return $this->option_values[$group][$option];
 				}
 			}
+		} else if ( $local ) {
+			return get_site_option( $option );
 		} else {
 			if ( isset( $this->option_values[$option] ) ) {
 				if ( $this->option_values[$option] || is_numeric( $this->option_values[$option] ) ) {
@@ -64,12 +66,15 @@ class Rcl_Options_Group {
 		$option_id	 = $option['slug'];
 		$default	 = isset( $option['default'] ) ? $option['default'] : false;
 		$group		 = isset( $option['group'] ) && $option['group'] ? $option['group'] : false;
+		$local		 = isset( $option['local'] ) && $option['local'] ? true : false;
 
 		if ( ! isset( $option['value'] ) )
-			$option['value'] = $this->get_value( $option_id, $default, $group );
+			$option['value'] = $this->get_value( $option_id, $default, $group, $local );
 
 		if ( $group ) {
 			$option['input_name'] = $this->option_name . '[' . $option['group'] . '][' . $option_id . ']';
+		} else if ( $local ) {
+			$option['input_name'] = 'local[' . $option_id . ']';
 		} else {
 			$option['input_name'] = $this->option_name . '[' . $option_id . ']';
 		}

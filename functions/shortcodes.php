@@ -5,7 +5,9 @@ function rcl_get_shortcode_wp_recall() {
 	global $user_LK;
 
 	if ( ! $user_LK ) {
-		return '<h4 class="rcl_cab_guest_message">' . __( 'Авторизуйтесь или зарегистрируйтесь на сайте', 'wp-recall' ) . '</h4>
+		return '<h4 class="rcl_cab_guest_message">'
+			. (get_site_option( 'users_can_register' ) ? __( 'Авторизуйтесь или зарегистрируйтесь на сайте', 'wp-recall' ) : __( 'Авторизуйтесь на сайте', 'wp-recall' ))
+			. '</h4>
 		<div class="authorize-form-rcl">' . rcl_get_authorize_form() . '</div>';
 	}
 
@@ -31,7 +33,7 @@ function rcl_get_userlist( $atts ) {
 
 	if ( ! isset( $atts['number'] ) ) {
 
-		$count_users = $users->count();
+		$count_users = $users->get_count();
 
 		$id_pager = ($users->id) ? 'rcl-users-' . $users->id : 'rcl-users';
 

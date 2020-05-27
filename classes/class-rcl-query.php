@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of Rcl_Query
+ * Depricated class
  *
  * @author Андрей
  */
@@ -127,8 +127,7 @@ class Rcl_Query {
 				$this->set_date_query( $this->args['date_query'] );
 			}
 
-			if ( isset( $this->args['join_query'] ) ) {
-
+			if ( isset( $this->args['join_query'] ) && $this->args['join_query'] ) {
 				$this->set_join_query( $this->args['join_query'] );
 			}
 
@@ -197,6 +196,8 @@ class Rcl_Query {
 			if ( $key === 'custom_query' ) {
 
 				foreach ( $name as $n ) {
+					if ( ! $n )
+						continue;
 					$this->query['select'][] = $n;
 				}
 
@@ -269,7 +270,7 @@ class Rcl_Query {
 
 				if ( isset( $date['older'] ) ) {
 
-					$this->query['where'][] = $this->query['table']['as'] . "." . $date['column'] . " < DATE_SUB(NOW(), INTERVAL " . $date['last'] . ")";
+					$this->query['where'][] = $this->query['table']['as'] . "." . $date['column'] . " < DATE_SUB(NOW(), INTERVAL " . $date['older'] . ")";
 				}
 			} else if ( $date['compare'] == 'BETWEEN' ) {
 
@@ -314,12 +315,16 @@ class Rcl_Query {
 
 	function set_join_query( $joins ) {
 
-		foreach ( $joins as $join ) {
+		foreach ( $joins as $k => $join ) {
 
 			$joinTable = $join['table'];
 
 			if ( ! $joinTable )
 				continue;
+
+			if ( isset( $join['postfix'] ) ) {
+				$joinTable['as'] .= $join['postfix'];
+			}
 
 			$joinOn = false;
 			foreach ( $this->query['table']['cols'] as $col_name ) {
@@ -381,7 +386,6 @@ class Rcl_Query {
 	}
 
 	function get_query() {
-
 		return apply_filters( 'rcl_table_' . $this->query['table']['as'] . '_query', $this->query );
 	}
 
@@ -430,8 +434,6 @@ class Rcl_Query {
 				$sql[] = "UNION ALL";
 
 				$Query = new Rcl_Query( $unionQuery['table'] );
-
-				//$Query->set_query( $unionQuery );
 
 				$sql[] = $Query->get_sql( $unionQuery );
 			}
@@ -610,16 +612,40 @@ class Rcl_Query {
 
 		$query = $this->get_query();
 
-		unset( $query['select'] );
-		unset( $query['offset'] );
-		unset( $query['orderby'] );
-		unset( $query['order'] );
-		unset( $query['number'] );
-		unset( $query['having'] );
+		if ( isset( $query['union'] ) ) {
 
-		$query['select'] = array( $operator . '(' . $query['table']['as'] . '.' . $field_name . ')' );
+			unset( $query['select'] );
+			unset( $query['offset'] );
+			unset( $query['orderby'] );
+			unset( $query['order'] );
+			unset( $query['number'] );
+			unset( $query['having'] );
 
-		$sql = $this->get_sql( $query );
+			$query['select'] = array( $operator . '(' . $query['table']['as'] . '.' . $field_name . ') as total' );
+
+			foreach ( $query['union'] as $k => $union ) {
+				unset( $query['union'][$k]['select'] );
+				unset( $query['union'][$k]['offset'] );
+				unset( $query['union'][$k]['orderby'] );
+				unset( $query['union'][$k]['order'] );
+				unset( $query['union'][$k]['number'] );
+				unset( $query['union'][$k]['having'] );
+				$query['union'][$k]['select'] = array( $operator . '(' . $query['union'][$k]['table']['as'] . '.' . $field_name . ') as total' );
+			}
+
+			$sql = 'SELECT SUM(total) FROM (' . $this->get_sql( $query ) . ') x';
+		} else {
+			unset( $query['select'] );
+			unset( $query['offset'] );
+			unset( $query['orderby'] );
+			unset( $query['order'] );
+			unset( $query['number'] );
+			unset( $query['having'] );
+
+			$query['select'] = array( $operator . '(' . $query['table']['as'] . '.' . $field_name . ')' );
+
+			$sql = $this->get_sql( $query );
+		}
 
 		if ( isset( $query['groupby'] ) && $query['groupby'] )
 			$result	 = $wpdb->query( $sql );

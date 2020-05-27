@@ -16,7 +16,7 @@ class RCL_Install {
 	public static function install() {
 		global $rcl_options;
 
-		if ( !defined( 'RCL_INSTALLING' ) ) {
+		if ( ! defined( 'RCL_INSTALLING' ) ) {
 			define( 'RCL_INSTALLING', true );
 		}
 
@@ -28,7 +28,7 @@ class RCL_Install {
 		self::create_tables();
 		self::create_roles();
 
-		if ( !isset( $rcl_options['view_user_lk_rcl'] ) ) {
+		if ( ! isset( $rcl_options['view_user_lk_rcl'] ) ) {
 			self::create_pages();
 			self::add_addons();
 		}
@@ -61,10 +61,10 @@ class RCL_Install {
 		$collate = '';
 
 		if ( $wpdb->has_cap( 'collation' ) ) {
-			if ( !empty( $wpdb->charset ) ) {
+			if ( ! empty( $wpdb->charset ) ) {
 				$collate .= "DEFAULT CHARACTER SET $wpdb->charset";
 			}
-			if ( !empty( $wpdb->collate ) ) {
+			if ( ! empty( $wpdb->collate ) ) {
 				$collate .= " COLLATE $wpdb->collate";
 			}
 		}
@@ -185,7 +185,7 @@ class RCL_Install {
 		);
 
 		foreach ( $files as $file ) {
-			if ( wp_mkdir_p( $file['base'] ) && !file_exists( trailingslashit( $file['base'] ) . $file['file'] ) ) {
+			if ( wp_mkdir_p( $file['base'] ) && ! file_exists( trailingslashit( $file['base'] ) . $file['file'] ) ) {
 				if ( $file_handle = @fopen( trailingslashit( $file['base'] ) . $file['file'], 'w' ) ) {
 					fwrite( $file_handle, $file['content'] );
 					fclose( $file_handle );
@@ -196,7 +196,7 @@ class RCL_Install {
 
 	public static function create_roles() {
 
-		if ( !class_exists( 'WP_Roles' ) ) {
+		if ( ! class_exists( 'WP_Roles' ) ) {
 			return;
 		}
 
@@ -218,7 +218,7 @@ class RCL_Install {
 	}
 
 	public static function remove_roles() {
-		if ( !class_exists( 'WP_Roles' ) ) {
+		if ( ! class_exists( 'WP_Roles' ) ) {
 			return;
 		}
 
@@ -243,7 +243,7 @@ class RCL_Install {
 	private static function any_functions() {
 		global $wpdb, $rcl_options, $active_addons;
 
-		if ( !isset( $rcl_options['view_user_lk_rcl'] ) ) {
+		if ( ! isset( $rcl_options['view_user_lk_rcl'] ) ) {
 
 			$rcl_options['view_user_lk_rcl'] = 1;
 			$rcl_options['view_recallbar']	 = 1;
@@ -252,23 +252,23 @@ class RCL_Install {
 			$templates = rcl_search_templates();
 
 			foreach ( $templates as $addon_id => $template ) {
-				update_option( 'rcl_active_template', $addon_id );
+				update_site_option( 'rcl_active_template', $addon_id );
 				break;
 			}
 
-			update_option( 'rcl_global_options', $rcl_options );
+			update_site_option( 'rcl_global_options', $rcl_options );
 
 			//отключаем все пользователям сайта показ админ панели, если включена
 			$wpdb->update(
 				$wpdb->prefix . 'usermeta', array( 'meta_value' => 'false' ), array( 'meta_key' => 'show_admin_bar_front' )
 			);
 
-			update_option( 'default_role', 'author' );
-			update_option( 'users_can_register', 1 );
+			update_site_option( 'default_role', 'author' );
+			update_site_option( 'users_can_register', 1 );
 		} else {
 
 			//устанавливаем показ аватарок на сайте
-			update_option( 'show_avatars', 1 );
+			update_site_option( 'show_avatars', 1 );
 
 			//производим повторную активацию всех активных дополнений плагина
 			if ( $active_addons ) {
@@ -278,11 +278,11 @@ class RCL_Install {
 			}
 		}
 
-		if ( !get_option( 'rtl_standard' ) )
-			update_option( 'rtl_standard', '' );
+		if ( ! get_site_option( 'rtl_standard' ) )
+			update_site_option( 'rtl_standard', '' );
 
-		update_option( 'rcl_global_options', $rcl_options );
-		update_option( 'rcl_version', VER_RCL );
+		update_site_option( 'rcl_global_options', $rcl_options );
+		update_site_option( 'rcl_version', VER_RCL );
 
 		rcl_remove_dir( RCL_UPLOAD_PATH . 'js' );
 		rcl_remove_dir( RCL_UPLOAD_PATH . 'css' );

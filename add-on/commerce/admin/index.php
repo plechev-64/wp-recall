@@ -178,7 +178,7 @@ add_action( 'admin_init', 'rcl_read_exportfile' );
 function rcl_read_exportfile() {
 	global $wpdb;
 
-	if ( !isset( $_POST['_wpnonce'] ) || !wp_verify_nonce( $_POST['_wpnonce'], 'get-csv-file' ) )
+	if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'get-csv-file' ) )
 		return false;
 
 	$importData = array(
@@ -205,7 +205,7 @@ function rcl_read_exportfile() {
 
 	$posts = $wpdb->get_results( "SELECT " . implode( ',', $importData['fields'] ) . " FROM $wpdb->posts WHERE post_type = 'products' AND post_status!='draft'" );
 
-	if ( !$posts )
+	if ( ! $posts )
 		return false;
 
 	$xml		 = new DomDocument( '1.0', 'utf-8' );
@@ -246,7 +246,7 @@ function rcl_read_exportfile() {
 			if ( $k == 'taxonomies' ) {
 				$data = $product->appendChild( $xml->createElement( $k ) );
 				foreach ( $termData as $taxonomy => $terms ) {
-					if ( !$terms )
+					if ( ! $terms )
 						continue;
 					$values		 = array();
 					foreach ( $terms as $term )
@@ -258,7 +258,7 @@ function rcl_read_exportfile() {
 
 			if ( $k == 'meta' ) {
 
-				if ( !$fields )
+				if ( ! $fields )
 					continue;
 
 				$meta = $product->appendChild( $xml->createElement( 'meta' ) );
@@ -313,7 +313,7 @@ function rcl_import_product( $product ) {
 		$postID					 = wp_insert_post( $postData );
 	}
 
-	if ( !$postID )
+	if ( ! $postID )
 		return false;
 
 	if ( $product->taxonomies ) {
@@ -357,7 +357,7 @@ function rcl_ajax_import_products() {
 
 	$xml = simplexml_load_file( $path );
 
-	if ( !$xml ) {
+	if ( ! $xml ) {
 		wp_send_json( array(
 			'error' => __( 'File not found!', 'wp-recall' )
 		) );
@@ -381,7 +381,7 @@ function rcl_ajax_import_products() {
 			$i = 0;
 			foreach ( $xml->product as $product ) {
 
-				$i++;
+				$i ++;
 
 				if ( $offset && $i <= $offset )
 					continue;
@@ -433,7 +433,7 @@ function rcl_ajax_import_products() {
 function rcl_get_chart_orders( $orders ) {
 	global $order, $chartData, $chartArgs;
 
-	if ( !$orders )
+	if ( ! $orders )
 		return false;
 
 	$chartArgs	 = array();
@@ -477,7 +477,7 @@ function rcl_commerce_metabox() {
 
 	$orders = rcl_get_orders( array( 'number' => 5 ) );
 
-	if ( !$orders ) {
+	if ( ! $orders ) {
 		echo '<p>' . __( 'No orders yet', 'wp-recall' ) . '</p>';
 		return;
 	}

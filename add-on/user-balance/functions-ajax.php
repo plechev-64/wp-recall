@@ -9,7 +9,7 @@ function rcl_add_count_user() {
 
 	rcl_verify_ajax_nonce();
 
-	if ( !intval( $_POST['pay_summ'] ) ) {
+	if ( ! intval( $_POST['pay_summ'] ) ) {
 		wp_send_json( array( 'error' => __( 'Enter the amount', 'wp-recall' ) ) );
 	}
 
@@ -52,11 +52,11 @@ function rcl_pay_order_user_balance() {
 
 	$pay_id			 = intval( $POST['pay_id'] );
 	$pay_type		 = $POST['pay_type'];
-	$pay_summ		 = $POST['pay_summ'];
+	$pay_summ		 = abs( $POST['pay_summ'] );
 	$description	 = $POST['description'];
 	$baggage_data	 = json_decode( base64_decode( $POST['baggage_data'] ) );
 
-	if ( !$pay_id ) {
+	if ( ! $pay_id ) {
 		wp_send_json( array( 'error' => __( 'Order not found!', 'wp-recall' ) ) );
 	}
 
@@ -75,7 +75,7 @@ function rcl_pay_order_user_balance() {
 
 	$newBalance = $userBalance - $pay_summ;
 
-	if ( !$userBalance || $newBalance < 0 ) {
+	if ( ! $userBalance || $newBalance < 0 ) {
 		wp_send_json( array( 'error' => sprintf( __( 'Insufficient funds in your personal account!<br>Order price: %d %s', 'wp-recall' ), $pay_summ, rcl_get_primary_currency( 1 ) ) ) );
 	}
 
@@ -100,9 +100,9 @@ function rcl_load_payment_form() {
 
 	$content = '<div class="rcl-pre-payment-data">';
 
-	$content .= '<div class="payment-meta"><b>' . __( 'Сумма платежа' ) . '</b>: ' . $_POST['pay_summ'] . '</div>';
+	$content .= '<p><b>' . __( 'Сумма платежа' ) . '</b>: ' . $_POST['pay_summ'] . ' ' . rcl_get_primary_currency( 1 ) . '</p>';
 
-	$content .= '<div class="payment-meta"><b>' . __( 'Описание платежа' ) . '</b>: ' . $_POST['description'] . '</div>';
+	//$content .= '<p><b>' . __( 'Описание платежа' ) . '</b>: ' . $_POST['description'] . '</p>';
 
 	$content .= $form;
 
@@ -111,8 +111,8 @@ function rcl_load_payment_form() {
 	wp_send_json( array(
 		'dialog'	 => array(
 			'content'	 => $content,
-			'size'		 => 'auto',
-			'title'		 => __( 'Ссылка на оплату' )
+			'size'		 => 'medium',
+			'title'		 => $_POST['description']
 		),
 		'pay_type'	 => $_POST['pay_type']
 	) );

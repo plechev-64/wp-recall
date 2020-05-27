@@ -19,6 +19,26 @@ function rcl_apply_filters_area_menu() {
 	echo $content;
 }
 
+add_action( 'rcl_area_top', 'rcl_apply_filters_area_top', 10 );
+function rcl_apply_filters_area_top() {
+	echo apply_filters( 'rcl_content_area_top', '' );
+}
+
+add_action( 'rcl_area_details', 'rcl_apply_filters_area_details', 10 );
+function rcl_apply_filters_area_details() {
+	echo apply_filters( 'rcl_content_area_details', '' );
+}
+
+add_action( 'rcl_area_actions', 'rcl_apply_filters_area_actions', 10 );
+function rcl_apply_filters_area_actions() {
+	echo apply_filters( 'rcl_content_area_actions', '' );
+}
+
+add_action( 'rcl_area_counters', 'rcl_apply_filters_area_counters', 10 );
+function rcl_apply_filters_area_counters() {
+	echo apply_filters( 'rcl_content_area_counters', '' );
+}
+
 function rcl_user_name() {
 	global $rcl_user;
 	echo $rcl_user->display_name;
@@ -26,7 +46,7 @@ function rcl_user_name() {
 
 function rcl_user_url() {
 	global $rcl_user;
-	echo get_author_posts_url( $rcl_user->ID, $rcl_user->user_nicename );
+	echo rcl_get_user_url( $rcl_user->ID );
 }
 
 function rcl_user_avatar( $size = 50 ) {
@@ -466,7 +486,7 @@ function rcl_get_link_author_comment( $url ) {
 	global $comment;
 	if ( ! isset( $comment ) || $comment->user_id == 0 )
 		return $url;
-	return get_author_posts_url( $comment->user_id );
+	return rcl_get_user_url( $comment->user_id );
 }
 
 add_action( 'wp_head', 'rcl_hidden_admin_panel' );

@@ -25,7 +25,7 @@ class Rcl_Fields extends Rcl_Field {
 		if ( $fields ) {
 
 			foreach ( $fields as $field ) {
-				if ( !isset( $field['slug'] ) )
+				if ( ! isset( $field['slug'] ) )
 					continue;
 				$this->fields[$field['slug']] = is_array( $field ) ? parent::setup( $field ) : $field;
 			}
@@ -36,7 +36,7 @@ class Rcl_Fields extends Rcl_Field {
 
 	function setup_structure( $force = false ) {
 
-		if ( !$this->structure || ($this->structure && !$this->fields) || $force ) {
+		if ( ! $this->structure || ($this->structure && ! $this->fields) || $force ) {
 
 			$fieldIds = array();
 
@@ -59,7 +59,7 @@ class Rcl_Fields extends Rcl_Field {
 			$structureFields = array();
 
 			foreach ( $this->structure as $group_id => $group ) {
-				if ( !isset( $group['areas'] ) )
+				if ( ! isset( $group['areas'] ) )
 					continue;
 				foreach ( $group['areas'] as $area ) {
 					$structureFields = array_merge( $structureFields, $area['fields'] );
@@ -69,7 +69,7 @@ class Rcl_Fields extends Rcl_Field {
 			if ( $structureFields ) {
 
 				foreach ( $this->fields as $field_id => $field ) {
-					if ( !in_array( $field_id, $structureFields ) ) {
+					if ( ! in_array( $field_id, $structureFields ) ) {
 						$this->structure['dump-group']['areas'][0]['fields'][] = $field_id;
 					}
 				}
@@ -110,7 +110,7 @@ class Rcl_Fields extends Rcl_Field {
 
 		$field = $this->get_field( $field_id );
 
-		if ( !$field )
+		if ( ! $field )
 			return false;
 
 		return isset( $field->$propName );
@@ -118,7 +118,7 @@ class Rcl_Fields extends Rcl_Field {
 
 	function get_field_prop( $field_id, $propName ) {
 
-		if ( !$this->isset_field_prop( $field_id, $propName ) )
+		if ( ! $this->isset_field_prop( $field_id, $propName ) )
 			return false;
 
 		$field = $this->get_field( $field_id );
@@ -128,7 +128,7 @@ class Rcl_Fields extends Rcl_Field {
 
 	function exclude( $fieldIds ) {
 
-		if ( !$this->fields )
+		if ( ! $this->fields )
 			return false;
 
 		$fields = array();
@@ -149,7 +149,7 @@ class Rcl_Fields extends Rcl_Field {
 
 		foreach ( $filters as $key => $value ) {
 			$fields = $this->search_by( $key, $value, $fields );
-			if ( !$fields )
+			if ( ! $fields )
 				return false;
 		}
 
@@ -158,19 +158,19 @@ class Rcl_Fields extends Rcl_Field {
 
 	function search_by( $key, $value, $fields = false ) {
 
-		if ( !$fields )
+		if ( ! $fields )
 			$fields = $this->fields;
 
 		$search = array();
 
 		foreach ( $fields as $field_id => $field ) {
 
-			if ( !$field->isset_prop( $key ) )
+			if ( ! $field->isset_prop( $key ) )
 				continue;
 
 			if ( is_array( $value ) ) {
 
-				if ( !in_array( $field->get_prop( $key ), $value ) )
+				if ( ! in_array( $field->get_prop( $key ), $value ) )
 					continue;
 			}else {
 
@@ -207,7 +207,7 @@ class Rcl_Fields extends Rcl_Field {
 			$content .= $this->get_group( $group );
 		}
 
-		if ( !$content )
+		if ( ! $content )
 			return false;
 
 		$content = '<div class="rcl-content preloader-parent">' . $content . '</div>';
@@ -228,7 +228,7 @@ class Rcl_Fields extends Rcl_Field {
 
 	function get_group( $group ) {
 
-		if ( !isset( $group['areas'] ) || !$group['areas'] )
+		if ( ! isset( $group['areas'] ) || ! $group['areas'] )
 			return false;
 
 		$groupContent = '';
@@ -237,7 +237,7 @@ class Rcl_Fields extends Rcl_Field {
 			$groupContent .= $this->get_area( $area );
 		}
 
-		if ( !$groupContent )
+		if ( ! $groupContent )
 			return false;
 
 		$content = '<div class="rcl-content-group">';
@@ -260,14 +260,14 @@ class Rcl_Fields extends Rcl_Field {
 
 		$areaContent = '';
 
-		if ( !isset( $area['fields'] ) || !$area['fields'] )
+		if ( ! isset( $area['fields'] ) || ! $area['fields'] )
 			return false;
 
 		foreach ( $area['fields'] as $field_id ) {
 			$areaContent .= $this->get_field_content( $field_id );
 		}
 
-		if ( !$areaContent )
+		if ( ! $areaContent )
 			return false;
 
 		$content = '<div class="rcl-content-area" style="width:' . (isset( $area['width'] ) ? $area['width'] : 100) . '%;">';
@@ -281,7 +281,7 @@ class Rcl_Fields extends Rcl_Field {
 
 		$field = $this->get_field( $field_id );
 
-		if ( !$field->value )
+		if ( ! $field->value )
 			return false;
 
 		$content .= $field->get_field_html( $field->value );
@@ -343,7 +343,7 @@ class Rcl_Fields extends Rcl_Field {
 			$content .= $this->get_group_form( $group, $args );
 		}
 
-		if ( !$content )
+		if ( ! $content )
 			return false;
 
 		$content = '<div class="rcl-content preloader-parent">' . $content . '</div>';
@@ -353,7 +353,7 @@ class Rcl_Fields extends Rcl_Field {
 
 	function get_group_form( $group, $args = false ) {
 
-		if ( !isset( $group['areas'] ) || !$group['areas'] )
+		if ( ! isset( $group['areas'] ) || ! $group['areas'] )
 			return false;
 
 		$groupContent = '';
@@ -362,7 +362,7 @@ class Rcl_Fields extends Rcl_Field {
 			$groupContent .= $this->get_area_form( $area, $args );
 		}
 
-		if ( !$groupContent )
+		if ( ! $groupContent )
 			return false;
 
 		$content = '<div class="rcl-content-group">';
@@ -388,14 +388,14 @@ class Rcl_Fields extends Rcl_Field {
 
 		$areaContent = '';
 
-		if ( !isset( $area['fields'] ) || !$area['fields'] )
+		if ( ! isset( $area['fields'] ) || ! $area['fields'] )
 			return false;
 
 		foreach ( $area['fields'] as $field_id ) {
 			$areaContent .= $this->get_field_form( $field_id, $args );
 		}
 
-		if ( !$areaContent )
+		if ( ! $areaContent )
 			return false;
 
 		$content = '<div class="rcl-content-area" style="width:' . (isset( $area['width'] ) ? $area['width'] : 100) . '%;">';
@@ -409,7 +409,7 @@ class Rcl_Fields extends Rcl_Field {
 
 		$field = $this->get_field( $field_id );
 
-		if ( !$field )
+		if ( ! $field )
 			return false;
 
 		if ( isset( $args['unique_ids'] ) )

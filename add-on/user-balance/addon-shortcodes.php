@@ -38,7 +38,7 @@ function rcl_form_user_balance( $args = array() ) {
 
 	$args['pay_type']		 = 1;
 	$args['ids__not_in'][]	 = 'user_balance';
-	$args['description']	 = __( 'Пополнение личного счета', 'wp-recall' );
+	$args['description']	 = __( 'Пополнение лицевого счета', 'wp-recall' );
 
 	return rcl_get_pay_form( $args );
 }

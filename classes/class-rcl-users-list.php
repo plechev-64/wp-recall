@@ -20,13 +20,13 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 		$this->init_properties( $args );
 
-		$args['fields'] = array(
+		$args['select'] = array(
 			'ID',
 			'display_name',
 			'user_nicename'
 		);
 
-		$this->set_query( $args );
+		$this->parse( $args );
 
 		$this->data = ($this->data) ? array_map( 'trim', explode( ',', $this->data ) ) : array();
 
@@ -112,7 +112,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 	}
 
 	function data( $needle ) {
-		if ( !$this->data )
+		if ( ! $this->data )
 			return false;
 		$key = array_search( $needle, $this->data );
 		return (false !== $key) ? true : false;
@@ -120,7 +120,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 	function get_users() {
 
-		$users = apply_filters( 'rcl_users', $this->get_data() );
+		$users = apply_filters( 'rcl_users', $this->get_results() );
 
 		return $users;
 	}
@@ -184,7 +184,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 		$profile_fields = apply_filters( 'rcl_userslist_custom_fields', $profile_fields );
 
-		if ( !$profile_fields )
+		if ( ! $profile_fields )
 			return $users;
 
 		$profile_fields = stripslashes_deep( $profile_fields );
@@ -194,7 +194,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 		foreach ( $profile_fields as $custom_field ) {
 			$custom_field = apply_filters( 'rcl_userslist_custom_field', $custom_field );
-			if ( !$custom_field )
+			if ( ! $custom_field )
 				continue;
 			if ( isset( $custom_field['public_value'] ) && $custom_field['public_value'] == 1 ) {
 				$fields[]	 = $custom_field;
@@ -202,7 +202,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 			}
 		}
 
-		if ( !$fields )
+		if ( ! $fields )
 			return $users;
 
 		$ids = $this->get_users_ids( $users );
@@ -294,7 +294,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 	function add_posts_count( $users ) {
 		global $wpdb;
 
-		if ( !$users )
+		if ( ! $users )
 			return $users;
 
 		$ids = $this->get_users_ids( $users );
@@ -331,7 +331,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 	function add_comments_count( $users ) {
 		global $wpdb;
 
-		if ( !$users )
+		if ( ! $users )
 			return $users;
 
 		$ids = $this->get_users_ids( $users );
@@ -353,7 +353,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 	function add_descriptions( $users ) {
 		global $wpdb;
 
-		if ( !$users )
+		if ( ! $users )
 			return $users;
 
 		$ids = $this->get_users_ids( $users );
@@ -373,7 +373,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 	function add_avatar_data( $users ) {
 		global $wpdb;
 
-		if ( !$users )
+		if ( ! $users )
 			return $users;
 
 		$ids = $this->get_users_ids( $users );
@@ -406,7 +406,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 	function add_rating_total( $users ) {
 		global $wpdb;
 
-		if ( !$users )
+		if ( ! $users )
 			return $users;
 
 		$ids = $this->get_users_ids( $users );
@@ -425,13 +425,13 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 	function get_users_ids( $users ) {
 
-		if ( !$users )
+		if ( ! $users )
 			return $users;
 
 		$ids = array();
 
 		foreach ( $users as $user ) {
-			if ( !isset( $user->ID ) || !$user->ID )
+			if ( ! isset( $user->ID ) || ! $user->ID )
 				continue;
 			$ids[] = $user->ID;
 		}
@@ -459,7 +459,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 	function get_filters( $count_users = false ) {
 		global $post, $user_LK, $active_addons;
 
-		if ( !$this->filters )
+		if ( ! $this->filters )
 			return false;
 
 		$content = '';
@@ -479,7 +479,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		$rqst = ($s_array) ? implode( '&', $s_array ) . '&' : '';
 
 		if ( rcl_is_office() ) {
-			$url = (isset( $_POST['tab_url'] )) ? $_POST['tab_url'] : get_author_posts_url( $user_LK );
+			$url = (isset( $_POST['tab_url'] )) ? $_POST['tab_url'] : rcl_get_user_url( $user_LK );
 		} else {
 			$url = get_permalink( $post->ID );
 		}
@@ -518,7 +518,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 	function add_query_search( $query ) {
 		$search_text		 = (isset( $_GET['search_text'] )) ? sanitize_user( $_GET['search_text'] ) : '';
 		$search_field		 = (isset( $_GET['search_field'] )) ? $_GET['search_field'] : '';
-		if ( !$search_text || !$search_field )
+		if ( ! $search_text || ! $search_field )
 			return $query;
 		$query['where'][]	 = "wp_users.$search_field LIKE '%$search_text%'";
 		return $query;

@@ -73,7 +73,7 @@ class Rcl_Image_Gallery {
 
 		$attach_ids = $attach_ids ? $attach_ids : $this->attach_ids;
 
-		if ( !$attach_ids )
+		if ( ! $attach_ids )
 			return false;
 
 		$images = array();
@@ -100,7 +100,7 @@ class Rcl_Image_Gallery {
 
 	function get_gallery() {
 
-		if ( !$this->image_urls )
+		if ( ! $this->image_urls )
 			return false;
 
 		rcl_image_slider_scripts();
@@ -168,7 +168,7 @@ class Rcl_Image_Gallery {
 
 	function get_slides() {
 
-		if ( !$this->image_urls )
+		if ( ! $this->image_urls )
 			return false;
 
 		$content = '<!-- Slides Container -->
@@ -230,7 +230,7 @@ class Rcl_Image_Gallery {
 						<div class="o"></div>
 					</div>
 				</div>
-				' . (isset( $this->navigator['thumbnails']['arrows'] ) ? $this->get_navigator_arrows : '') . '
+				' . (isset( $this->navigator['thumbnails']['arrows'] ) ? $this->get_navigator_arrows() : '') . '
 			</div>
 			<!-- endregion Thumbnail Navigator Skin End -->';
 

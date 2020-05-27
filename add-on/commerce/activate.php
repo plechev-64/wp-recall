@@ -4,7 +4,7 @@ global $wpdb;
 
 require_once 'core.php';
 
-if ( !defined( 'RMAG_PREF' ) )
+if ( ! defined( 'RMAG_PREF' ) )
 	define( 'RMAG_PREF', $wpdb->prefix . "rmag_" );
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -12,10 +12,10 @@ require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 $collate = '';
 
 if ( $wpdb->has_cap( 'collation' ) ) {
-	if ( !empty( $wpdb->charset ) ) {
+	if ( ! empty( $wpdb->charset ) ) {
 		$collate .= "DEFAULT CHARACTER SET $wpdb->charset";
 	}
-	if ( !empty( $wpdb->collate ) ) {
+	if ( ! empty( $wpdb->collate ) ) {
 		$collate .= " COLLATE $wpdb->collate";
 	}
 }
@@ -62,21 +62,21 @@ if ( $update_table ) {
 	rmag_migration_table_data();
 }
 
-$rmag_options = get_option( 'primary-rmag-options' );
+$rmag_options = get_site_option( 'primary-rmag-options' );
 
-if ( !isset( $rmag_options['sistem_related_products'] ) )
+if ( ! isset( $rmag_options['sistem_related_products'] ) )
 	$rmag_options['sistem_related_products'] = 1;
 
-if ( !isset( $rmag_options['title_related_products_recall'] ) )
+if ( ! isset( $rmag_options['title_related_products_recall'] ) )
 	$rmag_options['title_related_products_recall'] = 'Рекомендуем';
 
-if ( !isset( $rmag_options['size_related_products'] ) )
+if ( ! isset( $rmag_options['size_related_products'] ) )
 	$rmag_options['size_related_products'] = 3;
 
-if ( !isset( $rmag_options['primary_cur'] ) )
+if ( ! isset( $rmag_options['primary_cur'] ) )
 	$rmag_options['primary_cur'] = 'RUB';
 
-if ( !isset( $rmag_options['basket_page_rmag'] ) ) {
+if ( ! isset( $rmag_options['basket_page_rmag'] ) ) {
 
 	$labels = array(
 		'name'				 => __( 'Products catalog', 'wp-recall' ),
@@ -220,4 +220,4 @@ if ( !isset( $rmag_options['basket_page_rmag'] ) ) {
 	) );
 }
 
-update_option( 'primary-rmag-options', $rmag_options );
+update_site_option( 'primary-rmag-options', $rmag_options );

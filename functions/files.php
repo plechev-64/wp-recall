@@ -12,7 +12,7 @@ function rcl_get_template_path( $temp_name, $path = false ) {
 
 	$filepath = apply_filters( 'rcl_template_path', $filepath, $temp_name );
 
-	if ( !file_exists( $filepath ) )
+	if ( ! file_exists( $filepath ) )
 		return false;
 
 	return $filepath;
@@ -21,13 +21,13 @@ function rcl_get_template_path( $temp_name, $path = false ) {
 //подключение указанного файла шаблона с выводом
 function rcl_include_template( $temp_name, $path = false, $data = false ) {
 
-	if ( !empty( $data ) && is_array( $data ) ) {
+	if ( ! empty( $data ) && is_array( $data ) ) {
 		extract( $data );
 	}
 
 	$pathfile = rcl_get_template_path( $temp_name, $path );
 
-	if ( !$pathfile )
+	if ( ! $pathfile )
 		return false;
 
 	do_action( 'rcl_include_template_before', $temp_name, $path );
@@ -48,12 +48,8 @@ function rcl_get_include_template( $temp_name, $path = false, $data = false ) {
 
 //форматирование абсолютного пути в урл
 function rcl_path_to_url( $path ) {
-
-	$DirTail = stristr( $path, basename( content_url() ) );
-
-	$url = untrailingslashit( dirname( WP_CONTENT_URL ) . '/' . $DirTail );
-
-	return $url;
+	$siteUrl = is_ssl() ? str_replace( 'http://', 'https://', get_site_option( 'siteurl' ) ) : get_site_option( 'siteurl' );
+	return untrailingslashit( $siteUrl ) . '/' . stristr( $path, basename( content_url() ) );
 }
 
 //получение абсолютного пути из указанного урла
@@ -111,7 +107,7 @@ function rcl_check_jpeg( $f, $fix = false ) {
 
 function rcl_get_mime_type_by_ext( $file_ext ) {
 
-	if ( !$file_ext )
+	if ( ! $file_ext )
 		return false;
 
 	$mimes = get_allowed_mime_types();
@@ -127,13 +123,13 @@ function rcl_get_mime_type_by_ext( $file_ext ) {
 
 function rcl_get_mime_types( $ext_array ) {
 
-	if ( !$ext_array )
+	if ( ! $ext_array )
 		return false;
 
 	$mTypes = array();
 
 	foreach ( $ext_array as $ext ) {
-		if ( !$ext )
+		if ( ! $ext )
 			continue;
 		$mTypes[] = rcl_get_mime_type_by_ext( $ext );
 	}
@@ -144,7 +140,7 @@ function rcl_get_mime_types( $ext_array ) {
 /* 22-06-2015 Удаление папки с содержимым */
 function rcl_remove_dir( $dir ) {
 	$dir	 = untrailingslashit( $dir );
-	if ( !is_dir( $dir ) )
+	if ( ! is_dir( $dir ) )
 		return false;
 	if ( $objs	 = glob( $dir . "/*" ) ) {
 		foreach ( $objs as $obj ) {

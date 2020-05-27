@@ -53,12 +53,12 @@ class Rcl_Rating_Box {
 	function setup_box() {
 		global $post, $comment, $user_ID;
 
-		if ( !$this->user_id )
+		if ( ! $this->user_id )
 			$this->user_id = $user_ID;
 
 		$object = false;
 
-		if ( !$this->object_author ) {
+		if ( ! $this->object_author ) {
 
 			if ( $this->rating_type == 'comment' ) {
 
@@ -73,7 +73,7 @@ class Rcl_Rating_Box {
 			}
 		}
 
-		if ( !isset( $this->output_type ) )
+		if ( ! isset( $this->output_type ) )
 			$this->output_type = rcl_get_option( 'rating_type_' . $this->rating_type, 0 );
 
 		$this->setup_rating_allowed( $object );
@@ -90,10 +90,10 @@ class Rcl_Rating_Box {
 		);
 
 		if ( $this->output_type == 2 ) { //звезды
-			if ( !$this->vote_count )
+			if ( ! $this->vote_count )
 				$this->vote_count = rcl_count_rating_values( $data );
 
-			if ( !$this->item_count )
+			if ( ! $this->item_count )
 				$this->item_count = rcl_get_option( 'rating_item_amount_' . $this->rating_type, 1 );
 		}
 
@@ -126,7 +126,7 @@ class Rcl_Rating_Box {
 
 			$user_info = get_userdata( $this->user_id );
 
-			if ( !$user_info || $user_info->user_level < $access )
+			if ( ! $user_info || $user_info->user_level < $access )
 				$can = false;
 		}
 
@@ -135,14 +135,14 @@ class Rcl_Rating_Box {
 		if ( doing_filter( 'the_excerpt' ) || is_front_page() )
 			return;
 
-		if ( !$this->user_id || $this->user_id == $this->object_author )
+		if ( ! $this->user_id || $this->user_id == $this->object_author )
 			return;
 
 		$user_vote = apply_filters( 'rcl_rating_user_vote', false, $this );
 
 		$this->user_vote = $user_vote !== false ? $user_vote : rcl_get_vote_value( $this->user_id, $this->object_id, $this->rating_type );
 
-		if ( $this->user_vote && (!rcl_get_option( 'rating_delete_voice' ) || $this->output_type == 2) )
+		if ( $this->user_vote && ( ! rcl_get_option( 'rating_delete_voice' ) || $this->output_type == 2) )
 			return;
 
 		$this->user_can['vote'] = true;
@@ -150,7 +150,7 @@ class Rcl_Rating_Box {
 
 	function rating_type_exist( $type ) {
 
-		if ( !rcl_get_option( 'rating_' . $type ) )
+		if ( ! rcl_get_option( 'rating_' . $type ) )
 			return false;
 
 		return true;
@@ -159,7 +159,7 @@ class Rcl_Rating_Box {
 	function setup_rating_allowed( $object ) {
 		global $post;
 
-		if ( !$object || !isset( $object->post_type ) )
+		if ( ! $object || ! isset( $object->post_type ) )
 			return false;
 
 		$this->rating_none = ($object->ID == $post->ID && isset( $post->rating_none )) ? $post->rating_none : get_post_meta( $object->ID, 'rayting-none', 1 );
@@ -169,7 +169,7 @@ class Rcl_Rating_Box {
 
 		$this->setup_box();
 
-		if ( !$this->rating_type_exist( $this->rating_type ) )
+		if ( ! $this->rating_type_exist( $this->rating_type ) )
 			return false;
 
 		if ( $this->rating_none )
@@ -241,7 +241,7 @@ class Rcl_Rating_Box {
 
 		$content = '';
 
-		if ( $this->view_total_rating && !$this->user_can['vote'] )
+		if ( $this->view_total_rating && ! $this->user_can['vote'] )
 			$content .= '<span class="vote-heart"><i class="rcli fa-heartbeat" aria-hidden="true"></i></span>';
 
 		$content .= $this->get_html_button( $this->buttons['like'] );
@@ -256,7 +256,7 @@ class Rcl_Rating_Box {
 
 		$content = '';
 
-		if ( $this->view_total_rating && !$this->user_can['vote'] )
+		if ( $this->view_total_rating && ! $this->user_can['vote'] )
 			$content .= '<span class="vote-heart"><i class="rcli fa-heartbeat" aria-hidden="true"></i></span>';
 
 		$content .= $this->get_html_button( $this->buttons['minus'] );
@@ -304,7 +304,7 @@ class Rcl_Rating_Box {
 		if ( $this->rating_type != 'comment' )
 			return false;
 
-		if ( !$comment || !is_object( $comment ) || !isset( $comment->rating_total ) )
+		if ( ! $comment || ! is_object( $comment ) || ! isset( $comment->rating_total ) )
 			return false;
 
 		if ( $this->object_id != $comment->comment_ID )
@@ -316,10 +316,10 @@ class Rcl_Rating_Box {
 	function is_post() {
 		global $post;
 
-		if ( !$post || !is_object( $post ) )
+		if ( ! $post || ! is_object( $post ) )
 			return false;
 
-		if ( !isset( $post->rating_total ) )
+		if ( ! isset( $post->rating_total ) )
 			return false;
 
 		if ( $this->object_id != $post->ID )
@@ -359,7 +359,7 @@ class Rcl_Rating_Box {
 
 	function get_html_total_rating() {
 
-		if ( !$this->total_rating || !$this->user_can['view_history'] ) {
+		if ( ! $this->total_rating || ! $this->user_can['view_history'] ) {
 			return '<span class="rating-value">' . rcl_format_rating( $this->total_rating ) . '</span>';
 		}
 
@@ -368,7 +368,7 @@ class Rcl_Rating_Box {
 
 	function get_html_button( $args ) {
 
-		if ( !$this->user_can['vote'] )
+		if ( ! $this->user_can['vote'] )
 			return false;
 
 		$title = ($this->user_vote) ? __( 'Cancel vote', 'wp-recall' ) : __( 'Vote', 'wp-recall' );
@@ -380,7 +380,7 @@ class Rcl_Rating_Box {
 
 	function get_html_total_stars( $args ) {
 
-		if ( !$this->total_rating || !$this->user_can['view_history'] ) {
+		if ( ! $this->total_rating || ! $this->user_can['view_history'] ) {
 			return '<span class="rating-value">' . rcl_format_rating( round( $args['rating_value'], 1 ) ) . '</span>';
 		}
 
@@ -405,7 +405,7 @@ class Rcl_Rating_Box {
 
 			if ( $itemValue == $args['average_rating'] || $itemValue < $args['average_rating'] ) {
 				$procent = 100;
-			} else if ( !$args['rating_value'] || round( ($itemValue - $args['item_value'] ), 1 ) >= $args['average_rating'] ) {
+			} else if ( ! $args['rating_value'] || round( ($itemValue - $args['item_value'] ), 1 ) >= $args['average_rating'] ) {
 				$procent = 0;
 			} else {
 				$procent = round( $args['average_rating'] - $itemValue, 1 ) * 100 / $args['item_value'];
@@ -446,7 +446,7 @@ class Rcl_Rating_Box {
 			'ratingCount'	 => $this->vote_count
 			), $this );
 
-		if ( !$metatags )
+		if ( ! $metatags )
 			return false;
 
 		$content = '<span itemscope="" itemtype="http://schema.org/AggregateRating">';

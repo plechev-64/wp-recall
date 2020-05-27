@@ -6,7 +6,7 @@
 		<span class="rtng-time"><?php if ( $rating->days_value_sum ) echo '(' . $rating->days_value_sum . ')'; ?></span>
 	</div>
 	<div class="rating-sidebar">
-		<a title="<?php echo get_the_author_meta( 'display_name', $rating->object_author ); ?>" href="<?php echo get_author_posts_url( $rating->object_author ); ?>">
+		<a title="<?php echo get_the_author_meta( 'display_name', $rating->object_author ); ?>" href="<?php echo rcl_get_user_url( $rating->object_author ); ?>">
 			<?php echo get_avatar( $rating->object_author, 60 ); ?>
 		</a>
 	</div>

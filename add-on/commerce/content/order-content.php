@@ -4,7 +4,7 @@ add_action( 'rcl_order_before', 'rcl_add_order_manager', 10 );
 function rcl_add_order_manager() {
 	global $user_ID;
 
-	if ( !rcl_is_office( $user_ID ) )
+	if ( ! rcl_is_office( $user_ID ) )
 		return false;
 
 	echo rcl_get_order_manager();
@@ -14,7 +14,7 @@ add_action( 'rcl_order_before', 'rcl_add_order_notices', 10 );
 function rcl_add_order_notices() {
 	global $rclOrder, $rmag_options, $user_ID, $rcl_user_URL;
 
-	if ( !isset( $_GET['order-status'] ) )
+	if ( ! isset( $_GET['order-status'] ) )
 		return false;
 
 	$buyer_register = (isset( $rmag_options['buyer_register'] )) ? $rmag_options['buyer_register'] : 1;
@@ -32,7 +32,7 @@ function rcl_add_order_notices() {
 			$notice .= sprintf( __( 'Status granted to order - "%s"', 'wp-recall' ), rcl_get_status_name_order( $rclOrder->order_status ) ) . '. ';
 			$notice .= __( 'The order is being processed.', 'wp-recall' ) . '<br>';
 
-			if ( !$rclOrder->order_price ) { //Если заказ бесплатный
+			if ( ! $rclOrder->order_price ) { //Если заказ бесплатный
 				$notice .= __( 'The order contained only free items', 'wp-recall' ) . '<br>';
 			} else {
 
@@ -51,7 +51,7 @@ function rcl_add_order_notices() {
 				}
 			}
 
-			if ( !$user_ID && $buyer_register ) {
+			if ( ! $user_ID && $buyer_register ) {
 
 				$notice .= __( 'All necessary data for authorization on the site have been sent to the specified e-mail', 'wp-recall' ) . "<br />";
 				$notice .= __( 'In your personal account you can find out the status of your order.', 'wp-recall' ) . '<br>';
@@ -74,15 +74,15 @@ function rcl_add_order_notices() {
 	echo $notice;
 }
 
-if ( !is_admin() )
+if ( ! is_admin() )
 	add_action( 'rcl_order_before', 'rcl_add_order_pay_form', 30 );
 function rcl_add_order_pay_form() {
 	global $user_ID, $rclOrder, $rmag_options;
 
-	if ( !isset( $_GET['order-status'] ) && !rcl_is_office() )
+	if ( ! isset( $_GET['order-status'] ) && ! rcl_is_office() )
 		return false;
 
-	if ( !$user_ID || !$rclOrder->order_price || $rclOrder->order_status != 1 )
+	if ( ! $user_ID || ! $rclOrder->order_price || $rclOrder->order_status != 1 )
 		return false;
 
 	if ( function_exists( 'rcl_get_pay_form' ) ) {
@@ -100,7 +100,7 @@ function rcl_add_order_pay_form() {
 			'merchant_icon'	 => 1
 		);
 
-		if ( !$type_pay ) {
+		if ( ! $type_pay ) {
 			$dataPay['pay_systems'] = 'user_balance';
 		}
 
@@ -123,7 +123,7 @@ add_action( 'rcl_order_before', 'rcl_add_order_details', 20 );
 function rcl_add_order_details() {
 	global $rclOrder;
 
-	if ( !$rclOrder->order_details )
+	if ( ! $rclOrder->order_details )
 		return false;
 
 	$content = '<div class="rcl-order-details order-before-box">';

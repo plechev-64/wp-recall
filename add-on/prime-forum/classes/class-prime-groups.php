@@ -1,11 +1,11 @@
 <?php
 
 class PrimeGroups extends Rcl_Query {
-	function __construct() {
+	function __construct( $as = false ) {
 
 		$table = array(
 			'name'	 => RCL_PREF . "pforum_groups",
-			'as'	 => 'pfm_groups',
+			'as'	 => $as ? $as : 'pfm_groups',
 			'cols'	 => array(
 				'group_id',
 				'group_name',

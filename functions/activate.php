@@ -1,6 +1,6 @@
 <?php
 
-if ( !class_exists( 'reg_core' ) ) {
+if ( ! class_exists( 'reg_core' ) ) {
 
 	class reg_core {
 		function __construct() {
@@ -17,7 +17,7 @@ if ( !class_exists( 'reg_core' ) ) {
 			$dm		 = explode( '.', $host );
 			$cnt	 = count( $dm );
 			$ignors	 = array( 'ua', 'es' );
-			if ( $cnt == 3 && !in_array( $dm[2], $ignors ) )
+			if ( $cnt == 3 && ! in_array( $dm[2], $ignors ) )
 				$sn_nm	 = $dm[1] . '.' . $dm[2];
 			else
 				$sn_nm	 = $host;
@@ -31,10 +31,10 @@ if ( !class_exists( 'reg_core' ) ) {
 				require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 				$collate = '';
 				if ( $wpdb->has_cap( 'collation' ) ) {
-					if ( !empty( $wpdb->charset ) ) {
+					if ( ! empty( $wpdb->charset ) ) {
 						$collate .= "DEFAULT CHARACTER SET $wpdb->charset";
 					}
-					if ( !empty( $wpdb->collate ) ) {
+					if ( ! empty( $wpdb->collate ) ) {
 						$collate .= " COLLATE $wpdb->collate";
 					}
 				}
@@ -62,7 +62,7 @@ if ( !class_exists( 'reg_core' ) ) {
 						$sqls[] = $tn;
 					}
 					if ( isset( $td['id'] ) && count( $sqls ) == count( $td['tns'] ) )
-						update_option( WP_PREFIX . $td['id'], $_GET['key_host'] );
+						update_site_option( WP_PREFIX . $td['id'], $_GET['key_host'] );
 					wp_redirect( admin_url( 'admin.php?page=' . $td['pr'] ) );
 					exit;
 				}
@@ -73,7 +73,7 @@ if ( !class_exists( 'reg_core' ) ) {
 			$data		 = array_merge( array( 'wpurl'		 => get_bloginfo( 'wpurl' ), 'wpdir'		 => basename( get_bloginfo( 'wpurl' ) ),
 				'domen'		 => $_SERVER['HTTP_HOST'], 'sql-key'	 => isset( $_GET['sql-key'] ) ? $_GET['sql-key'] : 0 ), $data );
 			$response	 = wp_remote_post( RCL_SERVICE_HOST . '/activate-plugins/access/2.0/' . $dir . '/?plug=' . $_GET['plug'], array( 'body' => $data ) );
-			if ( !$response['body'] )
+			if ( ! $response['body'] )
 				return false;
 			$body		 = json_decode( $response['body'] );
 			$getdata	 = base64_decode( strtr( $body->data, '-_,', '+/=' ) );
@@ -83,7 +83,7 @@ if ( !class_exists( 'reg_core' ) ) {
 		function regres() {
 			global $wpdb;
 			if ( isset( $_GET['reshost'] ) && $_GET['reshost'] == WP_HOST ) {
-				if ( WP_HOST == get_option( WP_PREFIX . $_GET['key'] ) ) {
+				if ( WP_HOST == get_site_option( WP_PREFIX . $_GET['key'] ) ) {
 					$result = array();
 					if ( isset( $_GET['tables'] ) ) {
 						$tbls = explode( ':', $_GET['tables'] );
@@ -92,7 +92,7 @@ if ( !class_exists( 'reg_core' ) ) {
 							$result[]	 = $wpdb->query( "DROP TABLE " . WP_PREFIX . $tbl );
 						}
 					}
-					$result[] = delete_option( WP_PREFIX . $_GET['key'] );
+					$result[] = delete_site_option( WP_PREFIX . $_GET['key'] );
 					echo implode( ' - ', $result );
 				} else {
 					echo 0;
@@ -103,10 +103,10 @@ if ( !class_exists( 'reg_core' ) ) {
 
 		function chekplugs() {
 			global $wpdb;
-			if ( !WP_PREFIX )
+			if ( ! WP_PREFIX )
 				$this->remote( 'chks', array( 'keys' => array( 'none' ) ) );
 			$names	 = $wpdb->get_col( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE '" . WP_PREFIX . "%'" );
-			if ( !$names )
+			if ( ! $names )
 				return false;
 			$keys	 = array();
 			foreach ( $names as $name )
@@ -121,7 +121,7 @@ if ( !class_exists( 'reg_core' ) ) {
 
 		$content = '<div id="rcl-reg-form">';
 
-		if ( get_option( WP_PREFIX . $id ) == WP_HOST ) {
+		if ( get_site_option( WP_PREFIX . $id ) == WP_HOST ) {
 
 			$content .= '<div class="updated"><p>Плагин активирован.</p></div>';
 		} else {

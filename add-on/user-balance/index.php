@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'RCL_PRECISION' ) ) {
+	define( 'RCL_PRECISION', 2 );
+}
+
 require_once 'classes/class-rcl-users-balance.php';
 
 require_once 'classes/class-rcl-payment-core.php';
@@ -32,6 +36,10 @@ function rcl_user_account_scripts() {
 	rcl_enqueue_script( 'rcl-user-account', rcl_addon_url( 'assets/js/scripts.js', __FILE__ ) );
 }
 
+function rcl_commercial_round( $val ) {
+	return number_format( round( $val, RCL_PRECISION ), RCL_PRECISION, '.', '' );
+}
+
 add_filter( 'rcl_init_js_variables', 'rcl_init_js_account_variables', 10 );
 function rcl_init_js_account_variables( $data ) {
 	global $user_ID;
@@ -52,7 +60,7 @@ function rmag_get_global_unit_wallet() {
 
 	global $wpdb;
 	global $rmag_options;
-	$rmag_options = get_option( 'primary-rmag-options' );
+	$rmag_options = get_site_option( 'primary-rmag-options' );
 	define( 'RMAG_PREF', $wpdb->prefix . "rmag_" );
 }
 

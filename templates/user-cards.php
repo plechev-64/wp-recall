@@ -5,7 +5,7 @@ $uc_count = '';
 if ( in_array( 'comments_count', $rcl_users_set->data ) ) {
 	$uc_count .= '<div class="u_card_half">Комментариев<br/><span>';
 	$uc_count .= $rcl_user->comments_count;
-	if ( !isset( $rcl_user->comments_count ) ) {
+	if ( ! isset( $rcl_user->comments_count ) ) {
 		$uc_count .= '0';
 	}
 	$uc_count .= '</span></div>';
@@ -15,7 +15,7 @@ $up_count = '';
 if ( in_array( 'posts_count', $rcl_users_set->data ) ) {
 	$up_count .= '<div class="u_card_half">Публикаций<br/><span>';
 	$up_count .= $rcl_user->posts_count;
-	if ( !isset( $rcl_user->posts_count ) ) {
+	if ( ! isset( $rcl_user->posts_count ) ) {
 		$up_count .= '0';
 	}
 	$up_count .= '</span></div>';

@@ -13,9 +13,10 @@
 	color: #e6e6e6;
 	text-decoration: none;
 }
+/*#recallbar .rcb_icons .rcli*/
 #recallbar .rcli {
 	color: #e6e6e6;
-	font-size: 30px;
+	font-size: 25px;
 	line-height: 36px;
 	vertical-align: middle;
 	width: 30px;

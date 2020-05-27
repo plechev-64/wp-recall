@@ -28,51 +28,24 @@ class PrimeLastPosts {
 	}
 
 	function get_topics() {
-		global $wpdb;
 
-		$cachekey	 = 'pfm_last_topics';
-		$cache		 = wp_cache_get( $cachekey );
-		if ( $cache )
-			return $cache;
+		$PrimePosts = new PrimePosts();
 
-		$PrimeTopics = new PrimeTopics();
-		$PrimePosts	 = new PrimePosts();
+		$query = RQ::tbl( new PrimeTopics() )
+			->join( ['topic_id', 'topic_id' ], $PrimePosts )
+			->limit( $this->number )
+			->groupby( 'topic_id' )
+			->orderby( "MAX(" . $PrimePosts->get_colname( 'post_date' ) . ")", 'DESC', false );
 
-		$args = array(
-			'number'	 => $this->number,
-			'join_query' => array(
-				array(
-					'table'			 => $PrimePosts->query['table'],
-					'on_topic_id'	 => 'topic_id',
-					'fields'		 => false,
-					'join'			 => 'INNER'
-				)
-			),
-			'groupby'	 => $PrimeTopics->query['table']['as'] . '.topic_id'
-		);
+		$query = apply_filters( 'pfm_last_topics_query', $query );
 
-		$args = apply_filters( 'pfm_last_topics_query_args', $args );
-
-		$PrimeTopics->set_query( $args );
-
-		$PrimeTopics->query['orderby'] = "MAX(" . $PrimePosts->query['table']['as'] . ".post_date)";
-
-		$topics = $PrimeTopics->get_data();
-
-		$topics = wp_unslash( $topics );
-
-		wp_cache_add( $cachekey, $topics );
-
-		if ( !$topics )
-			return false;
-
-		return $topics;
+		return $query->get_results( 'cache' );
 	}
 
 	function get_posts() {
 		global $wpdb;
 
-		if ( !$this->topics )
+		if ( ! $this->topics )
 			return false;
 
 		$tIDs = array();
@@ -80,10 +53,8 @@ class PrimeLastPosts {
 			$tIDs[] = $topic->topic_id;
 		}
 
-		$PrimePosts = new PrimePosts();
-
 		$args = array(
-			'fields'		 => array(
+			'select'		 => array(
 				'topic_id',
 				'post_id',
 				'post_content',
@@ -93,14 +64,14 @@ class PrimeLastPosts {
 			'orderby'		 => 'post_date'
 		);
 
-		$args = apply_filters( 'pfm_last_posts_query_args', $args );
+		$posts = RQ::tbl( new PrimePosts() )
+			->parse( apply_filters( 'pfm_last_posts_query_args', $args ) )
+			->get_results();
 
-		$posts = $PrimePosts->get_results( $args );
-
-		if ( !$posts )
+		if ( ! $posts )
 			return false;
 
-		return wp_unslash( $posts );
+		return $posts;
 	}
 
 	function string_trim( $string, $length ) {
@@ -117,7 +88,7 @@ class PrimeLastPosts {
 
 	function get_post_by_topic( $topic_id ) {
 
-		if ( !$this->posts )
+		if ( ! $this->posts )
 			return false;
 
 		foreach ( $this->posts as $post ) {
@@ -130,7 +101,7 @@ class PrimeLastPosts {
 
 	function get_content() {
 
-		if ( !$this->topics )
+		if ( ! $this->topics )
 			return false;
 
 		$content = '<div class="prime-last-posts">';

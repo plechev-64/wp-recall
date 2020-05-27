@@ -37,7 +37,7 @@ class Rcl_Field_Abstract {
 
 	function __construct( $args ) {
 
-		if ( !isset( $args['slug'] ) )
+		if ( ! isset( $args['slug'] ) )
 			return false;
 
 		if ( isset( $args['name'] ) )
@@ -67,7 +67,7 @@ class Rcl_Field_Abstract {
 			$this->$key = $val;
 		}
 
-		if ( !isset( $this->value ) && isset( $this->default ) ) {
+		if ( ! isset( $this->value ) && isset( $this->default ) ) {
 			$this->value = $this->default;
 		}
 	}
@@ -86,7 +86,7 @@ class Rcl_Field_Abstract {
 
 	function get_title() {
 
-		if ( !$this->title )
+		if ( ! $this->title )
 			return false;
 
 		return '<span class="rcl-field-title">'
@@ -96,7 +96,7 @@ class Rcl_Field_Abstract {
 
 	function get_icon() {
 
-		if ( !$this->icon )
+		if ( ! $this->icon )
 			return false;
 
 		$content = '<span class="rcl-field-icon">';
@@ -108,7 +108,7 @@ class Rcl_Field_Abstract {
 
 	function get_notice() {
 
-		if ( !$this->notice )
+		if ( ! $this->notice )
 			return false;
 
 		return '<span class="rcl-field-notice">'
@@ -123,15 +123,15 @@ class Rcl_Field_Abstract {
 
 	function get_field_input() {
 
-		if ( !$this->type )
+		if ( ! $this->type )
 			return false;
 
 		$this->rand = rand( 0, 1000 );
 
-		if ( !$this->input_name )
+		if ( ! $this->input_name )
 			$this->input_name = $this->id;
 
-		if ( !$this->input_id )
+		if ( ! $this->input_id )
 			$this->input_id = $this->id;
 
 		if ( $this->unique_id ) {
@@ -155,7 +155,7 @@ class Rcl_Field_Abstract {
 			//$classes[] = 'have-icon';
 		}
 
-		if ( !$this->title && $this->required ) {
+		if ( ! $this->title && $this->required ) {
 			$inputField .= '<span class="required">*</span>';
 		}
 
@@ -208,7 +208,7 @@ class Rcl_Field_Abstract {
 
 	function get_help() {
 
-		if ( !$this->help )
+		if ( ! $this->help )
 			return;
 
 		$content = '<span class="rcl-balloon-hover rcl-field-help">';
@@ -269,7 +269,7 @@ class Rcl_Field_Abstract {
 
 	function get_value() {
 
-		if ( !$this->value )
+		if ( ! isset( $this->value ) || $this->value == '' )
 			return false;
 
 		return $value;
@@ -279,7 +279,7 @@ class Rcl_Field_Abstract {
 
 		$value = $this->get_value();
 
-		if ( !$value || !$this->type )
+		if ( ! $value || ! $this->type )
 			return false;
 
 		$content = '<div class="rcl-field">';

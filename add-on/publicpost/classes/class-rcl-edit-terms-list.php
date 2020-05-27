@@ -9,7 +9,7 @@ class Rcl_Edit_Terms_List {
 		$this->cats		 = $cats;
 		$this->new_cat	 = $post_cat;
 		$cnt			 = count( $post_cat );
-		for ( $a = 0; $a < $cnt; $a++ ) {
+		for ( $a = 0; $a < $cnt; $a ++ ) {
 			foreach ( ( array ) $cats as $cat ) {
 				if ( $cat->term_id != $post_cat[$a] )
 					continue;

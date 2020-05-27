@@ -143,7 +143,7 @@ function rcl_get_tab_button( $tab_id, $master_id ) {
 }
 
 function rcl_get_tab_content( $tab_id, $master_id, $subtab_id = '' ) {
-
+	global $user_ID;
 	if ( ! class_exists( 'Rcl_Tab' ) )
 		require_once RCL_PATH . 'classes/class-rcl-tab.php';
 
@@ -243,7 +243,7 @@ function rcl_add_custom_tabs( $tabs ) {
 
 //выясняем какую вкладку ЛК показывать пользователю,
 //если ни одна не указана для вывода
-add_filter( 'rcl_tabs', 'rcl_get_order_tabs', 10 );
+add_filter( 'rcl_tabs', 'rcl_get_order_tabs', 100 );
 function rcl_get_order_tabs( $rcl_tabs ) {
 	global $user_ID, $user_LK;
 
@@ -254,7 +254,10 @@ function rcl_get_order_tabs( $rcl_tabs ) {
 	$a		 = 10;
 	foreach ( $rcl_tabs as $id => $data ) {
 
-		if ( isset( $data['output'] ) && $data['output'] != 'menu' )
+		if ( ! isset( $data['output'] ) )
+			$data['output'] = 'menu';
+
+		if ( $data['output'] != 'menu' )
 			continue;
 
 		if ( isset( $data['hidden'] ) && $data['hidden'] )
@@ -298,6 +301,7 @@ function rcl_get_order_tabs( $rcl_tabs ) {
 	}
 
 	ksort( $counter );
+
 	$id_first						 = array_shift( $counter );
 	$rcl_tabs[$id_first]['first']	 = 1;
 
@@ -658,7 +662,7 @@ function rcl_sanitize_string( $title, $sanitize = true ) {
 
 	$title = mb_strtolower( $title );
 
-	switch ( get_option( 'rtl_standard' ) ) {
+	switch ( get_site_option( 'rtl_standard' ) ) {
 		case 'off':
 			return $title;
 		case 'gost':
@@ -711,9 +715,17 @@ function rcl_author_link( $link, $author_id ) {
 	if ( rcl_get_option( 'view_user_lk_rcl' ) != 1 )
 		return $link;
 
+	return rcl_get_user_url( $author_id );
+}
+
+function rcl_get_user_url( $user_id ) {
+
+	if ( rcl_get_option( 'view_user_lk_rcl' ) != 1 )
+		return get_author_posts_url( $user_id );
+
 	return add_query_arg(
 		array(
-		rcl_get_option( 'link_user_lk_rcl', 'user' ) => $author_id
+		rcl_get_option( 'link_user_lk_rcl', 'user' ) => $user_id
 		), get_permalink( rcl_get_option( 'lk_page_rcl' ) )
 	);
 }
@@ -808,7 +820,10 @@ function rcl_mail( $email, $title, $text, $from = false, $attach = false ) {
 	$from_name	 = (isset( $from['name'] )) ? $from['name'] : get_bloginfo( 'name' );
 	$from_mail	 = (isset( $from['email'] )) ? $from['email'] : 'noreply@' . $_SERVER['HTTP_HOST'];
 
-	add_filter( 'wp_mail_content_type', create_function( '', 'return "text/html";' ) );
+	add_filter( 'wp_mail_content_type', function() {
+		return "text/html";
+	} );
+
 	$headers = 'From: ' . $from_name . ' <' . $from_mail . '>' . "\r\n";
 
 	$text .= '<p><small>-----------------------------------------------------<br/>
@@ -949,11 +964,8 @@ function rcl_add_balloon_menu( $data, $args ) {
 
 /* 14.0.0 */
 function rcl_verify_ajax_nonce() {
-	if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
-		return false;
-	if ( ! wp_verify_nonce( $_POST['ajax_nonce'], 'rcl-post-nonce' ) ) {
-		wp_send_json( array( 'error' => __( 'Signature verification failed', 'wp-recall' ) . '!' ) );
-	}
+	$ajax = new Rcl_Ajax();
+	$ajax->verify();
 }
 
 function rcl_office_class() {
@@ -1022,8 +1034,7 @@ function rcl_is_user_role( $user_id, $role ) {
 }
 
 function rcl_is_register_open() {
-	$users_can = apply_filters( 'rcl_users_can_register', get_option( 'users_can_register' ) );
-	return $users_can;
+	return apply_filters( 'rcl_users_can_register', get_site_option( 'users_can_register' ) );
 }
 
 /* 16.0.0 */
@@ -1167,7 +1178,7 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 /* 16.0.0 */
 function rcl_get_profile_fields( $args = false ) {
 
-	$fields = get_option( 'rcl_profile_fields' );
+	$fields = get_site_option( 'rcl_profile_fields' );
 
 	$fields = apply_filters( 'rcl_profile_fields', $fields, $args );
 
@@ -1209,9 +1220,9 @@ function rcl_get_profile_field( $field_id ) {
 function rcl_get_area_options() {
 
 	$areas = array(
-		'menu'		 => get_option( 'rcl_fields_area-menu' ),
-		'counters'	 => get_option( 'rcl_fields_area-counters' ),
-		'actions'	 => get_option( 'rcl_fields_area-actions' ),
+		'menu'		 => get_site_option( 'rcl_fields_area-menu' ),
+		'counters'	 => get_site_option( 'rcl_fields_area-counters' ),
+		'actions'	 => get_site_option( 'rcl_fields_area-actions' ),
 	);
 
 	return $areas;
@@ -1243,7 +1254,7 @@ function rcl_get_addon_paths() {
 }
 
 function rcl_get_tab_permalink( $user_id, $tab_id, $subtab_id = false ) {
-	return rcl_format_url( get_author_posts_url( $user_id ), $tab_id, $subtab_id );
+	return rcl_format_url( rcl_get_user_url( $user_id ), $tab_id, $subtab_id );
 }
 
 function rcl_get_option( $option, $default = false ) {
@@ -1255,7 +1266,7 @@ function rcl_get_option( $option, $default = false ) {
 		return $pre;
 
 	if ( ! $rcl_options )
-		$rcl_options = get_option( 'rcl_global_options' );
+		$rcl_options = get_site_option( 'rcl_global_options' );
 
 	if ( isset( $rcl_options[$option] ) ) {
 		if ( $rcl_options[$option] || is_numeric( $rcl_options[$option] ) ) {
@@ -1270,22 +1281,22 @@ function rcl_update_option( $name, $value ) {
 	global $rcl_options;
 
 	if ( ! $rcl_options )
-		$rcl_options = get_option( 'rcl_global_options' );
+		$rcl_options = get_site_option( 'rcl_global_options' );
 
 	$rcl_options[$name] = $value;
 
-	return update_option( 'rcl_global_options', $rcl_options );
+	return update_site_option( 'rcl_global_options', $rcl_options );
 }
 
 function rcl_delete_option( $name ) {
 	global $rcl_options;
 
 	if ( ! $rcl_options )
-		$rcl_options = get_option( 'rcl_global_options' );
+		$rcl_options = get_site_option( 'rcl_global_options' );
 
 	unset( $rcl_options[$name] );
 
-	return update_option( 'rcl_global_options', $rcl_options );
+	return update_site_option( 'rcl_global_options', $rcl_options );
 }
 
 //вывод контента произвольной вкладки
@@ -1309,15 +1320,7 @@ function rcl_filter_custom_tab_vars( $content ) {
 	if ( ! $matchs )
 		return $content;
 
-	$vars		 = array();
-	$replaces	 = array();
-
-	foreach ( $matchs as $var => $replace ) {
-		$vars[]		 = $var;
-		$replaces[]	 = $replace;
-	}
-
-	return str_replace( $vars, $replaces, $content );
+	return strtr( $content, $matchs );
 }
 
 add_filter( 'rcl_custom_tab_content', 'rcl_filter_custom_tab_usermetas', 5 );
@@ -1329,23 +1332,14 @@ function rcl_filter_custom_tab_usermetas( $content ) {
 	if ( ! $metas[1] )
 		return $content;
 
-	$vars		 = array();
-	$replaces	 = array();
+	$matchs = array();
 
 	foreach ( $metas[1] as $meta ) {
-
-		$vars[] = '{RCL-UM:' . $meta . '}';
-
-		$value	 = ($value	 = get_the_author_meta( $meta, $rcl_office )) ? $value : __( 'not specified', 'wp-recall' );
-
-		if ( is_array( $value ) ) {
-			$value = implode( ', ', $value );
-		}
-
-		$replaces[] = $value;
+		$value								 = get_user_meta( $rcl_office, $meta, 1 ) ? : __( 'not specified', 'wp-recall' );
+		$matchs['{RCL-UM:' . $meta . '}']	 = (is_array( $value )) ? implode( ', ', $value ) : $value;
 	}
 
-	return str_replace( $vars, $replaces, $content );
+	return strtr( $content, $matchs );
 }
 
 /* * * */
@@ -1405,7 +1399,7 @@ function rcl_is_gutenberg() {
 	}
 
 	/* if ( self::is_classic_editor_plugin_active() ) {
-	  $editor_option	   = get_option( 'classic-editor-replace' );
+	  $editor_option	   = get_site_option( 'classic-editor-replace' );
 	  $block_editor_active = array( 'no-replace', 'block' );
 
 	  return in_array( $editor_option, $block_editor_active, true );
@@ -1465,8 +1459,7 @@ function rcl_delete_temp_media_by_args( $args ) {
 }
 
 function rcl_get_temp_media( $args = false ) {
-	$Query = new Rcl_Temp_Media();
-	return $Query->get_results( $args );
+	return RQ::tbl( new Rcl_Temp_Media() )->parse( $args )->get_results();
 }
 
 add_action( 'delete_attachment', 'rcl_delete_attachment_temp_gallery', 10 );
@@ -1497,6 +1490,9 @@ function rcl_get_balloon( $args ) {
 
 	$content = '<span class="rcl-balloon-hover ' . (isset( $args['class'] ) ? $args['class'] : '') . '">';
 	$content .= '<i class="rcli ' . $args['icon'] . '" aria-hidden="true"></i>';
+	if ( isset( $args['label'] ) ) {
+		$content .= ' ' . $args['label'];
+	}
 	$content .= '<span class="rcl-balloon ' . (isset( $args['position'] ) ? 'position-' . $args['position'] : 'position-bottom') . '">';
 	$content .= $args['content'];
 	$content .= '</span>';

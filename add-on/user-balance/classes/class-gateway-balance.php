@@ -7,11 +7,31 @@ function rcl_gateway_balance_init() {
 
 class Rcl_Gateway_Balance extends Rcl_Gateway_Core {
 	function __construct() {
+		global $rmag_options;
 		parent::__construct( array(
-			'label'	 => 'Личный счет',
-			'submit' => __( 'Оплатить с личного счета' ),
+			'name'	 => 'Лицевой счет',
+			'label'	 => isset( $rmag_options['balance_label'] ) && $rmag_options['balance_label'] ? $rmag_options['balance_label'] : __( 'Лицевой счет' ),
+			'submit' => isset( $rmag_options['balance_submit'] ) && $rmag_options['balance_submit'] ? $rmag_options['balance_submit'] : __( 'Оплатить с лицевого счета' ),
 			'icon'	 => rcl_addon_url( 'assets/img/wallet2.jpg', __FILE__ )
 		) );
+	}
+
+	function get_options() {
+
+		return array(
+			array(
+				'type'			 => 'text',
+				'slug'			 => 'balance_label',
+				'placeholder'	 => __( 'Лицевой счет' ),
+				'title'			 => __( 'Наименование способа оплаты' )
+			),
+			array(
+				'type'			 => 'text',
+				'slug'			 => 'balance_submit',
+				'placeholder'	 => __( 'Оплатить с лицевого счета' ),
+				'title'			 => __( 'Надпись на кнопке оплаты' )
+			)
+		);
 	}
 
 	function get_form( $data ) {

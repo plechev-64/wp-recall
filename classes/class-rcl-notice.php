@@ -58,6 +58,9 @@ class Rcl_Notice {
 				case 'info':
 					$this->icon	 = 'fa-info-circle';
 					break;
+				case 'error':
+					$this->icon	 = 'fa-exclamation-triangle';
+					break;
 			}
 		}
 	}

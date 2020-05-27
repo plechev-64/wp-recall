@@ -37,7 +37,7 @@ class Rcl_Tab {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( !isset( $args[$name] ) )
+			if ( ! isset( $args[$name] ) )
 				continue;
 			$this->$name = $args[$name];
 		}
@@ -45,8 +45,9 @@ class Rcl_Tab {
 
 	function register_tab() {
 		add_filter( 'rcl_content_area_tabs', array( $this, 'print_tab' ), $this->order );
-		if ( $this->output && !$this->hidden )
+		if ( $this->output && ! $this->hidden ) {
 			add_filter( 'rcl_content_area_' . $this->output, array( $this, 'print_tab_button' ), $this->order );
+		}
 	}
 
 	function print_tab( $content ) {
@@ -125,10 +126,10 @@ class Rcl_Tab {
 		global $user_ID;
 
 		switch ( $this->public ) {
-			case 0: if ( !$user_ID || $user_ID != $master_id )
+			case 0: if ( ! $user_ID || $user_ID != $master_id )
 					return false;
 				break;
-			case -1: if ( !$user_ID || $user_ID == $master_id )
+			case -1: if ( ! $user_ID || $user_ID == $master_id )
 					return false;
 				break;
 			case -2: if ( $user_ID && $user_ID == $master_id )
@@ -142,7 +143,7 @@ class Rcl_Tab {
 	function get_tab_button( $master_id ) {
 		global $user_ID;
 
-		if ( !$this->is_user_access( $master_id ) )
+		if ( ! $this->is_user_access( $master_id ) )
 			return false;
 
 		$name = (isset( $this->counter )) ? sprintf( '%s <span class="rcl-menu-notice">%s</span>', $this->name, $this->counter ) : $this->name;
@@ -208,10 +209,10 @@ class Rcl_Tab {
 	function get_tab( $master_id, $subtab_id = false ) {
 		global $user_ID;
 
-		if ( !$this->is_user_access( $master_id ) )
+		if ( ! $this->is_user_access( $master_id ) )
 			return false;
 
-		if ( !$this->tab_upload )
+		if ( ! $this->tab_upload )
 			return false;
 
 		$status = ($this->tab_active) ? 'active' : '';
@@ -245,7 +246,7 @@ class Rcl_Tab {
 
 			$content = $this->get_tab_content( $master_id, $subtab_id );
 
-			if ( !$content )
+			if ( ! $content )
 				return false;
 		}
 

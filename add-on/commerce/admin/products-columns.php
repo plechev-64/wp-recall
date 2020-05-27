@@ -8,7 +8,7 @@ function rcl_init_product_columns( $columns ) {
 	$out = array();
 	foreach ( $columns as $col => $name ) {
 
-		if ( ++$i == 2 ) {
+		if ( ++ $i == 2 ) {
 			$out['product-thumbnail'] = __( 'Thumbnail', 'wp-recall' );
 		}
 
@@ -68,7 +68,7 @@ function rcl_add_data_product_columns( $column_name, $post_id ) {
 				echo '<span>' . __( 'digital goods', 'wp-recall' ) . '</span>';
 			} else {
 
-				if ( !get_post_meta( $post_id, 'outsale', 1 ) ) {
+				if ( ! get_post_meta( $post_id, 'outsale', 1 ) ) {
 
 					$amount	 = get_post_meta( $post_id, 'amount_product', 1 );
 					$reserve = get_post_meta( $post_id, 'reserve_product', 1 );

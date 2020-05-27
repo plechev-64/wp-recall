@@ -15,8 +15,9 @@ class Rcl_Field_Checkbox extends Rcl_Field_Abstract {
 
 	public $required;
 	public $values;
-	public $display = 'inline';
+	public $display		 = 'inline';
 	public $value_in_key;
+	public $check_all	 = false;
 
 	function __construct( $args ) {
 		parent::__construct( $args );
@@ -62,6 +63,23 @@ class Rcl_Field_Checkbox extends Rcl_Field_Abstract {
 		$this->class = ($this->required) ? 'required-checkbox' : '';
 
 		$content = '';
+
+		if ( $this->check_all ) {
+
+			$content .= '<div class="checkbox-manager">';
+
+			$content .= rcl_get_button( array(
+				'label'		 => __( 'Отметить все' ),
+				'onclick'	 => 'return rcl_check_all_actions_manager("' . $this->input_name . '[]",this);return false;',
+				) );
+
+			$content .= rcl_get_button( array(
+				'label'		 => __( 'Снять все флажки' ),
+				'onclick'	 => 'return rcl_uncheck_all_actions_manager("' . $this->input_name . '[]",this);return false;',
+				) );
+
+			$content .= '</div>';
+		}
 
 		foreach ( $this->values as $k => $value ) {
 

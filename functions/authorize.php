@@ -3,6 +3,9 @@
 add_filter( 'login_redirect', 'rcl_edit_default_login_redirect', 10, 3 );
 function rcl_edit_default_login_redirect( $redirect_to, $requested_redirect_to, $user ) {
 
+	if ( is_wp_error( $user ) )
+		return $redirect_to;
+
 	rcl_update_timeaction_user();
 
 	return rcl_get_authorize_url( $user->ID );
@@ -88,7 +91,7 @@ function rcl_get_authorize_url( $user_id ) {
 	}
 
 	if ( ! $redirect )
-		$redirect = get_author_posts_url( $user_id );
+		$redirect = rcl_get_user_url( $user_id );
 
 	return $redirect;
 }

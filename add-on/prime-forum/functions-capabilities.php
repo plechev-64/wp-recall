@@ -8,7 +8,7 @@ function pfm_is_can( $action ) {
 function pfm_is_user_can( $user_id, $action ) {
 	global $PrimeUser;
 
-	if ( !$PrimeUser || $PrimeUser->user_id != $user_id ) {
+	if ( ! $PrimeUser || $PrimeUser->user_id != $user_id ) {
 		$PrimeUser = new PrimeUser( array( 'user_id' => $user_id ) );
 	}
 
@@ -131,7 +131,7 @@ add_filter( 'pfm_check_forum_errors', 'pfm_check_access_global_view', 10 );
 function pfm_check_access_global_view( $errors ) {
 	global $PrimeUser;
 
-	if ( !$PrimeUser->is_can( 'forum_view' ) )
+	if ( ! $PrimeUser->is_can( 'forum_view' ) )
 		$errors['error'][] = __( 'You are not allowed to view contents of the forum', 'wp-recall' );
 
 	return $errors;

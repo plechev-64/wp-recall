@@ -1,6 +1,6 @@
 <?php
 
-if ( !is_admin() ):
+if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'rcl_support_user_info_scripts', 10 );
 endif;
 function rcl_support_user_info_scripts() {
@@ -58,7 +58,7 @@ function rcl_get_user_details( $user_id, $args = false ) {
 
 	$args = wp_parse_args( $args, $defaults );
 
-	if ( !class_exists( 'Rcl_Blocks' ) )
+	if ( ! class_exists( 'Rcl_Blocks' ) )
 		require_once RCL_PATH . 'classes/class-rcl-blocks.php';
 
 	$content = '<div id="rcl-user-details">';
@@ -103,16 +103,16 @@ function rcl_get_user_details( $user_id, $args = false ) {
 			$details = array_merge( $details, $old_output );
 
 			foreach ( $details as $a => $detail ) {
-				if ( !isset( $details[$a]['args']['order'] ) )
+				if ( ! isset( $details[$a]['args']['order'] ) )
 					$details[$a]['args']['order'] = 10;
 			}
 
-			for ( $a = 0; $a < count( $details ); $a++ ) {
+			for ( $a = 0; $a < count( $details ); $a ++ ) {
 
 				$min		 = $details[$a];
 				$newArray	 = $details;
 
-				for ( $n = $a; $n < count( $newArray ); $n++ ) {
+				for ( $n = $a; $n < count( $newArray ); $n ++ ) {
 
 					if ( $newArray[$n]['args']['order'] < $min['args']['order'] ) {
 						$details[$n] = $min;

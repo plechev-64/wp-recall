@@ -6,11 +6,11 @@
  * @author Андрей
  */
 class Rcl_Payments extends Rcl_Query {
-	function __construct() {
+	function __construct( $as = false ) {
 
 		$table = array(
 			'name'	 => RMAG_PREF . "pay_results",
-			'as'	 => 'rcl_payments',
+			'as'	 => $as ? $as : 'rcl_payments',
 			'cols'	 => array(
 				'ID',
 				'payment_id',

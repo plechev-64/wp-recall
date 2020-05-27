@@ -16,10 +16,10 @@ function rcl_edit_old_option_fields( $option, $type = false ) {
 		'radio',
 	);
 
-	if ( $type && !in_array( $type, $types ) )
+	if ( $type && ! in_array( $type, $types ) )
 		return $option;
 
-	if ( $option && !is_array( $option ) ) {
+	if ( $option && ! is_array( $option ) ) {
 
 		$array = explode( '#', $option );
 
@@ -77,7 +77,7 @@ class RCL_navi {
 			if ( $_GET['group-page'] )
 				$prm = rcl_format_url( $prm ) . 'group-page=' . $_GET['group-page'];
 		}else if ( $user_LK ) {
-			$prm = get_author_posts_url( $user_LK );
+			$prm = rcl_get_user_url( $user_LK );
 		} else {
 			if ( isset( $post ) )
 				$prm = get_permalink( $post->ID );
@@ -98,7 +98,7 @@ class RCL_navi {
 			$prev		 = $this->navi - 4;
 			if ( $prev == 1 )
 				$page_navi .= '<a href="' . $redirect_url . $this->g_name . '=1' . $this->get . '">1</a>';
-			for ( $a = 1; $a <= $this->num_page; $a++ ) {
+			for ( $a = 1; $a <= $this->num_page; $a ++ ) {
 				if ( $a == 1 && $a <= $prev && $prev != 1 )
 					$page_navi .= '<a href="' . $redirect_url . $this->g_name . '=1' . $this->get . '">1</a> ... ';
 				if ( $prev < $a && $a <= $next ) {

@@ -47,7 +47,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$this->name_option = $name_option;
 
-		$fields = stripslashes_deep( get_option( $name_option ) );
+		$fields = stripslashes_deep( get_site_option( $name_option ) );
 
 		if ( $fields ) {
 
@@ -97,7 +97,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 			foreach ( $types as $key => $fieldname ) {
 
-				if ( !in_array( $key, $this->types ) )
+				if ( ! in_array( $key, $this->types ) )
 					continue;
 
 				$newFields[$key] = $fieldname;
@@ -204,7 +204,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$form = '';
 
-		if ( !isset( $fields ) )
+		if ( ! isset( $fields ) )
 			$fields = $this->fields;
 
 		if ( $fields ) {
@@ -225,7 +225,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$slug = isset( $field['slug'] ) ? $field['slug'] : false;
 
-		if ( $this->new_slug && $this->meta_key && !$this->is_default_field( $slug ) ) {
+		if ( $this->new_slug && $this->meta_key && ! $this->is_default_field( $slug ) ) {
 
 			$options[] = array(
 				'type'			 => 'text',
@@ -236,7 +236,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 			);
 		}
 
-		if ( !isset( $field['newField'] ) ) {
+		if ( ! isset( $field['newField'] ) ) {
 			$options[] = array(
 				'type'		 => 'text',
 				'slug'		 => 'title',
@@ -380,7 +380,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 			}
 		} else {
 
-			if ( $this->exist_placeholder && !in_array( $this->field['type'], array( 'custom', 'color' ) ) ) {
+			if ( $this->exist_placeholder && ! in_array( $this->field['type'], array( 'custom', 'color' ) ) ) {
 
 				$options[] = array(
 					'type'	 => 'text',
@@ -458,7 +458,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$options = $this->get_constant_options( $field );
 
-		if ( !$options )
+		if ( ! $options )
 			return false;
 
 		$content = '';
@@ -475,7 +475,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$options = $this->get_options_field();
 
-		if ( !$options )
+		if ( ! $options )
 			return false;
 
 		$content = '';
@@ -513,7 +513,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 					<span class="field-controls">
 					';
 
-		if ( $delete && !$this->is_default_field( $this->field['slug'] ) )
+		if ( $delete && ! $this->is_default_field( $this->field['slug'] ) )
 			$content .= '<a class="field-delete field-control" title="' . __( 'Delete', 'wp-recall' ) . '" href="#"></a>';
 
 		$content .= '<a class="field-edit field-control" href="#" title="' . __( 'Edit', 'wp-recall' ) . '"></a>
@@ -702,7 +702,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 	function get_active_fields() {
 
-		if ( !$this->fields )
+		if ( ! $this->fields )
 			return false;
 
 		$options = $this->get_default_fields_options();
@@ -725,7 +725,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 	function exist_active_field( $slug ) {
 
-		if ( !$this->fields )
+		if ( ! $this->fields )
 			return false;
 
 		foreach ( $this->fields as $k => $field ) {
@@ -741,7 +741,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 	function get_field( $slug ) {
 
-		if ( !$this->fields )
+		if ( ! $this->fields )
 			return false;
 
 		foreach ( $this->fields as $k => $field ) {
@@ -759,7 +759,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$field = $this->get_field( $slug );
 
-		if ( !$field )
+		if ( ! $field )
 			return false;
 
 		if ( isset( $field[$option] ) )
@@ -772,13 +772,13 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$fields = $this->get_default_fields();
 
-		if ( !$fields )
+		if ( ! $fields )
 			return $fields;
 
 		$options = array();
 		foreach ( $fields as $field ) {
 
-			if ( !isset( $field['options-field'] ) )
+			if ( ! isset( $field['options-field'] ) )
 				continue;
 
 			$slug = $field['slug'];
@@ -820,7 +820,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 	/* depricated */
 	function get_types() {
 
-		if ( !$this->select_type )
+		if ( ! $this->select_type )
 			return false;
 
 		$fields = $this->get_field_types();

@@ -1,4 +1,4 @@
-=== WP-Recall ===
+=== WP-Recall - Registration, Profile, Commerce & More ===
 Contributors: wppost
 Donate link: https://codeseller.ru/
 Tags: user profile, members, community, private message, forum

@@ -232,6 +232,10 @@ class Rcl_EditPost {
 			'post_content'	 => (isset( $_POST['post_content'] )) ? $_POST['post_content'] : ''
 		);
 
+		if ( ! $post || ! $post->post_name ) {
+			$postdata['post_name'] = sanitize_title( $postdata['post_title'] );
+		}
+
 		if ( $this->post_id )
 			$postdata['ID']			 = $this->post_id;
 		else
@@ -249,6 +253,7 @@ class Rcl_EditPost {
 		}
 
 		if ( ! $this->post_id ) {
+
 			$this->post_id = wp_insert_post( $postdata );
 
 			if ( ! $this->post_id )
@@ -271,10 +276,10 @@ class Rcl_EditPost {
 
 		rcl_update_post_custom_fields( $this->post_id, $formID );
 
-		do_action( 'update_post_rcl', $this->post_id, $postdata, $this->update );
+		do_action( 'update_post_rcl', $this->post_id, $postdata, $this->update, $this );
 
 		if ( isset( $_POST['save-as-draft'] ) ) {
-			wp_redirect( get_permalink( rcl_get_option( 'public_form_page_rcl' ) ) . '?rcl-post-edit=' . $this->post_id );
+			wp_redirect( get_permalink( rcl_get_option( 'public_form_page_rcl' ) ) . '?draft=saved&rcl-post-edit=' . $this->post_id );
 			exit;
 		}
 

@@ -35,7 +35,7 @@ class Rcl_Sub_Tabs {
 			}
 		}
 
-		if ( !$this->active_tab ) {
+		if ( ! $this->active_tab ) {
 
 			$this->active_tab = $this->subtabs[0]['id'];
 		}
@@ -53,7 +53,7 @@ class Rcl_Sub_Tabs {
 
 		foreach ( $this->subtabs as $key => $tab ) {
 
-			if ( !$tab['name'] )
+			if ( ! $tab['name'] )
 				continue;
 
 			$classes = ($this->active_tab == $tab['id']) ? array( 'rcl-bttn__active', 'rcl-subtab-button' ) : array( 'rcl-subtab-button' );
@@ -64,9 +64,11 @@ class Rcl_Sub_Tabs {
 				}
 			}
 
+			$tab_url = $this->url_string( $master_id, $tab['id'] );
+
 			$content .= rcl_get_button( array(
 				'label'	 => $tab['name'],
-				'href'	 => $this->url_string( $master_id, $tab['id'] ),
+				'href'	 => isset( $tab['query_args'] ) && $tab['query_args'] ? add_query_arg( $tab['query_args'], $tab_url ) : $tab_url,
 				'class'	 => implode( ' ', $classes ),
 				'icon'	 => isset( $tab['icon'] ) ? $tab['icon'] : '',
 				'data'	 => array(
@@ -92,7 +94,7 @@ class Rcl_Sub_Tabs {
 			}
 		}
 
-		$content = '<div id="subtab-' . $this->active_tab . '" class="rcl-subtab-content">';
+		$funcContent = false;
 
 		if ( $this->callback ) {
 
@@ -104,15 +106,15 @@ class Rcl_Sub_Tabs {
 
 			$funcContent = call_user_func_array( $this->callback['name'], $args );
 
-			if ( !$funcContent ) {
+			if ( ! $funcContent ) {
 				rcl_add_log(
 					'get_subtab: ' . __( 'Failed to load tab content', 'wp-recall' ), $this->callback
 				);
 			}
-
-			$content .= $funcContent;
 		}
 
+		$content = '<div id="subtab-' . $this->active_tab . '" class="rcl-subtab-content">';
+		$content .= apply_filters( 'rcl_subtab_content', $funcContent, $this->active_tab, $this->parent_id );
 		$content .= '</div>';
 
 		return $content;
@@ -120,7 +122,7 @@ class Rcl_Sub_Tabs {
 
 	function url_string( $master_id, $subtab_id ) {
 
-		$url = rcl_format_url( get_author_posts_url( $master_id ), $this->parent_id, $subtab_id );
+		$url = rcl_format_url( rcl_get_user_url( $master_id ), $this->parent_id, $subtab_id );
 
 		return $url;
 	}

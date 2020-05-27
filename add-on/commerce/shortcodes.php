@@ -69,14 +69,17 @@ function rcl_shortcode_productlist( $atts ) {
 		);
 	}
 
-	if ( !$num ) {
+	if ( ! $num ) {
 		$count_prod = count( get_posts( $args ) );
 	} else {
 		$count_prod	 = false;
 		$inpage		 = $num;
 	}
 
-	$rclnavi = new Rcl_PageNavi( 'rcl-products', $count_prod, array( 'in_page' => $inpage ) );
+	$rclnavi = new Rcl_Pager( array(
+		'total'	 => $count_prod,
+		'number' => $count_prod
+		) );
 
 	$args['numberposts'] = $inpage;
 	$args['fields']		 = '';
@@ -92,18 +95,18 @@ function rcl_shortcode_productlist( $atts ) {
 
 	$rcl_cache = new Rcl_Cache();
 
-	if ( !$user_ID && $rcl_cache->is_cache ) {
+	if ( ! $user_ID && $rcl_cache->is_cache ) {
 
 		$file = $rcl_cache->get_file( json_encode( $args ) );
 
-		if ( !$file->need_update ) {
+		if ( ! $file->need_update ) {
 			return $rcl_cache->get_cache();
 		}
 	}
 
 	$products = get_posts( $args );
 
-	if ( !$products )
+	if ( ! $products )
 		return false;
 
 	$type_list = ($switch) ? $type : $type . ' cancel-switch';
@@ -121,10 +124,10 @@ function rcl_shortcode_productlist( $atts ) {
 	$prodlist .='</div>'
 		. '</div>';
 
-	if ( !$num )
-		$prodlist .= $rclnavi->pagenavi();
+	if ( ! $num )
+		$prodlist .= $rclnavi->get_navi();
 
-	if ( !$user_ID && $rcl_cache->is_cache ) {
+	if ( ! $user_ID && $rcl_cache->is_cache ) {
 		$rcl_cache->update_cache( $prodlist );
 	}
 

@@ -103,8 +103,6 @@ function pfm_setup_page_title( $title, $post_id ) {
 function pfm_replace_shortlink( $url ) {
 	global $PrimeQuery;
 
-	return false;
-
 	if ( $PrimeQuery->is_frontpage )
 		return $url;
 

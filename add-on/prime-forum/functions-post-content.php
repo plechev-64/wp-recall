@@ -225,12 +225,12 @@ add_filter( 'pfm_the_post_content', 'pfm_add_post_edition', 25 );
 function pfm_add_post_edition( $content ) {
 	global $PrimePost;
 
-	if ( !$PrimePost || !isset( $PrimePost->post_edit ) || !$PrimePost->post_edit )
+	if ( ! $PrimePost || ! isset( $PrimePost->post_edit ) || ! $PrimePost->post_edit )
 		return $content;
 
 	$postEdition = pfm_get_post_edition();
 
-	if ( !$postEdition )
+	if ( ! $postEdition )
 		return $content;
 
 	$content .= '<div class="post-edit-list">';

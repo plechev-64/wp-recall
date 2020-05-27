@@ -15,15 +15,16 @@ echo '<div id="icon-plugins" class="icon32"><br></div>
 	<h2>' . __( 'WP-Recall Add-ons', 'wp-recall' ) . '</h2>';
 
 if ( isset( $_GET['update-addon'] ) ) {
+
+	$type		 = 'updated';
+	$text_notice = '';
+
 	switch ( $_GET['update-addon'] ) {
 		case 'activate': $text_notice = __( 'Addition <strong>activated</strong>. New settings may be available on  WP-Recall page', 'wp-recall' );
-			$type		 = 'updated';
 			break;
 		case 'deactivate': $text_notice = __( 'Addition <strong>deactivated</strong>.', 'wp-recall' );
-			$type		 = 'updated';
 			break;
 		case 'delete': $text_notice = __( 'Files and data additions have been <strong>deleted</strong>.', 'wp-recall' );
-			$type		 = 'updated';
 			break;
 		case 'error-info': $text_notice = __( 'Add-on has not been loaded. Correct headers not found.', 'wp-recall' );
 			$type		 = 'error';
@@ -38,7 +39,7 @@ if ( isset( $_GET['update-addon'] ) ) {
 
 if ( isset( $_POST['save-rcl-key'] ) ) {
 	if ( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ) {
-		update_option( 'rcl-key', $_POST['rcl-key'] );
+		update_site_option( 'rcl-key', $_POST['rcl-key'] );
 		echo '<div id="message" class="updated"><p>' . __( 'Key has been saved', 'wp-recall' ) . '!</p></div>';
 	}
 }
@@ -47,7 +48,7 @@ echo '<div class="rcl-admin-service-box rcl-key-box">';
 
 echo '<h4>' . __( 'RCLKEY', 'wp-recall' ) . '</h4>
 	<form action="" method="post">
-		' . __( 'Enter RCLKEY', 'wp-recall' ) . ' <input type="text" name="rcl-key" value="' . get_option( 'rcl-key' ) . '">
+		' . __( 'Enter RCLKEY', 'wp-recall' ) . ' <input type="text" name="rcl-key" value="' . get_site_option( 'rcl-key' ) . '">
 		<input class="button" type="submit" value="' . __( 'Save', 'wp-recall' ) . '" name="save-rcl-key">
 		' . wp_nonce_field( 'add-rcl-key', '_wpnonce', true, false ) . '
 	</form>

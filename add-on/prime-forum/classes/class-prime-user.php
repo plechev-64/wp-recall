@@ -10,7 +10,7 @@ class PrimeUser extends PrimeRoles {
 	function __construct( $args = array() ) {
 		global $user_ID;
 
-		if ( !isset( $args['user_id'] ) )
+		if ( ! isset( $args['user_id'] ) )
 			$args['user_id'] = $user_ID;
 
 		$args = apply_filters( 'pfm_setup_user', $args );
@@ -19,7 +19,7 @@ class PrimeUser extends PrimeRoles {
 
 		parent::__construct();
 
-		if ( !$this->user_role )
+		if ( ! $this->user_role )
 			$this->user_role = $this->user_id ? $this->get_user_role( $this->user_id ) : 'guest';
 
 		$this->user_capabilities = $this->get_role_capabilities( $this->user_role );
@@ -42,7 +42,7 @@ class PrimeUser extends PrimeRoles {
 	function get_user_role( $user_id ) {
 		global $PrimeUser;
 
-		if ( !$user_id )
+		if ( ! $user_id )
 			return 'guest';
 
 		if ( $PrimeUser && $PrimeUser->user_id == $user_id ) {
@@ -58,7 +58,7 @@ class PrimeUser extends PrimeRoles {
 
 	function is_can( $action ) {
 
-		if ( !isset( $this->user_capabilities[$action] ) )
+		if ( ! isset( $this->user_capabilities[$action] ) )
 			return false;
 
 		return apply_filters( 'pfm_is_can', $this->user_capabilities[$action], $action, $this->user_id );
@@ -85,15 +85,11 @@ class PrimeUser extends PrimeRoles {
 
 	function is_can_posts( $topic_id ) {
 
-		$posts = new PrimePosts();
-
-		$post_id = $posts->get_var( array(
-			'topic_id'	 => $topic_id,
-			'fields'	 => array( 'post_id' ),
-			'orderby'	 => 'post_id',
-			'order'		 => 'ASC',
-			'user_id'	 => $this->user_id
-			) );
+		$post_id = RQ::tbl( new PrimePosts() )->select( ['post_id' ] )
+				->where( [
+					'topic_id'	 => $topic_id,
+					'user_id'	 => $this->user_id
+				] )->orderby( 'post_id', 'ASC' )->get_var();
 
 		return $post_id ? true : false;
 	}

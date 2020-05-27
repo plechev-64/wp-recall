@@ -22,7 +22,7 @@ class Rcl_Cart_Button_Form {
 
 		$this->init_properties( $args );
 
-		if ( !$this->label )
+		if ( ! $this->label )
 			$this->label = __( 'To cart', 'wp-recall' );
 	}
 
@@ -36,13 +36,13 @@ class Rcl_Cart_Button_Form {
 				$this->$name = $args[$name];
 		}
 
-		if ( !$this->product_id && $post )
+		if ( ! $this->product_id && $post )
 			$this->product_id = $post->ID;
 
-		if ( !$this->product_price )
+		if ( ! $this->product_price )
 			$this->product_price = $this->get_price();
 
-		if ( !$this->product_old_price )
+		if ( ! $this->product_old_price )
 			$this->product_old_price = $this->get_old_price();
 
 		$this->product_status = (get_post_meta( $this->product_id, 'outsale', 1 )) ? 0 : 1;
@@ -64,7 +64,7 @@ class Rcl_Cart_Button_Form {
 
 	function old_price_box() {
 
-		if ( !$this->product_old_price )
+		if ( ! $this->product_old_price )
 			return false;
 
 		$content = '<span class="product-old-price">';
@@ -108,7 +108,7 @@ class Rcl_Cart_Button_Form {
 
 		$this->output = apply_filters( 'rcl_cart_button_form_args', wp_parse_args( $args, $this->output ), $this->product_id );
 
-		if ( !$this->output )
+		if ( ! $this->output )
 			return false;
 
 		$PrVars = new Rcl_Product_Variations();
@@ -149,7 +149,7 @@ class Rcl_Cart_Button_Form {
 
 	function quantity_selector_box() {
 
-		if ( !$this->product_status )
+		if ( ! $this->product_status )
 			return false;
 
 		$content = '<span class="quantity-selector">';
@@ -169,7 +169,7 @@ class Rcl_Cart_Button_Form {
 
 		$productVars = $PrVars->get_product_variations( $product_id );
 
-		if ( !$productVars )
+		if ( ! $productVars )
 			return false;
 
 		$box_id = rand( 0, 100 );

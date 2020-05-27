@@ -31,12 +31,12 @@ class Rcl_Product_Price {
 		//получаем все текущие вариации товара
 		$productVars = $Vars->get_product_variations();
 
-		if ( !$productVars )
+		if ( ! $productVars )
 			return false;
 
 		foreach ( $productVars as $productVar ) {
 
-			if ( !isset( $vars[$productVar['slug']] ) )
+			if ( ! isset( $vars[$productVar['slug']] ) )
 				continue;
 
 			$name = $vars[$productVar['slug']][1];
@@ -44,7 +44,7 @@ class Rcl_Product_Price {
 			foreach ( $productVar['values'] as $varValue ) {
 
 				if ( is_array( $name ) ) {
-					if ( !in_array( $varValue['name'], $name ) )
+					if ( ! in_array( $varValue['name'], $name ) )
 						continue;
 				}else {
 					if ( $varValue['name'] != $name )

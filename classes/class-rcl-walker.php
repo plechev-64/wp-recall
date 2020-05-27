@@ -23,6 +23,17 @@ class Rcl_Walker {
 		return false;
 	}
 
+	function get_item_value( $byname, $nameValue, $getName ) {
+
+		if ( ! $this->items )
+			return false;
+
+		if ( ! $item = $this->get_item( $byname, $nameValue ) )
+			return false;
+
+		return isset( $item->$getName ) ? $item->$getName : false;
+	}
+
 	function get_items( $args = false ) {
 
 		if ( ! $this->items )
@@ -36,9 +47,16 @@ class Rcl_Walker {
 
 			$correct = true;
 			foreach ( $args as $key => $value ) {
-				if ( $item->$key != $value ) {
-					$correct = false;
-					break;
+				if ( is_array( $value ) ) {
+					if ( ! in_array( $item->$key, $value ) ) {
+						$correct = false;
+						break;
+					}
+				} else {
+					if ( $item->$key != $value ) {
+						$correct = false;
+						break;
+					}
 				}
 			}
 

@@ -15,6 +15,7 @@ class Rcl_Field_Radio extends Rcl_Field_Abstract {
 
 	public $required;
 	public $values;
+	public $display = 'inline';
 	public $empty_first;
 	public $empty_value;
 	public $childrens;
@@ -61,7 +62,7 @@ class Rcl_Field_Radio extends Rcl_Field_Abstract {
 
 	function get_input() {
 
-		if ( !$this->values )
+		if ( ! $this->values )
 			return false;
 
 		$content = '';
@@ -75,7 +76,7 @@ class Rcl_Field_Radio extends Rcl_Field_Abstract {
 
 		$a = 0;
 
-		if ( !$this->empty_first && !$this->value )
+		if ( ! $this->empty_first && ! $this->value )
 			$this->value = ($this->value_in_key) ? $this->values[0] : 0;
 
 		foreach ( $this->values as $k => $value ) {
@@ -85,12 +86,12 @@ class Rcl_Field_Radio extends Rcl_Field_Abstract {
 
 			$k = trim( $k );
 
-			$content .= '<span class="rcl-radio-box" data-value="' . $k . '">';
+			$content .= '<span class="rcl-radio-box checkbox-display-' . $this->display . '" data-value="' . $k . '">';
 			$content .= '<input type="radio" ' . $this->get_required() . ' ' . checked( $this->value, $k, false ) . ' ' . $this->get_class() . ' id="' . $this->input_id . '_' . $k . $this->rand . '" name="' . $this->input_name . '" value="' . $k . '"> ';
 			$content .= '<label class="block-label" for="' . $this->input_id . '_' . $k . $this->rand . '">' . $value . '</label>';
 			$content .= '</span>';
 
-			$a++;
+			$a ++;
 		}
 
 		return $content;

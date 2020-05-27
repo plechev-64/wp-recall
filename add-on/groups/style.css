@@ -321,10 +321,13 @@ div p.post-group-meta {
 	line-height: 1.2;
 	margin-bottom: 10px;
 	overflow: hidden;
+	display: flex;
+}
+.rcl-grouplist .single-group > div{
+    margin-right: 15px;
 }
 .rcl-grouplist .single-group .group-avatar {
-	float: left;
-	margin-right: 15px;
+
 }
 .rcl-grouplist .single-group .group-avatar img {
 	max-width: 100px;

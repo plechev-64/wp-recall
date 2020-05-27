@@ -5,7 +5,7 @@ function rcl_get_product_gallery( $product_id, $size = 'rcl-product-thumb' ) {
 	$oldSlider	 = get_post_meta( $product_id, 'recall_slider', 1 );
 	$gallery	 = get_post_meta( $product_id, 'rcl_post_gallery', 1 );
 
-	if ( !$gallery && $oldSlider ) {
+	if ( ! $gallery && $oldSlider ) {
 
 		$gallery = array();
 
@@ -22,7 +22,7 @@ function rcl_get_product_gallery( $product_id, $size = 'rcl-product-thumb' ) {
 		}
 	}
 
-	if ( !$gallery )
+	if ( ! $gallery )
 		return false;
 
 	$content = rcl_get_image_gallery( array(

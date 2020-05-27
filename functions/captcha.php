@@ -2,7 +2,7 @@
 
 function rcl_get_simple_captcha( $args = false ) {
 
-	if ( !class_exists( 'ReallySimpleCaptcha' ) )
+	if ( ! class_exists( 'ReallySimpleCaptcha' ) )
 		return false;
 
 	$captcha = new ReallySimpleCaptcha();
@@ -36,7 +36,7 @@ function rcl_get_simple_captcha( $args = false ) {
 
 function rcl_captcha_check_correct( $code, $prefix ) {
 
-	if ( !class_exists( 'ReallySimpleCaptcha' ) )
+	if ( ! class_exists( 'ReallySimpleCaptcha' ) )
 		return true;
 
 	$rcl_captcha = new ReallySimpleCaptcha();
@@ -59,7 +59,7 @@ function rcl_add_regform_captcha( $fields ) {
 
 	$captcha = rcl_get_simple_captcha();
 
-	if ( !$captcha )
+	if ( ! $captcha )
 		return $fields;
 
 	$fields .= '
@@ -78,7 +78,7 @@ function rcl_check_register_captcha( $errors ) {
 
 	$rcl_captcha_correct = rcl_captcha_check_correct( $_POST['rcl_captcha_code'], $_POST['rcl_captcha_prefix'] );
 
-	if ( !$rcl_captcha_correct ) {
+	if ( ! $rcl_captcha_correct ) {
 		$errors = new WP_Error();
 		$errors->add( 'rcl_register_captcha', __( 'Incorrect CAPTCHA!', 'wp-recall' ) );
 	}
@@ -95,7 +95,7 @@ function rcl_add_public_form_captcha( $form ) {
 
 	$captcha = rcl_get_simple_captcha( array( 'img_size' => array( 72, 29 ) ) );
 
-	if ( !$captcha )
+	if ( ! $captcha )
 		return $form;
 
 	$form .= '
@@ -113,11 +113,11 @@ add_action( 'init_update_post_rcl', 'rcl_check_public_form_captcha', 10 );
 function rcl_check_public_form_captcha() {
 	global $user_ID;
 
-	if ( !$user_ID && isset( $_POST['rcl_captcha_prefix'] ) ) {
+	if ( ! $user_ID && isset( $_POST['rcl_captcha_prefix'] ) ) {
 
 		$rcl_captcha_correct = rcl_captcha_check_correct( $_POST['rcl_captcha_code'], $_POST['rcl_captcha_prefix'] );
 
-		if ( !$rcl_captcha_correct ) {
+		if ( ! $rcl_captcha_correct ) {
 			wp_die( __( 'Incorrect CAPTCHA!', 'wp-recall' ) );
 		}
 	}

@@ -9,7 +9,7 @@ class Rcl_Gateway_Freekassa extends Rcl_Gateway_Core {
 	function __construct() {
 		parent::__construct( array(
 			'request'	 => 'us_pay_type',
-			'label'		 => 'Free-Kassa',
+			'name'		 => 'Free-Kassa',
 			'submit'	 => __( 'Оплатить через Free-Kassa' ),
 			'icon'		 => rcl_addon_url( 'assets/freekassa.jpg', __FILE__ )
 		) );
@@ -112,7 +112,7 @@ class Rcl_Gateway_Freekassa extends Rcl_Gateway_Core {
 			die;
 		}
 
-		if ( !parent::get_payment( $_REQUEST["MERCHANT_ORDER_ID"] ) ) {
+		if ( ! parent::get_payment( $_REQUEST["MERCHANT_ORDER_ID"] ) ) {
 			parent::insert_payment( array(
 				'pay_id'		 => $_REQUEST["MERCHANT_ORDER_ID"],
 				'pay_summ'		 => $_REQUEST["AMOUNT"],

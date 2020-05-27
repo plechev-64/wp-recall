@@ -1,15 +1,18 @@
 <?php
 
-function rcl_ajax_action( $function_name, $guest_access = false ) {
+function rcl_ajax_action( $function_name, $guest_access = false, $rest = false ) {
 
-	add_action( 'wp_ajax_' . $function_name, $function_name );
+	$ajax = new Rcl_Ajax( array(
+		'rest'	 => $rest,
+		'name'	 => $function_name,
+		'nopriv' => $guest_access
+		) );
 
-	if ( $guest_access )
-		add_action( 'wp_ajax_nopriv_' . $function_name, $function_name );
+	$ajax->init();
 }
 
 //загрузка вкладки ЛК через AJAX
-rcl_ajax_action( 'rcl_ajax_tab', true );
+rcl_ajax_action( 'rcl_ajax_tab', true, true );
 function rcl_ajax_tab() {
 	global $user_LK;
 
@@ -194,7 +197,7 @@ function rcl_ajax_delete_attachment() {
 
 		$user_id = ($user_ID) ? $user_ID : $_COOKIE['PHPSESSID'];
 
-		$gallery = get_option( 'rcl_temporary_gallery' );
+		$gallery = get_site_option( 'rcl_temporary_gallery' );
 
 		$user_gallery = $gallery[$user_id];
 
@@ -225,7 +228,7 @@ function rcl_ajax_delete_attachment() {
 				unset( $gallery[$user_id] );
 		}
 
-		update_option( 'rcl_temporary_gallery', $gallery );
+		update_site_option( 'rcl_temporary_gallery', $gallery );
 	}
 
 	$result = wp_delete_post( $attachment_id );
@@ -238,6 +241,6 @@ function rcl_ajax_delete_attachment() {
 	}
 
 	wp_send_json( array(
-		'success' => __( 'Material successfully removed!', 'rcl-public' )
+		'success' => __( 'Файл успешно удален!', 'wp-recall' )
 	) );
 }

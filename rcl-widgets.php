@@ -20,7 +20,7 @@ class Widget_new_author extends WP_Widget {
 		$count_user	 = $instance['count_user'];
 		$all		 = $instance['page_all_users'];
 
-		if ( !$count_user )
+		if ( ! $count_user )
 			$count_user = 12;
 
 		echo $before_widget;

@@ -34,7 +34,7 @@ require_once 'functions-shortcodes.php';
 if ( is_admin() )
 	require_once 'admin/index.php';
 
-if ( !is_admin() ):
+if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'pfm_scripts', 10 );
 endif;
 function pfm_scripts() {
@@ -101,7 +101,7 @@ function pfm_user_posts_other_topics( $master_id ) {
 
 	$countTopics = $TopicsQuery->count( $args );
 
-	if ( !$countTopics )
+	if ( ! $countTopics )
 		return pfm_get_notice( __( 'There are no messages in topics created by other users.', 'wp-recall' ) );
 
 	$pageNavi = new Rcl_PageNavi( 'forum', $countTopics, array( 'in_page' => 20 ) );
@@ -156,7 +156,7 @@ function pfm_get_user_topics_list( $master_id, $navi = true ) {
 		'user_id' => $master_id
 		) );
 
-	if ( !$countTopics )
+	if ( ! $countTopics )
 		return pfm_get_notice( __( 'There are no started topics on the forum yet.', 'wp-recall' ) );
 
 	if ( $navi )
@@ -214,14 +214,14 @@ function pfm_get_user_topics_list( $master_id, $navi = true ) {
 add_action( 'pre_get_posts', 'pfm_init', 10 );
 function pfm_init( $wp_query ) {
 
-	if ( !$wp_query->is_main_query() )
+	if ( ! $wp_query->is_main_query() )
 		return;
 
 	if ( isset( $wp_query->queried_object ) ) {
 		if ( $wp_query->queried_object->ID != pfm_get_option( 'home-page' ) )
 			return;
 	}else if ( isset( $wp_query->query ) ) {
-		if ( !isset( $wp_query->query['page_id'] ) || $wp_query->query['page_id'] != pfm_get_option( 'home-page' ) )
+		if ( ! isset( $wp_query->query['page_id'] ) || $wp_query->query['page_id'] != pfm_get_option( 'home-page' ) )
 			return;
 	}
 
@@ -262,7 +262,7 @@ add_action( 'pfm_init', 'pfm_redirect_short_url' );
 function pfm_redirect_short_url() {
 	global $PrimeQuery;
 
-	if ( '' == get_option( 'permalink_structure' ) )
+	if ( '' == get_site_option( 'permalink_structure' ) )
 		return false;
 
 	if ( $PrimeQuery->is_search )
@@ -294,7 +294,7 @@ add_action( 'pfm_init', 'pfm_update_current_visitor', 10 );
 function pfm_update_current_visitor() {
 	global $user_ID, $PrimeQuery;
 
-	if ( !$user_ID )
+	if ( ! $user_ID )
 		return false;
 
 	$args = array(
@@ -319,10 +319,10 @@ add_filter( 'rcl_init_js_variables', 'pfm_init_js_variables', 10 );
 function pfm_init_js_variables( $data ) {
 	global $PrimeQuery;
 
-	if ( !$PrimeQuery )
+	if ( ! $PrimeQuery )
 		return $data;
 
-	if ( !$PrimeQuery->is_forum && !$PrimeQuery->is_topic )
+	if ( ! $PrimeQuery->is_forum && ! $PrimeQuery->is_topic )
 		return $data;
 
 	$pfm = array(
@@ -344,7 +344,7 @@ function pfm_init_js_variables( $data ) {
 
 	$tags = apply_filters( 'pfm_gtags', $tags );
 
-	if ( !$tags )
+	if ( ! $tags )
 		return $data;
 
 	$data['QTags'] = $tags;
@@ -354,9 +354,9 @@ function pfm_init_js_variables( $data ) {
 
 function pfm_get_option( $name, $default = false ) {
 
-	$PfmOptions = get_option( 'rcl_pforum_options' );
+	$PfmOptions = get_site_option( 'rcl_pforum_options' );
 
-	if ( !isset( $PfmOptions[$name] ) || $PfmOptions[$name] == '' ) {
+	if ( ! isset( $PfmOptions[$name] ) || $PfmOptions[$name] == '' ) {
 		return $default;
 	}
 
@@ -366,12 +366,12 @@ function pfm_get_option( $name, $default = false ) {
 function pfm_get_title_tag() {
 	global $PrimeQuery;
 
-	if ( !$PrimeQuery )
+	if ( ! $PrimeQuery )
 		return false;
 
 	$object = $PrimeQuery->object;
 
-	if ( !$object )
+	if ( ! $object )
 		return false;
 
 	if ( $PrimeQuery->is_topic ) {
@@ -392,12 +392,12 @@ function pfm_get_title_tag() {
 function pfm_get_title_page() {
 	global $PrimeQuery;
 
-	if ( !$PrimeQuery || !in_the_loop() )
+	if ( ! $PrimeQuery || ! in_the_loop() )
 		return false;
 
 	$object = $PrimeQuery->object;
 
-	if ( !$object )
+	if ( ! $object )
 		return false;
 
 	if ( $PrimeQuery->is_topic ) {
@@ -438,14 +438,14 @@ function pfm_replace_mask_title( $string ) {
 		$replace[]	 = $object->topic_name;
 	}
 
-	if ( !$mask || !$replace )
+	if ( ! $mask || ! $replace )
 		return $string;
 
 	return str_replace( $mask, $replace, $string );
 }
 
 function pfm_get_current_theme() {
-	return apply_filters( 'pfm_current_theme', rcl_get_addon( $themeName = get_option( 'rcl_pforum_template' ) ), $themeName );
+	return apply_filters( 'pfm_current_theme', rcl_get_addon( $themeName = get_site_option( 'rcl_pforum_template' ) ), $themeName );
 }
 
 function pfm_topic_beat( $beat ) {
@@ -458,22 +458,15 @@ function pfm_topic_beat( $beat ) {
 		'group_id'	 => $beat->group_id
 	) );
 
-	$posts = new PrimePosts();
-
-	$lastPosts = $posts->get_col( array(
-		'topic_id'			 => $beat->topic_id,
-		'fields'			 => array( 'post_id' ),
-		'orderby'			 => 'post_id',
-		'order'				 => 'ASC',
-		'user_id__not_in'	 => array( $user_ID ),
-		'date_query'		 => array(
-			array(
-				'column'	 => 'post_date',
-				'value'		 => $beat->last_beat,
-				'compare'	 => '>'
-			)
-		)
-		) );
+	$lastPosts = RQ::tbl( new PrimePosts() )
+		->select( ['post_id' ] )
+		->where( [
+			'topic_id'			 => $beat->topic_id,
+			'user_id__not_in'	 => array( $user_ID )
+		] )
+		->date( 'post_date', '>', $beat->last_beat )
+		->orderby( 'post_id', 'ASC' )
+		->get_col();
 
 	$lastPosts = array_unique( $lastPosts );
 
@@ -491,7 +484,7 @@ function pfm_topic_beat( $beat ) {
 	if ( $visitors ) {
 		$visits = array();
 		foreach ( $visitors as $visitor ) {
-			$visits[] = '<a href="' . get_author_posts_url( $visitor->user_id ) . '">' . $visitor->display_name . '</a>';
+			$visits[] = '<a href="' . rcl_get_user_url( $visitor->user_id ) . '">' . $visitor->display_name . '</a>';
 		}
 		$visitsList = implode( ', ', $visits );
 	} else {
@@ -511,7 +504,7 @@ function is_prime_forum() {
 
 function pfm_get_user_name( $user_id ) {
 
-	if ( !$user_id )
+	if ( ! $user_id )
 		return __( 'Guest', 'wp-recall' );
 
 	if ( $name = pfm_get_user_data( $user_id, 'display_name' ) ) {

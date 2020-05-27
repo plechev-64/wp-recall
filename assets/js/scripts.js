@@ -52,6 +52,7 @@ function rcl_init_ajax_tab() {
 		rcl_do_action( 'rcl_before_upload_tab', e );
 
 		rcl_ajax( {
+			rest: true,
 			data: {
 				action: 'rcl_ajax_tab',
 				post: e.data( 'post' ),
@@ -281,7 +282,7 @@ function rcl_init_update_requared_checkbox() {
 		rcl_update_require_checkbox( this );
 	} );
 
-	jQuery( 'body form' ).on( 'click', '.required-checkbox', function() {
+	jQuery( 'body' ).on( 'click', '.required-checkbox', function() {
 		rcl_update_require_checkbox( this );
 	} );
 

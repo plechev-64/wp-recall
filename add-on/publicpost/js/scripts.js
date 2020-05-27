@@ -111,7 +111,7 @@ jQuery( document ).ready( function( $ ) {
 rcl_add_action( 'rcl_init_public_form', 'rcl_setup_async_upload' );
 function rcl_setup_async_upload() {
 
-	if ( !wp || !wp.Uploader )
+	if ( typeof wp == 'undefined' || !wp.Uploader )
 		return false;
 
 	jQuery.extend( wp.Uploader.prototype, {
@@ -509,7 +509,7 @@ function rcl_init_public_form( post ) {
 	 dataType: 'json',
 	 type: 'POST',
 	 dropZone: jQuery('#rcl-public-dropzone-'+post_type),
-	 url: Rcl.ajax_url,
+	 url: Rcl.ajaxurl,
 	 formData:{
 	 action: 'rcl_imagepost_upload',
 	 post_type: post_type,
@@ -577,7 +577,7 @@ function rcl_init_public_form( post ) {
  jQuery('#rcl-thumbnail-uploader').fileupload({
  dataType: 'json',
  type: 'POST',
- url: Rcl.ajax_url,
+ url: Rcl.ajaxurl,
  formData:{
  action: 'rcl_imagepost_upload',
  post_type: post_type,
@@ -643,7 +643,7 @@ function rcl_init_public_form( post ) {
  return false;
  }*/
 
-function rcl_add_attachment_in_editor( attach_id, editor_id, e ) {
+function rcl_add_attachment_in_editor( attach_id, editor_name, e ) {
 
 	var image = jQuery( e ).data( 'html' );
 	var src = jQuery( e ).data( 'src' );
@@ -651,9 +651,16 @@ function rcl_add_attachment_in_editor( attach_id, editor_id, e ) {
 	if ( src )
 		image = '<a href="' + src + '">' + image + '</a>';
 
-	jQuery( "#" + editor_id ).insertAtCaret( image + "&nbsp;" );
+	jQuery( "#" + editor_name ).insertAtCaret( image + "&nbsp;" );
 
-	tinyMCE.execCommand( "mceInsertContent", false, image );
+	var editor_id = jQuery( 'textarea[name="' + editor_name + '"]' ).attr( 'id' );
+
+	tinyMCE.editors.forEach( function( editor ) {
+
+		if ( editor.targetElm.name.length === editor_name.length ) {
+			editor.execCommand( 'mceInsertContent', false, image );
+		}
+	} );
 
 	return false;
 }

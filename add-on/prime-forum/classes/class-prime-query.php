@@ -181,10 +181,10 @@ class PrimeQuery {
 		} else if ( $this->is_group ) {
 
 			$this->number	 = $this->forums_query->number;
-			$this->all_items = $this->forums_query->count( array(
-				'group_id'	 => $this->object->group_id,
-				'parent_id'	 => 0
-				) );
+			$this->all_items = $this->forums_query->where( array(
+					'group_id'	 => $this->object->group_id,
+					'parent_id'	 => 0
+				) )->get_count();
 		}
 
 		$this->offset = ($this->current_page - 1) * $this->number;
@@ -196,7 +196,7 @@ class PrimeQuery {
 
 		if ( $this->is_group ) {
 
-			if ( '' != get_option( 'permalink_structure' ) ) {
+			if ( '' != get_site_option( 'permalink_structure' ) ) {
 				$args = array(
 					'group_slug' => $this->vars['pfm-group']
 				);
@@ -208,15 +208,14 @@ class PrimeQuery {
 		} else if ( $this->is_forum ) {
 
 			$args = array(
-				'join_query' => array(
+				'join' => array(
 					array(
-						'table'			 => $this->groups_query->query['table'],
-						'on_group_id'	 => 'group_id'
+						['group_id', 'group_id' ], $this->groups_query->select( true )
 					)
 				)
 			);
 
-			if ( '' != get_option( 'permalink_structure' ) ) {
+			if ( '' != get_site_option( 'permalink_structure' ) ) {
 				$args['forum_slug'] = $this->vars['pfm-forum'];
 			} else {
 				$args['forum_id'] = $this->vars['pfm-forum'];
@@ -224,31 +223,25 @@ class PrimeQuery {
 		} else if ( $this->is_topic ) {
 
 			$args = array(
-				'join_query' => array(
+				'join' => array(
 					array(
-						'table'			 => $this->forums_query->query['table'],
-						'on_forum_id'	 => 'forum_id',
-						'join_query'	 => array(
-							array(
-								'table'			 => $this->groups_query->query['table'],
-								'on_group_id'	 => 'group_id'
-							)
+						['forum_id', 'forum_id' ],
+						$this->forums_query->join(
+							['group_id', 'group_id' ], $this->groups_query->select( true )
 						)
 					),
 					array(
-						'table'			 => $this->posts_query->query['table'],
-						'on_topic_id'	 => 'topic_id',
-						'fields'		 => false
+						['topic_id', 'topic_id' ], $this->posts_query
 					)
 				)
 			);
 
-			if ( '' != get_option( 'permalink_structure' ) ) {
-				$args['topic_slug']					 = $this->vars['pfm-topic'];
-				$args['join_query'][0]['forum_slug'] = $this->vars['pfm-forum'];
+			if ( '' != get_site_option( 'permalink_structure' ) ) {
+				$args['topic_slug'] = $this->vars['pfm-topic'];
+				$args['join'][0][1]->where( ['forum_slug' => $this->vars['pfm-forum'] ] );
 			} else {
-				$args['topic_id']					 = $this->vars['pfm-topic'];
-				$args['join_query'][0]['forum_id']	 = $this->vars['pfm-forum'];
+				$args['topic_id'] = $this->vars['pfm-topic'];
+				$args['join'][0][1]->where( ['forum_id' => $this->vars['pfm-forum'] ] );
 			}
 		}
 
@@ -263,20 +256,17 @@ class PrimeQuery {
 			return false;
 
 		if ( $this->is_group ) {
-
-			$object = $this->groups_query->get_results( $args );
+			$object = $this->groups_query->parse( $args )->get_results();
 		} else if ( $this->is_forum ) {
-
-			$object = $this->forums_query->get_results( $args );
+			$object = $this->forums_query->parse( $args )->get_results();
 		} else if ( $this->is_topic ) {
 
 			$this->topics_query->reset_query();
 
-			$this->topics_query->set_query( $args );
-
-			$this->topics_query->query['select'][] = "MAX(pfm_posts.post_date) AS last_post_date";
-
-			$object = $this->topics_query->get_data( 'get_results' );
+			$object = $this->topics_query
+				->parse( $args )
+				->select_string( "MAX(pfm_posts.post_date) AS last_post_date" )
+				->get_results();
 		}
 
 		$this->object = apply_filters( 'pfm_query_object', $object[0] );
@@ -289,14 +279,12 @@ class PrimeQuery {
 			$args = array(
 				'number'	 => $this->number,
 				'offset'	 => $this->offset,
-				'join_query' => array(
+				'join'		 => array(
 					array(
-						'table'			 => $this->posts_query->query['table'],
-						'on_topic_id'	 => 'topic_id',
-						'fields'		 => false
+						['topic_id', 'topic_id' ], $this->posts_query
 					)
 				),
-				'groupby'	 => $this->topics_query->query['table']['as'] . '.topic_id'
+				'groupby'	 => $this->topics_query->get_colname( 'topic_id' )
 			);
 
 			if ( $this->vars['pfm-forum'] ) {
@@ -304,11 +292,9 @@ class PrimeQuery {
 			}
 
 			if ( $this->vars['pfm-group'] ) {
-				$args['join_query'][] = array(
-					'table'			 => $this->forums_query->query['table'],
-					'on_forum_id'	 => 'forum_id',
-					'fields'		 => false,
-					'group_id'		 => $this->vars['pfm-group']
+				$args['join'][] = array(
+					['forum_id', 'forum_id' ],
+					$this->forums_query->where( ['group_id' => $this->vars['pfm-group'] ] )
 				);
 			}
 		}if ( $this->is_author ) {
@@ -317,31 +303,25 @@ class PrimeQuery {
 				'number'	 => $this->number,
 				'offset'	 => $this->offset,
 				'user_id'	 => $this->vars['pfm-author'],
-				'join_query' => array(
+				'join'		 => array(
 					array(
-						'table'			 => $this->posts_query->query['table'],
-						'on_topic_id'	 => 'topic_id',
-						'fields'		 => false
+						['topic_id', 'topic_id' ], $this->posts_query
 					)
 				),
-				'groupby'	 => $this->topics_query->query['table']['as'] . '.topic_id'
+				'groupby'	 => $this->topics_query->get_colname( 'topic_id' )
 			);
 		} else if ( $this->is_frontpage ) {
 
 			$args = array(
 				'number'	 => -1,
-				//'offset'	 => $this->offset,
 				'order'		 => 'ASC',
 				'orderby'	 => 'group_seq',
-				'join_query' => array(
+				'join'		 => array(
 					array(
-						'table'			 => $this->forums_query->query['table'],
-						'on_group_id'	 => 'group_id',
-						'fields'		 => false,
-						'join'			 => 'LEFT'
+						['group_id', 'group_id', 'LEFT' ], $this->forums_query
 					)
 				),
-				'groupby'	 => $this->groups_query->query['table']['as'] . '.group_id'
+				'groupby'	 => $this->groups_query->get_colname( 'group_id' )
 			);
 		} else if ( $this->is_group && $this->object ) {
 
@@ -352,34 +332,25 @@ class PrimeQuery {
 				'offset'	 => $this->offset,
 				'order'		 => 'ASC',
 				'orderby'	 => 'forum_seq',
-				'join_query' => array(
+				'join'		 => array(
 					array(
-						'table'			 => array(
-							'name'	 => $this->forums_query->query['table']['name'],
-							'as'	 => $this->forums_query->query['table']['as'] . '2',
-							'cols'	 => $this->forums_query->query['table']['cols']
-						),
-						'on_forum_id'	 => 'parent_id',
-						'fields'		 => false,
-						'join'			 => 'LEFT'
+						['forum_id', 'parent_id', 'LEFT' ], RQ::tbl( new PrimeForums( 'forums2' ) )
 					)
 				),
-				'groupby'	 => $this->forums_query->query['table']['as'] . '.forum_id'
+				'groupby'	 => $this->forums_query->get_colname( 'forum_id' )
 			);
 		} else if ( $this->is_forum && $this->object ) {
 
 			$args = array(
 				'forum_id'	 => $this->object->forum_id,
-				'join_query' => array(
+				'join'		 => array(
 					array(
-						'table'			 => $this->posts_query->query['table'],
-						'on_topic_id'	 => 'topic_id',
-						'fields'		 => false
+						['topic_id', 'topic_id' ], $this->posts_query
 					)
 				),
 				'offset'	 => $this->offset,
 				'number'	 => $this->number,
-				'groupby'	 => $this->topics_query->query['table']['as'] . '.topic_id'
+				'groupby'	 => $this->topics_query->get_colname( 'topic_id' )
 			);
 		} else if ( $this->is_topic && $this->object ) {
 			global $wpdb;
@@ -404,74 +375,75 @@ class PrimeQuery {
 
 			$this->topics_query->reset_query();
 
-			$this->topics_query->set_query( $args );
+			$this->topics_query->parse( $args );
 
-			$this->topics_query->query['where'][] = "(pfm_topics.topic_name LIKE '%" . $this->vars['pfm-search'] . "%' "
-				. "OR pfm_posts.post_content LIKE '%" . $this->vars['pfm-search'] . "%')";
+			$this->topics_query->where_string( "(pfm_topics.topic_name LIKE '%" . $this->vars['pfm-search'] . "%' "
+				. "OR pfm_posts.post_content LIKE '%" . $this->vars['pfm-search'] . "%')" );
 
-			$this->all_items = $this->topics_query->count();
+			$this->all_items = $this->topics_query->get_count();
 
-			$this->topics_query->query['select'] = array(
-				"pfm_topics.*",
-				"MAX(pfm_posts.post_date) AS last_post_date"
-			);
+			$this->topics_query->select_string( "pfm_topics.*" );
+			$this->topics_query->select_string( "MAX(pfm_posts.post_date) AS last_post_date" );
 
-			$this->topics = apply_filters( 'pfm_search_posts', $this->topics_query->get_data( 'get_results' ) );
+			$this->topics_query = apply_filters( 'pfm_search_posts_query', $this->topics_query );
+
+			$this->topics = apply_filters( 'pfm_search_posts', $this->topics_query->get_results() );
 		}if ( $this->is_author ) {
 
 			$this->topics_query->reset_query();
 
-			$this->topics_query->set_query( $args );
+			$this->topics_query->parse( $args );
 
-			$this->all_items = $this->topics_query->count();
+			$this->all_items = $this->topics_query->get_count();
 
-			$this->topics_query->query['select'] = array(
-				"pfm_topics.*",
-				"MAX(pfm_posts.post_date) AS last_post_date"
-			);
+			$this->topics_query->select_string( "pfm_topics.*" );
+			$this->topics_query->select_string( "MAX(pfm_posts.post_date) AS last_post_date" );
 
-			$this->topics = apply_filters( 'pfm_author_posts', $this->topics_query->get_data( 'get_results' ) );
+			$this->topics_query = apply_filters( 'pfm_author_posts_query', $this->topics_query );
+
+			$this->topics = apply_filters( 'pfm_author_posts', $this->topics_query->get_results() );
 		} else if ( $this->is_frontpage ) {
 
 			$this->groups_query->reset_query();
 
-			$this->groups_query->set_query( $args );
+			$this->groups_query->parse( $args );
 
-			$this->groups_query->query['select'] = array(
-				"pfm_groups.*",
-				"COUNT(pfm_forums.forum_id) AS forum_count"
-			);
+			$this->groups_query->select_string( "pfm_groups.*" );
+			$this->groups_query->select_string( "COUNT(pfm_forums.forum_id) AS forum_count" );
 
-			$this->groups = apply_filters( 'pfm_groups', $this->groups_query->get_data( 'get_results' ) );
+			$this->groups_query = apply_filters( 'pfm_groups_query', $this->groups_query );
+
+			$this->groups = apply_filters( 'pfm_groups', $this->groups_query->get_results() );
 		} else if ( $this->is_group ) {
 
 			$this->forums_query->reset_query();
 
-			$this->forums_query->set_query( $args );
+			$this->forums_query->parse( $args );
 
-			$this->forums_query->query['select'] = array(
-				"pfm_forums.*",
-				"COUNT(DISTINCT pfm_forums2.forum_id) AS subforum_count"
-			);
+			$this->groups_query->select_string( "pfm_forums.*" );
+			$this->groups_query->select_string( "COUNT(DISTINCT pfm_forums2.forum_id) AS subforum_count" );
 
-			$this->forums = apply_filters( 'pfm_forums', $this->forums_query->get_data( 'get_results' ) );
+			$this->forums_query = apply_filters( 'pfm_forums_query', $this->forums_query );
+
+			$this->forums = apply_filters( 'pfm_forums', $this->forums_query->get_results() );
 		} else if ( $this->object && $this->is_forum ) {
 
 			$this->topics_query->reset_query();
+			$this->topics_query->parse( $args );
 
-			$this->topics_query->set_query( $args );
-
-			$this->topics_query->query['select'] = array(
-				"pfm_topics.*",
-				"MAX(pfm_posts.post_date) AS last_post_date"
-			);
+			$this->topics_query->select_string( "pfm_topics.*" );
+			$this->topics_query->select_string( "MAX(pfm_posts.post_date) AS last_post_date" );
 
 			$this->topics_query->query['orderby'] = "topic_fix DESC, MAX(pfm_posts.post_date)";
 
-			$this->topics = apply_filters( 'pfm_topics', $this->topics_query->get_data( 'get_results' ) );
+			$this->topics_query = apply_filters( 'pfm_topics_query', $this->topics_query );
+
+			$this->topics = apply_filters( 'pfm_topics', $this->topics_query->get_results() );
 		} else if ( $this->object && $this->is_topic ) {
 
-			$this->posts = apply_filters( 'pfm_posts', $this->posts_query->get_results( $args ) );
+			$this->posts_query = apply_filters( 'pfm_posts_query', $this->posts_query );
+
+			$this->posts = apply_filters( 'pfm_posts', $this->posts_query->parse( $args )->get_results() );
 		}
 	}
 
@@ -482,6 +454,8 @@ class PrimeQuery {
 
 		if ( ! $this->is_frontpage || ! $this->groups )
 			return false;
+
+		$this->forums_query->reset_query();
 
 		$groups = (pfm_get_option( 'forums-home-list' )) ? array_map( 'trim', explode( ',', pfm_get_option( 'forums-home-list' ) ) ) : false;
 
@@ -494,43 +468,27 @@ class PrimeQuery {
 
 		$this->parent_groups = $groups;
 
-		$args = array(
-			'group_id__in'	 => $groups,
-			'parent_id'		 => 0,
-			'number'		 => -1,
-			'order'			 => 'ASC',
-			'join_query'	 => array(
-				array(
-					'table'			 => $this->groups_query->query['table'],
-					'on_group_id'	 => 'group_id',
-					'fields'		 => false,
-					'join'			 => 'LEFT'
-				),
-				array(
-					'table'			 => array(
-						'name'	 => $this->forums_query->query['table']['name'],
-						'as'	 => $this->forums_query->query['table']['as'] . '2',
-						'cols'	 => $this->forums_query->query['table']['cols']
-					),
-					'on_forum_id'	 => 'parent_id',
-					'fields'		 => false,
-					'join'			 => 'LEFT'
-				)
-			),
-			'groupby'		 => $this->forums_query->query['table']['as'] . '.forum_id'
-		);
-
-		$this->forums_query->reset_query();
-
-		$this->forums_query->set_query( $args );
-
-		$this->forums_query->query['orderby']	 = "pfm_groups.group_seq ASC, pfm_forums.forum_seq";
-		$this->forums_query->query['select']	 = array(
-			"pfm_forums.*",
-			"COUNT(DISTINCT pfm_forums2.forum_id) AS subforum_count"
-		);
-
-		$this->forums = $this->forums_query->get_data( 'get_results' );
+		$this->forums = $this->forums_query
+			->select_string( "pfm_forums.*" )
+			->where( [
+				'group_id__in'	 => $groups,
+				'parent_id'		 => 0,
+			] )
+			->join(
+				['group_id', 'group_id', 'LEFT' ], RQ::tbl( new PrimeGroups() )
+			)
+			->join(
+				['forum_id', 'parent_id', 'LEFT' ], RQ::tbl( new PrimeForums( 'forums2' ) )
+				->select( ['count' => ['subforum_count' => 'forum_id' ] ] )
+			)
+			->groupby( $this->forums_query->get_colname( 'forum_id' ) )
+			->order( 'ASC' )
+			->orderby( array(
+				'pfm_groups.group_seq'	 => 'ASC',
+				'pfm_forums.forum_seq'	 => 'ASC'
+				), false, false )
+			->limit( -1 )
+			->get_results();
 	}
 
 	function setup_child_forums() {
@@ -538,37 +496,26 @@ class PrimeQuery {
 		if ( ! $this->is_forum )
 			return false;
 
+		$this->forums_query->reset_query();
+
 		$args = array(
 			'group_id'	 => $this->object->group_id,
 			'parent_id'	 => $this->object->forum_id,
 			'number'	 => -1,
 			'order'		 => 'ASC',
 			'orderby'	 => 'forum_seq',
-			'join_query' => array(
+			'join'		 => array(
 				array(
-					'table'			 => array(
-						'name'	 => $this->forums_query->query['table']['name'],
-						'as'	 => $this->forums_query->query['table']['as'] . '2',
-						'cols'	 => $this->forums_query->query['table']['cols']
-					),
-					'on_forum_id'	 => 'parent_id',
-					'fields'		 => false,
-					'join'			 => 'LEFT'
+					['forum_id', 'parent_id', 'LEFT' ], RQ::tbl( new PrimeForums( 'forums2' ) )
 				)
 			),
-			'groupby'	 => $this->forums_query->query['table']['as'] . '.forum_id'
+			'groupby'	 => $this->forums_query->get_colname( 'forum_id' )
 		);
 
-		$this->forums_query->reset_query();
-
-		$this->forums_query->set_query( $args );
-
-		$this->forums_query->query['select'] = array(
-			"pfm_forums.*",
-			"COUNT(DISTINCT pfm_forums2.forum_id) AS subforum_count"
-		);
-
-		$this->forums = $this->forums_query->get_data( 'get_results' );
+		$this->forums = $this->forums_query->parse( $args )
+			->select_string( "pfm_forums.*" )
+			->select_string( "COUNT(DISTINCT forums2.forum_id) AS subforum_count" )
+			->get_results();
 	}
 
 	function setup_last_items() {
@@ -675,27 +622,20 @@ class PrimeQuery {
 			$forumIDs[] = $forum->forum_id;
 		}
 
-		$sql = "SELECT "
-			. "MAX(topic_id) AS post_id "
-			. "FROM " . RCL_PREF . "pforum_topics "
-			. "WHERE forum_id IN (" . implode( ',', $forumIDs ) . ") "
-			. "GROUP BY forum_id";
-
-		$topicIdx = $wpdb->get_col( $sql );
+		$topicIdx = RQ::tbl( new PrimeTopics() )->select( ['max' => ['post_id' => 'topic_id' ] ] )
+				->where( ['forum_id__in' => $forumIDs ] )
+				->groupby( 'forum_id' )->get_col();
 
 		if ( ! $topicIdx )
 			return false;
 
-		$sql = "SELECT "
-			. "topic_id,"
-			. "topic_name,"
-			. "forum_id,"
-			. "topic_slug,"
-			. "user_id "
-			. "FROM " . RCL_PREF . "pforum_topics "
-			. "WHERE topic_id IN (" . implode( ',', $topicIdx ) . ") ";
-
-		$topics = $wpdb->get_results( $sql );
+		$topics = RQ::tbl( new PrimeTopics() )->select( [
+				"topic_id",
+				"topic_name",
+				"forum_id",
+				"topic_slug",
+				"user_id"
+			] )->where( ['topic_id__in' => $topicIdx ] )->get_results();
 
 		return $topics;
 	}
@@ -759,7 +699,7 @@ class PrimeQuery {
 		if ( $url ) {
 
 			if ( $this->is_page ) {
-				if ( '' != get_option( 'permalink_structure' ) ) {
+				if ( '' != get_site_option( 'permalink_structure' ) ) {
 					$url = untrailingslashit( $url ) . '/page/' . $this->current_page;
 					$url = user_trailingslashit( $url );
 				} else {
@@ -779,8 +719,8 @@ class PrimeQuery {
 
 		$PrimeMeta = new PrimeMeta();
 
-		$table	 = $PrimeMeta->query['table']['name'];
-		$as		 = $PrimeMeta->query['table']['as'];
+		$table	 = $PrimeMeta->table['name'];
+		$as		 = $PrimeMeta->table['as'];
 
 		$childrens = array();
 
@@ -928,10 +868,10 @@ class PrimeQuery {
 		$argsQuery = apply_filters( 'pfm_users_data_query', array(
 			'ID__in' => $userIds,
 			'number' => -1,
-			'fields' => $fields
+			'select' => $fields
 			) );
 
-		$users = $query->get_results( $argsQuery );
+		$users = $query->parse( $argsQuery )->get_results();
 
 		$this->users_data = array();
 		foreach ( $users as $user ) {

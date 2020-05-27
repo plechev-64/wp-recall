@@ -90,7 +90,7 @@ class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager {
 
 	function edit_field_options( $options, $field, $manager_id ) {
 
-		if ( !$field->id || $manager_id != $this->manager_id )
+		if ( ! $field->id || $manager_id != $this->manager_id )
 			return $options;
 
 		$defaultFields = array(

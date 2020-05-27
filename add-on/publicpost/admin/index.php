@@ -31,6 +31,8 @@ function rcl_public_form_manager() {
 
 	$content .= '<p>' . __( 'On this page you can manage the creation of publications for registered record types. Create custom fields for the form of publication of various types and manage', 'wp-recall' ) . '</p>';
 
+	$content .= '<div id="rcl-public-form-manager">';
+
 	$content .= $formManager->form_navi();
 
 	$content .= '<div class="rcl-custom-fields-navi">';
@@ -39,12 +41,13 @@ function rcl_public_form_manager() {
 
 	$content .= $formManager->get_manager();
 
+	$content .= '</div>';
+
 	echo $content;
 }
 
-add_action( 'dbx_post_advanced', 'custom_fields_editor_post_rcl', 1 );
-function custom_fields_editor_post_rcl() {
-	global $post;
+add_action( 'add_meta_boxes', 'custom_fields_editor_post_rcl', 1, 2 );
+function custom_fields_editor_post_rcl( $post_type, $post ) {
 	add_meta_box( 'custom_fields_editor_post', __( 'Arbitrary fields of  publication', 'wp-recall' ), 'custom_fields_list_posteditor_rcl', $post->post_type, 'normal', 'high' );
 }
 
@@ -97,7 +100,7 @@ function rcl_public_form_admin_actions() {
 			$post_type	 = $_GET['post-type'];
 
 
-			if ( ! get_option( 'rcl_fields_' . $post_type . '_1' ) )
+			if ( ! get_site_option( 'rcl_fields_' . $post_type . '_1' ) )
 				add_option( 'rcl_fields_' . $post_type . '_1', array() );
 
 			add_option( 'rcl_fields_' . $post_type . '_' . $newFormId, array() );
@@ -112,8 +115,8 @@ function rcl_public_form_admin_actions() {
 			$delFormId	 = $_GET['form-id'];
 			$post_type	 = $_GET['post-type'];
 
-			delete_option( 'rcl_fields_' . $post_type . '_' . $delFormId );
-			delete_option( 'rcl_fields_' . $post_type . '_' . $delFormId . '_structure' );
+			delete_site_option( 'rcl_fields_' . $post_type . '_' . $delFormId );
+			delete_site_option( 'rcl_fields_' . $post_type . '_' . $delFormId . '_structure' );
 
 			wp_redirect( admin_url( 'admin.php?page=manage-public-form&post-type=' . $post_type ) );
 			exit;

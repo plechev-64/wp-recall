@@ -7,7 +7,7 @@
  * Time: 20:39
  * Project: wp-recall
  */
-if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
@@ -34,9 +34,9 @@ rcl_remove_dir( RCL_TAKEPATH );
 rcl_remove_dir( RCL_UPLOAD_PATH );
 
 //Удаляем созданные страницы
-wp_trash_post( get_option( $rcl_options['lk_page_rcl'] ) );
-wp_trash_post( get_option( $rcl_options['feed_page_rcl'] ) );
-wp_trash_post( get_option( $rcl_options['users_page_rcl'] ) );
+wp_trash_post( get_site_option( $rcl_options['lk_page_rcl'] ) );
+wp_trash_post( get_site_option( $rcl_options['feed_page_rcl'] ) );
+wp_trash_post( get_site_option( $rcl_options['users_page_rcl'] ) );
 
 //Удаляем таблицы и настройки плагина
 $tables = $wpdb->get_results( "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name like '%rcl_%'" );

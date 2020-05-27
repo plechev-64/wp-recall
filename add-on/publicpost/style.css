@@ -1,3 +1,8 @@
+#rcl-public-form-top-manager{
+	text-align: right;
+	margin: 15px 0;
+}
+
 /* tab=publics */
 #tab-publics .rcl-table__cell {
 	min-width: 75px;
@@ -56,6 +61,7 @@
 /* publicpost */
 .rcl-public-box {
 	position: relative;
+	clear: both;
 }
 .rcl-public-box .edit-form-link > a {
 	align-items: center;

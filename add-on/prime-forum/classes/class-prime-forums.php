@@ -1,11 +1,11 @@
 <?php
 
 class PrimeForums extends Rcl_Query {
-	function __construct() {
+	function __construct( $as = false ) {
 
 		$table = array(
 			'name'	 => RCL_PREF . "pforums",
-			'as'	 => 'pfm_forums',
+			'as'	 => $as ? $as : 'pfm_forums',
 			'cols'	 => array(
 				'forum_id',
 				'forum_name',
@@ -16,8 +16,7 @@ class PrimeForums extends Rcl_Query {
 				'group_id',
 				'parent_id',
 				'topic_count',
-				'post_count',
-				'closed'
+				'forum_closed'
 			)
 		);
 

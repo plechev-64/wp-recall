@@ -744,6 +744,9 @@ a.data-filter.filter-active:hover {
 .rcl-field-core {
 	position: relative;
 }
+.rcl-field-core .checkbox-manager{
+	text-align: right;
+}
 .rcl-children-field{
 	display: none;
 }
@@ -1088,6 +1091,9 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
 	display: inline-block;
 	margin: 0 4px;
 	padding: 2px 9px;
+}
+.rcl-pager .pager-item{
+	margin: 0 4px;
 }
 .rcl-navi span {
 	box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.4);
@@ -1600,7 +1606,6 @@ body .ssi-modalOuter .ssi-modalTitle {
 	-webkit-hyphens: auto;
 	-ms-hyphens: auto;
 	hyphens: auto;
-	clear: both;
 }
 .rcl-table__border {
 	border: 1px solid #e5e5e5;
@@ -1635,6 +1640,32 @@ body .ssi-modalOuter .ssi-modalTitle {
 	flex-grow: 1;
 	padding: .4em .6em;
 	position: relative;
+}
+.rcl-table__row-header .rcl-table__cell[data-value="-"],
+.rcl-table__row-search .rcl-table__cell[data-value="-"]{
+	opacity: 0;
+}
+.rcl-table__cell[data-order="desc"]:after{
+	font-family: 'rcl-awesome'!important;
+    content: "\f0dd";
+    margin-left: 3px;
+    border-bottom: 0;
+    text-decoration: none;
+    height: 14px;
+    width: 10px;
+    overflow: hidden;
+    margin-top: -5px;
+}
+.rcl-table__cell[data-order="asc"]:after{
+	font-family: 'rcl-awesome'!important;
+    content: "\f0de";
+    margin-left: 3px;
+    border-bottom: 0;
+    text-decoration: none;
+    height: 14px;
+    width: 10px;
+    overflow: hidden;
+    margin-top: -5px;
 }
 .rcl-table__cell:empty {
 	display: none;
@@ -1741,6 +1772,10 @@ body .ssi-modalOuter .ssi-modalTitle {
 .rcl-table__not-header .rcl-table__row {
 	padding: .4em 0;
 }
+.rcl-table__row-total{
+	border-top: 2px solid #ccc;
+    font-weight: bold;
+}
 
 @media screen and (max-width: 768px) {
 	.rcl-table__border {
@@ -1748,6 +1783,9 @@ body .ssi-modalOuter .ssi-modalTitle {
 	}
 	.rcl-table__row-header {
 		display: none;
+	}
+	.rcl-table__row-header .rcl-table__cell{
+		justify-content: center;
 	}
 	.rcl-table .rcl-table__row-header ~ .rcl-table__row:not(.rcl-table__row-header) {
 		display: block;
@@ -1840,49 +1878,60 @@ body .ssi-modalOuter .ssi-modalTitle {
 /**/
 
 /*
-	33. RCL Notice
+    33. New RCL Notice
 */
 .rcl-notice {
     box-sizing: border-box;
+    clear: both;
     font-size: 16px;
-    line-height: 1.4;
-    margin: 5px 0;
+    line-height: normal;
+    margin: 12px 0 !important;
     overflow: hidden;
-    padding: 12px 36px;
+    padding: 12px 36px !important;
     position: relative;
-	clear: both;
 }
-.rcl-notice.rcl-notice__type-info,
-.rcl-notice.rcl-notice__type-warning{
-    background-color: #fff5ce;
-    color: #7b743f;
+.rcl-notice__border {
+    border-width: 1px;
+    border-style: solid;
 }
-.rcl-notice.rcl-notice__type-info.rcl-notice__border,
-.rcl-notice.rcl-notice__type-warning.rcl-notice__border{
-    border: 1px solid #efe5be;
+/* AAA accebillity color > 7 contrast*/
+.rcl-notice__type-info {
+    background-color: #fff7da;
+    color: #56562a;
 }
-.rcl-notice.rcl-notice__type-success {
-    background-color: #e0f8c9;
-    color: #457b3f;
+/* border is background-color down to 20 point in firefox */
+.rcl-notice__type-info.rcl-notice__border {
+    border-color: #ebe3c6;
 }
-.rcl-notice.rcl-notice__type-success.rcl-notice__border {
-    border: 1px solid #d0e8b9;
+.rcl-notice__type-success {
+    background-color: #e6f4cd;
+    color: #2e582e;
 }
-.rcl-notice.rcl-notice__type-error {
-    background-color: #ffdfe3;
-    color: #a7565f;
+.rcl-notice__type-success.rcl-notice__border {
+    border-color: #d2e0b9;
 }
-.rcl-notice.rcl-notice__type-error.rcl-notice__border {
-    border: 1px solid #efcfd3;
+.rcl-notice__type-warning {
+    background-color: #ffe0b1;
+    color: #594628;
 }
-.rcl-notice.rcl-notice__type-simple {
+.rcl-notice__type-warning.rcl-notice__border {
+    border-color: #ebcc9d;
+}
+.rcl-notice__type-error {
+    background-color: #f9dcdc;
+    color: #71363e;
+}
+.rcl-notice__type-error.rcl-notice__border {
+    border-color: #e5c8c8;
+}
+.rcl-notice__type-simple {
     background-color: #eee;
-    color: #555;
+    color: #4e4e4e;
 }
-.rcl-notice.rcl-notice__type-simple.rcl-notice__border {
-    border: 1px solid #ddd;
+.rcl-notice__type-simple.rcl-notice__border {
+    border-color: #dadada;
 }
-.rcl-notice .rcli {
+.rcl-notice > .rcli {
     color: rgba(0, 0, 0, 0.08);
     font-size: 52px;
     left: -10px;
@@ -1893,13 +1942,17 @@ body .ssi-modalOuter .ssi-modalTitle {
 .rcl-notice .rcl-notice__text {
     text-align: center;
 }
-.rcl-notice .rcl-notice__title {
+.rcl-notice__text > p {
+    margin: 0;
+    padding: 0;
+}
+.rcl-notice__title {
     color: currentColor;
     font-size: 1.1em;
     font-weight: bold;
-    margin: 0 0 5px 5px;
+    margin: 0 0 6px 6px;
 }
-.rcl-notice .rcl-notice__close {
+.rcl-notice__close {
     cursor: pointer;
     font-size: 15px;
     line-height: 15px;
@@ -1907,10 +1960,10 @@ body .ssi-modalOuter .ssi-modalTitle {
     right: 2px;
     top: 0;
 }
-.rcl-notice .rcl-notice__close:hover {
+.rcl-notice__close:hover {
     opacity: .7;
 }
-.rcl-notice .rcl-notice__close::before {
+.rcl-notice__close::before {
     color: currentColor;
     content: "\f00d";
     font-family: rcl-awesome;

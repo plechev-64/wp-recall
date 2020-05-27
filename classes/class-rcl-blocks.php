@@ -24,7 +24,7 @@ class Rcl_Blocks {
 
 		foreach ( $properties as $name => $val ) {
 
-			if ( !isset( $args[$name] ) )
+			if ( ! isset( $args[$name] ) )
 				continue;
 
 			if ( $name == 'args' ) {
@@ -49,10 +49,10 @@ class Rcl_Blocks {
 		global $user_ID;
 
 		switch ( $this->args['public'] ) {
-			case 0: if ( !$user_ID || $user_ID != $user_lk )
+			case 0: if ( ! $user_ID || $user_ID != $user_lk )
 					return false;
 				break; //только хозяину ЛК
-			case -1: if ( !$user_ID || $user_ID == $user_lk )
+			case -1: if ( ! $user_ID || $user_ID == $user_lk )
 					return false;
 				break; //всем зарегистрированным кроме хозяина ЛК
 			case -2: if ( $user_ID && $user_ID == $user_lk )
@@ -61,7 +61,7 @@ class Rcl_Blocks {
 		}
 
 		$cl_content = $this->get_callback_content( $user_lk );
-		if ( !$cl_content )
+		if ( ! $cl_content )
 			return false;
 
 		$content = '<div';

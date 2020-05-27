@@ -293,8 +293,9 @@ function rcl_tab_groups( $type_account = 'user_id' ) {
 				. '<div class="form-field">'
 				. '<input type="text" required placeholder="' . __( 'Enter the name of the new group', 'wp-recall' ) . '" name="rcl_group[name]">'
 				. rcl_get_button( array(
-					'label'	 => __( 'Create', 'wp-recall' ),
-					'submit' => true
+					'onclick'	 => 'rcl_send_form_data(\'rcl_ajax_create_group\', this);return false;',
+					'label'		 => __( 'Create', 'wp-recall' ),
+					'submit'	 => true
 				) )
 				. '<input type="hidden" name="rcl_group[create]" value="1">'
 				. '</div>'
@@ -427,6 +428,7 @@ function rcl_new_group() {
 	}
 }
 
+add_action( 'init', 'rcl_init_group_create' );
 function rcl_init_group_create() {
 	if ( isset( $_POST['rcl_group'] ) ) {
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'rcl-group-create' ) )
@@ -435,7 +437,40 @@ function rcl_init_group_create() {
 	}
 }
 
-add_action( 'init', 'rcl_init_group_create' );
+rcl_ajax_action( 'rcl_ajax_create_group' );
+function rcl_ajax_create_group() {
+	global $user_ID;
+
+	rcl_verify_ajax_nonce();
+
+	$group_name = sanitize_text_field( $_POST['group_name'] );
+
+	if ( ! $group_name ) {
+		wp_send_json( array(
+			'error' => __( 'Укажите наименование', 'wp-recall' )
+		) );
+	}
+
+	do_action( 'rcl_pre_create_group' );
+
+	$group_id = rcl_create_group( array(
+		'name'		 => $group_name,
+		'admin_id'	 => $user_ID
+		) );
+
+	if ( ! $group_id ) {
+		wp_send_json( array(
+			'error' => __( 'Group creation failed', 'wp-recall' )
+		) );
+	}
+
+	do_action( 'rcl_ajax_create_group', $group_id );
+
+	wp_send_json( array(
+		'success'	 => __( 'Новая группа успешно создана!', 'wp-recall' ),
+		'redirect'	 => rcl_get_group_permalink( $group_id )
+	) );
+}
 
 add_filter( 'rcl_group_thumbnail', 'rcl_group_add_thumb_buttons' );
 function rcl_group_add_thumb_buttons( $content ) {
@@ -491,46 +526,77 @@ function rcl_get_group_options( $group_id ) {
 
 	$category = (is_array( $category )) ? implode( ', ', $category ) : $category;
 
+	$fields = [
+		'name'			 => [
+			'type'		 => 'text',
+			'slug'		 => 'name',
+			'title'		 => __( 'Group name', 'wp-recall' ),
+			'default'	 => $rcl_group->name,
+			'required'	 => 1
+		],
+		'description'	 => [
+			'type'		 => 'textarea',
+			'slug'		 => 'description',
+			'title'		 => __( 'Description', 'wp-recall' ),
+			'default'	 => esc_html( strip_tags( rcl_get_group_description( $group_id ) ) )
+		],
+		'status'		 => [
+			'type'		 => 'radio',
+			'slug'		 => 'status',
+			'title'		 => __( 'Group status', 'wp-recall' ),
+			'values'	 => [
+				'open'	 => __( 'Open group', 'wp-recall' ),
+				'closed' => __( 'Closed group', 'wp-recall' )
+			],
+			'default'	 => $rcl_group->group_status
+		],
+		'can_register'	 => [
+			'type'		 => 'checkbox',
+			'slug'		 => 'can_register',
+			'title'		 => __( 'Membership', 'wp-recall' ),
+			'values'	 => [
+				1 => __( 'Registration allowed', 'wp-recall' )
+			],
+			'default'	 => rcl_get_group_option( $group_id, 'can_register' )
+		],
+		'default_role'	 => [
+			'type'		 => 'radio',
+			'slug'		 => 'default_role',
+			'title'		 => __( 'New user role', 'wp-recall' ),
+			'values'	 => [
+				'reader' => __( 'Visitor', 'wp-recall' ),
+				'author' => __( 'Author', 'wp-recall' )
+			],
+			'default'	 => $default_role
+		],
+		'category'		 => [
+			'type'		 => 'textarea',
+			'slug'		 => 'category',
+			'title'		 => sprintf( '%s <small>(%s)</small>', __( 'Group categories', 'wp-recall' ), __( 'separate by commas', 'wp-recall' ) ),
+			'default'	 => $category
+		],
+	];
+
+	$fields = apply_filters( 'rcl_group_options_fields', $fields, $group_id );
+
+	foreach ( $fields as $k => $field ) {
+		$fields[$k]['name'] = 'group-options[' . $field['slug'] . ']';
+	}
+
+	require_once RCL_PATH . 'classes/class-rcl-form.php';
+
+	$form = new Rcl_Form( [
+		'fields' => $fields
+		] );
+
 	$content = '<div id="group-options">'
 		. '<h3>' . __( 'Group settings', 'wp-recall' ) . '</h3>'
-		. '<form method="post">'
-		. '<div class="group-option">'
-		. '<label>' . __( 'Group name', 'wp-recall' ) . '</label>'
-		. '<input type="text" name="group-options[name]" value="' . $rcl_group->name . '">'
-		. '</div>'
-		. '<div class="group-option">'
-		. '<label>' . __( 'Description', 'wp-recall' ) . '</label>'
-		. '<textarea name="group-options[description]">' . esc_html( strip_tags( rcl_get_group_description( $group_id ) ) ) . '</textarea>'
-		. '</div>'
-		. '<div class="group-option">'
-		. '<label>' . __( 'Group status', 'wp-recall' ) . '</label>'
-		. '<select name="group-options[status]">'
-		. '<option ' . selected( $rcl_group->group_status, 'open', false ) . ' value="open">' . __( 'Open group', 'wp-recall' ) . '</option>'
-		. '<option ' . selected( $rcl_group->group_status, 'closed', false ) . ' value="closed">' . __( 'Closed group', 'wp-recall' ) . '</option>'
-		. '</select>'
-		. '</div>'
-		. '<div class="group-option">'
-		. '<label>' . __( 'Membership', 'wp-recall' ) . '</label>'
-		. '<input type="checkbox" name="group-options[can_register]" ' . checked( rcl_get_group_option( $group_id, 'can_register' ), 1, false ) . ' value="1"> ' . __( 'Registration allowed', 'wp-recall' )
-		. '<label>' . __( 'New user role', 'wp-recall' ) . '</label>'
-		. '<select name="group-options[default_role]">'
-		. '<option ' . selected( $default_role, 'reader', false ) . ' value="reader">' . __( 'Visitor', 'wp-recall' ) . '</option>'
-		. '<option ' . selected( $default_role, 'author', false ) . ' value="author">' . __( 'Author', 'wp-recall' ) . '</option>'
-		. '</select>'
-		. '</div>'
-		. '<div class="group-option">'
-		. '<label>' . sprintf( '%s <small>(%s)</small>', __( 'Group categories', 'wp-recall' ), __( 'separate by commas', 'wp-recall' ) ) . '</label>'
-		. '<textarea name="group-options[category]">' . $category . '</textarea>'
-		. '</div>';
+		. '<form method="post">';
 
-	$content = apply_filters( 'rcl_group_options', $content );
+	$content .= apply_filters( 'rcl_group_options', $form->get_fields_list(), $group_id );
 
 	$content .= '<div class="group-option">'
-		. rcl_get_button( array(
-			'label'	 => __( 'Save settings', 'wp-recall' ),
-			'submit' => true
-		) )
-		. '<input type="hidden" name="group-submit" value="1">'
+		. '<input type="submit" class="recall-button" name="group-submit" value="' . __( 'Save settings', 'wp-recall' ) . '">'
 		. '<input type="hidden" name="group-action" value="update">'
 		. wp_nonce_field( 'group-action-' . $user_ID, '_wpnonce', true, false )
 		. '</div>'
